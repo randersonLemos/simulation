@@ -1,0 +1,85 @@
+---GROUP---
+PRODUCTION
+---END---
+
+---OPERATE---
+*MAX, *STL, 3000.0, *CONT *REPEAT
+*MIN, *BHP,  295.0, *CONT *REPEAT
+---END---
+
+---MONITOR---
+*WCUT, 0.95, *SHUTIN
+# *GOR, 1000.0, *SHUTIN
+---END---
+
+---GEOMETRY---
+*K, 0.108, 0.370, 1.000, 0.000
+---END---
+
+---PERF_FF---
+*GEOA
+---END---
+
+---PERF_TABLE---
+19, 28, 01, 1.0, *OPEN
+19, 28, 02, 1.0, *OPEN
+19, 28, 03, 1.0, *OPEN
+19, 28, 04, 1.0, *OPEN
+19, 28, 05, 1.0, *OPEN
+19, 28, 06, 1.0, *OPEN
+19, 28, 07, 1.0, *OPEN
+19, 28, 08, 1.0, *OPEN
+19, 28, 09, 1.0, *OPEN
+19, 28, 10, 1.0, *OPEN
+19, 28, 11, 1.0, *OPEN
+19, 28, 12, 1.0, *CLOSED
+19, 28, 13, 1.0, *OPEN
+19, 28, 14, 1.0, *OPEN
+19, 28, 15, 1.0, *OPEN
+19, 28, 16, 1.0, *OPEN
+19, 28, 17, 1.0, *OPEN
+19, 28, 18, 1.0, *CLOSED
+19, 28, 19, 1.0, *OPEN
+19, 28, 20, 1.0, *OPEN
+19, 28, 21, 1.0, *OPEN
+19, 28, 22, 1.0, *OPEN
+19, 28, 23, 1.0, *OPEN
+19, 28, 24, 1.0, *OPEN
+19, 28, 25, 1.0, *OPEN
+19, 28, 26, 1.0, *OPEN
+19, 28, 27, 1.0, *OPEN
+19, 28, 28, 1.0, *OPEN
+19, 28, 29, 1.0, *OPEN
+19, 28, 30, 1.0, *OPEN
+---END---
+
+---LAYERCLUMP---
+19, 28, 01:11
+19, 28, 13:17
+19, 28, 19:30
+---END---
+
+---TIME_OPEN---
+# 1369
+---END---
+
+---TIME_ON---
+1.0
+---END---
+
+---ICV_NR---
+3
+---END---
+
+---ICV_OPERATION---
+# 2008, 183, 200
+---END---
+
+---ICV_CONTROL_LAW---
+# 1, *ON_CTRLLUMP __LAYER__ *GOR > 750, AND, *ON_CTRLLUMP __LAYER__ *GOR < 1250, 0.0
+# 1, *ON_CTRLLUMP __LAYER__ *WCUT > 0.95, 0.0
+# 2, *ON_CTRLLUMP __LAYER__ *GOR > 750, AND, *ON_CTRLLUMP __LAYER__ *GOR < 1250, 0.0
+# 2, *ON_CTRLLUMP __LAYER__ *WCUT > 0.95, 0.0
+# 3, *ON_CTRLLUMP __LAYER__ *GOR > 750, AND, *ON_CTRLLUMP __LAYER__ *GOR < 1250, 0.0
+# 3, *ON_CTRLLUMP __LAYER__ *WCUT > 0.95, 0.0
+---END---

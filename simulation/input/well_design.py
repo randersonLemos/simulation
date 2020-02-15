@@ -3,11 +3,10 @@ import pathlib
 import warnings
 import functools
 
-
 def handle_assignment(decoreted_method):
     @functools.wraps(decoreted_method)
     def wrapper(inst):
-        attribute = '_'.join(decoreted_method.__name__.split('_')[1:])
+        attribute = decoreted_method.__name__[12:]
         attribute_data = getattr(inst, attribute)
         if attribute_data:
             stg  = "Attribute '{}' from well {} already has an assigned value.".format(attribute, inst.name)
@@ -17,7 +16,6 @@ def handle_assignment(decoreted_method):
         decoreted_method(inst)
     return wrapper
 
-
 def handle_lst(decorated_method):
     @functools.wraps(decorated_method)
     def wrapper(inst, lst):
@@ -26,15 +24,21 @@ def handle_lst(decorated_method):
     return wrapper
 
 
-class Well_Spec:
-    def __init__(self, name, alias_lst=[], file='', **kwargs):
-        self.name = name
-        self.alias_lst = alias_lst
+class Well_Design:
+    _rootPath = pathlib.Path('')
 
-        if file:
-            self.file = pathlib.Path(file)
+    @classmethod
+    def set_rootPath(cls, path):
+        cls._rootPath = pathlib.Path(path)
+
+    def __init__(self, name, alias=[], file_name='', **kwargs):
+        self.name = name
+        self.alias = alias
+
+        if file_name:
+            self.path_to_file = self._rootPath / file_name
         else:
-            self.file = pathlib.Path(__file__).parent.parent / '{}.input'.format(self.name)
+            self.path_to_file = self._rootPath / '{}.input'.format(self.name)
 
         self.group = ''
         self.operate = []
@@ -56,115 +60,83 @@ class Well_Spec:
             else:
                 raise AttributeError('{} is not an attribute class')
 
-        self._not_loaded = True
-        self._not_loaded_more = True
-        self._not_loaded_more_more = True
-
-    def load(self):
-        if self._not_loaded:
-            self.load_group()
-            self.load_icv_nr()
-            self._not_loaded = False
-        return copy.deepcopy(self)
-
-    def load_more(self):
-        if self._not_loaded_more:
-            if self._not_loaded:
-                self.load()
-            #self.load_group()
-            self.load_operate()
-            self.load_monitor()
-            self.load_geometry()
-            self.load_perf_ff()
-            self.load_perf_table()
-            self.load_time_open()
-            self.load_time_on()
-            self._not_loaded_more = False
-        return copy.deepcopy(self)
-
-    def load_more_more(self):
-        if self._not_loaded_more_more:
-            if self._not_loaded_more:
-                self.load_more()
-            #self.load_group()
-            #self.load_operate()
-            #self.load_monitor()
-            #self.load_geometry()
-            #self.load_perf_ff()
-            #self.load_perf_table()
-            self.load_layerclump()
-            #self.load_time_open()
-            #self.load_time_on()
-            #self.load_icv_nr()
-            self.load_icv_operation()
-            self.load_icv_control_law()
-            self.load_wag_operation()
-            self._not_loaded_more_more = False
-        return copy.deepcopy(self)
+        self._outer_load_group()
+        self._outer_load_icv_nr()
+        self._outer_load_operate()
+        self._outer_load_monitor()
+        self._outer_load_geometry()
+        self._outer_load_perf_ff()
+        self._outer_load_perf_table()
+        self._outer_load_time_open()
+        self._outer_load_time_on()
+        self._outer_load_layerclump()
+        self._outer_load_icv_operation()
+        self._outer_load_icv_control_law()
+        self._outer_load_wag_operation()
 
     @handle_assignment
-    def load_group(self):
-        lst = self._data_picker('---GROUP---', self.file)
+    def _outer_load_group(self):
+        lst = self._data_picker('---GROUP---', self.path_to_file)
         self._load_group(lst)
 
     @handle_assignment
-    def load_operate(self):
-        lst = self._data_picker('---OPERATE---', self.file)
+    def _outer_load_operate(self):
+        lst = self._data_picker('---OPERATE---', self.path_to_file)
         self._load_operate(lst)
 
     @handle_assignment
-    def load_monitor(self):
-        lst = self._data_picker('---MONITOR---', self.file)
+    def _outer_load_monitor(self):
+        lst = self._data_picker('---MONITOR---', self.path_to_file)
         self._load_monitor(lst)
 
     @handle_assignment
-    def load_geometry(self):
-        lst = self._data_picker('---GEOMETRY---', self.file)
+    def _outer_load_geometry(self):
+        lst = self._data_picker('---GEOMETRY---', self.path_to_file)
         self._load_geometry(lst)
 
     @handle_assignment
-    def load_perf_ff(self):
-        lst = self._data_picker('---PERF_FF---', self.file)
+    def _outer_load_perf_ff(self):
+        lst = self._data_picker('---PERF_FF---', self.path_to_file)
         self._load_perf_ff(lst)
 
     @handle_assignment
-    def load_perf_table(self):
-        lst = self._data_picker('---PERF_TABLE---', self.file)
+    def _outer_load_perf_table(self):
+        lst = self._data_picker('---PERF_TABLE---', self.path_to_file)
         self._load_perf_table(lst)
 
     @handle_assignment
-    def load_layerclump(self):
-        lst = self._data_picker('---LAYERCLUMP---', self.file)
+    def _outer_load_layerclump(self):
+        lst = self._data_picker('---LAYERCLUMP---', self.path_to_file)
         self._load_layerclump(lst)
 
     @handle_assignment
-    def load_time_open(self):
-        lst = self._data_picker('---TIME_OPEN---', self.file)
+    def _outer_load_time_open(self):
+        lst = self._data_picker('---TIME_OPEN---', self.path_to_file)
         self._load_time_open(lst)
 
     @handle_assignment
-    def load_time_on(self):
-        lst = self._data_picker('---TIME_ON---', self.file)
+    def _outer_load_time_on(self):
+        lst = self._data_picker('---TIME_ON---', self.path_to_file)
         self._load_time_on(lst)
 
     @handle_assignment
-    def load_icv_nr(self):
-        lst = self._data_picker('---ICV_NR---', self.file)
+    def _outer_load_icv_nr(self):
+        lst = self._data_picker('---ICV_NR---', self.path_to_file)
         self._load_icv_nr(lst)
 
     @handle_assignment
-    def load_icv_operation(self):
-        lst = self._data_picker('---ICV_OPERATION---', self.file)
+    def _outer_load_icv_operation(self):
+        lst = self._data_picker('---ICV_OPERATION---', self.path_to_file)
         self._load_icv_operation(lst)
 
     @handle_assignment
-    def load_icv_control_law(self):
-        lst = self._data_picker('---ICV_CONTROL_LAW---', self.file)
+    def _outer_load_icv_control_law(self):
+        lst = self._data_picker('---ICV_CONTROL_LAW---', self.path_to_file)
         self._load_icv_control_law(lst)
 
     @handle_assignment
-    def load_wag_operation(self):
-        lst = self._data_picker('---WAG_OPERATION---', self.file)
+    def _outer_load_wag_operation(self):
+        lst = self._data_picker('---WAG_OPERATION---', self.path_to_file)
         self._load_wag_operation(lst)
 
     @handle_lst
@@ -235,8 +207,8 @@ class Well_Spec:
         self.wag_operation = [el.strip() for el in lst.pop().split(',')]
 
 
-    def _data_picker(self, keyword, file):
-        with file.open() as fh:
+    def _data_picker(self, keyword, path_to_file):
+        with path_to_file.open() as fh:
             content = iter(fh.read().split('\n'))
         chunk = []
         for line in content:
@@ -249,7 +221,7 @@ class Well_Spec:
                         pass
                     else:
                         chunk.append(line)
-        stg  = "Keyword '{}' not found in file '{}'.".format(keyword, file)
+        stg  = "Keyword '{}' not found in file '{}'.".format(keyword, path_to_file)
         stg += " Returning empty list."
         warnings.warn(stg)
         return []

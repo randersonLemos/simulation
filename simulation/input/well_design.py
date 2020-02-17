@@ -23,7 +23,6 @@ def handle_lst(decorated_method):
             decorated_method(inst, lst)
     return wrapper
 
-
 class Well_Design:
     _rootPath = pathlib.Path('')
 

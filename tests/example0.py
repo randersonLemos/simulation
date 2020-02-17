@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from os import sys, path; sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 import setup
-from simulation.model.well.producer_dual_icv import producer_dual_icv
 from simulation.input.well_design import Well_Design
+from simulation.model.well.producer import Producer
+from simulation.model.well.builder_producer_default import Builder_Producer_Default
 
 Well_Design.set_rootPath('./input')
+Producer.set_builder(Builder_Producer_Default)
 
 prds = []
 prds.append(Well_Design(name='PRK014'))
@@ -32,17 +34,4 @@ sim_folder_group = 'DEFAULT'
 sim_folder = 'sim_001'
 
 for well in prds:
-    producer_dual_icv(  well.name
-                      , well.group
-                      , well.operate
-                      , well.monitor
-                      , well.geometry
-                      , well.perf_ff
-                      , well.perf_table
-                      , well.time_open
-                      , well.time_on
-                      , well.layerclump
-                      , well.icv_operation
-                      , well.icv_control_law
-                      , setup.LOCAL_ROOT / setup.SIMS_FOLDER / sim_folder_group / sim_folder / 'wells'
-                      )
+    pb = Producer(well).build().write('wells')

@@ -10,7 +10,7 @@ def handle_assignment(decoreted_method):
         attribute_data = getattr(inst, attribute)
         if attribute_data:
             stg  = "Attribute '{}' from well {} already has an assigned value.".format(attribute, inst.name)
-            stg += ' Value replacing by loading not allowed. Original value kept.'
+            stg += " Value replacing by loading not allowed. Original value kept."
             warnings.warn(stg)
             return
         decoreted_method(inst)
@@ -32,14 +32,7 @@ class Well_Design:
         cls._rootPath = pathlib.Path(path)
 
     def __init__(self, name, alias=[], file_name='', **kwargs):
-        self.name = name
-        self.alias = alias
-
-        if file_name:
-            self.path_to_file = self._rootPath / file_name
-        else:
-            self.path_to_file = self._rootPath / '{}.input'.format(self.name)
-
+        self.name = name; self.alias = alias
         self.group = ''
         self.operate = []
         self.monitor = []
@@ -54,12 +47,16 @@ class Well_Design:
         self.icv_control_law = []
         self.wag_operation = []
 
-        for key in kwargs:
-            if hasattr(self, key):
-                self.__dict__[key] = kwargs[key]
-            else:
-                raise AttributeError('{} is not an attribute class')
+        if file_name: self.path_to_file = self._rootPath / file_name
+        else: self.path_to_file = self._rootPath / '{}.input'.format(self.name)
 
+        for key in kwargs:
+            if hasattr(self, key): self.__dict__[key] = kwargs[key]
+            else: raise AttributeError('{} is not an attribute class')
+
+        self._load()
+
+    def _load(self):
         self._outer_load_group()
         self._outer_load_icv_nr()
         self._outer_load_operate()

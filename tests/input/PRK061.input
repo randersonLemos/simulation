@@ -59,11 +59,11 @@ PRODUCTION
 26, 34, 19:30
 ---END---
 
----TIME_OPEN---
+---OPEN_TIME---
 # 1673
 ---END---
 
----TIME_ON---
+---ON_TIME---
 1.0
 ---END---
 

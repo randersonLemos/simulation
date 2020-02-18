@@ -58,11 +58,11 @@ W, *MAX, *BHP,     470.0, *CONT *REPEAT
 37, 56, 16:30
 ---END---
 
----TIME_OPEN---
+---OPEN_TIME---
 # G, 1278
 ---END---
 
----TIME_ON---
+---ON_TIME---
 0.98
 ---END---
 

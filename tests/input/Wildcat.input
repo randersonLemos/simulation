@@ -53,23 +53,14 @@ PRODUCTION
 # 16, 36, 30, 1.0, *OPEN
 ---END---
 
----LAYERCLUMP---
----END---
-
----TIME_OPEN---
+---OPEN_TIME---
 # 1553
 ---END---
 
----TIME_ON---
+---ON_TIME---
 1.0
 ---END---
 
 ---ICV_NR---
 0
----END---
-
----ICV_OPERATION---
----END---
-
----ICV_CONTROL_LAW---
 ---END---

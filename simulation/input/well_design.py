@@ -39,8 +39,8 @@ class Well_Design:
         self.perf_ff = ''
         self.perf_table = []
         self.layerclump = []
-        self.time_open = ''
-        self.time_on = ''
+        self.open_time = ''
+        self.on_time = ''
         self.icv_nr = ''
         self.icv_operation = []
         self.icv_control_law = []
@@ -63,8 +63,8 @@ class Well_Design:
         self._outer_load_geometry()
         self._outer_load_perf_ff()
         self._outer_load_perf_table()
-        self._outer_load_time_open()
-        self._outer_load_time_on()
+        self._outer_load_open_time()
+        self._outer_load_on_time()
         self._outer_load_layerclump()
         self._outer_load_icv_operation()
         self._outer_load_icv_control_law()
@@ -106,14 +106,14 @@ class Well_Design:
         self._load_layerclump(lst)
 
     @handle_assignment
-    def _outer_load_time_open(self):
-        lst = self._data_picker('---TIME_OPEN---', self.path_to_file)
-        self._load_time_open(lst)
+    def _outer_load_open_time(self):
+        lst = self._data_picker('---OPEN_TIME---', self.path_to_file)
+        self._load_open_time(lst)
 
     @handle_assignment
-    def _outer_load_time_on(self):
-        lst = self._data_picker('---TIME_ON---', self.path_to_file)
-        self._load_time_on(lst)
+    def _outer_load_on_time(self):
+        lst = self._data_picker('---ON_TIME---', self.path_to_file)
+        self._load_on_time(lst)
 
     @handle_assignment
     def _outer_load_icv_nr(self):
@@ -168,14 +168,14 @@ class Well_Design:
             self.layerclump.append([el.strip() for el in line.split(',')])
 
     @handle_lst
-    def _load_time_open(self, lst):
-        self.time_open = lst.pop().split(',')
-        if len(self.time_open) == 1:
-            self.time_open = self.time_open.pop()
+    def _load_open_time(self, lst):
+        self.open_time = lst.pop().split(',')
+        if len(self.open_time) == 1:
+            self.open_time = self.open_time.pop()
 
     @handle_lst
-    def _load_time_on(self, lst):
-        self.time_on = lst.pop()
+    def _load_on_time(self, lst):
+        self.on_time = lst.pop()
 
     @handle_lst
     def _load_icv_nr(self, lst):

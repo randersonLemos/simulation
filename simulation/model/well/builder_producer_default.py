@@ -1,6 +1,7 @@
 from simulation.model.well.parts.header import Header
 from simulation.model.well.parts.completion import Completion
 from simulation.model.well.parts.others import Others
+from simulation.model.well.parts.icv import ICV
 from simulation.common.keywords import Keywords as kw
 
 class Builder_Producer_Default:
@@ -13,20 +14,14 @@ class Builder_Producer_Default:
         Completion.default(agregator, wd.perf_table)
 
         agregator.add_two(kw.shutin(), wd.name)
-
-        if wd.time_on:
+        if wd.on_time:
             agregator.add_two(kw.on_time(), wd.name)
-            agregator.add_one(wd.time_on)
+            agregator.add_one(wd.on_time)
 
 
-        if wd.time_open:
-            Others.Open.default(agregator, wd.name, wd.time_open)
+        if wd.open_time: Others.Open.default(agregator, wd.name, wd.open_time)
 
-#        if self.layerclump:
-#            from ..pieces.others import layerclump_default as layerclump
-#            layerclump(agr, self.well_name, self.layerclump)
-#
-#        if self.icv_start:
-#            from ..pieces.icvs import icv_deafult as icv
-#            icv(agr, self.well_name, self.icv_start, self.layerclump, self.icv_control)
-#
+        if wd.layerclump: Others.Layerclump.default(agregator, wd.name, wd.layerclump)
+
+        if wd.icv_operation: ICV.deafult(agregator, wd.name, wd.layerclump, wd.icv_operation, wd.icv_control_law)
+

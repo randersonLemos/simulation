@@ -30,7 +30,7 @@ class Well_Design:
     def set_rootPath(cls, path):
         cls._rootPath = pathlib.Path(path)
 
-    def __init__(self, name, alias=[], file_name='', **kwargs):
+    def __init__(self, name, alias={}, file_name='', **kwargs):
         self.name = name; self.alias = alias
         self.group = ''
         self.operate = []

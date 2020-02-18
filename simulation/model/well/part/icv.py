@@ -2,8 +2,7 @@ import re
 from simulation.common.keywords import Keywords as kw
 from simulation.common.words import Words as wrd
 
-class ICV:
-
+class Icv:
     @staticmethod
     def deafult(agr, well_name, layerclump, icv_operation, icv_control_law):
         agr.add_one('**ICV control')

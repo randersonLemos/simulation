@@ -59,7 +59,7 @@ W, *MAX, *BHP,     470.0, *CONT *REPEAT
 ---END---
 
 ---OPEN_TIME---
-# W, 1734
+W, 1734
 ---END---
 
 ---ON_TIME---
@@ -76,5 +76,5 @@ W, *MAX, *BHP,     470.0, *CONT *REPEAT
 ---END---
 
 ---WAG_OPERATION---
-# G, 1918, 183, 100
+G, 1918, 183, 100
 ---END---

@@ -24,13 +24,13 @@ def handle_lst(decorated_method):
     return wrapper
 
 class Well_Design:
-    _rootPath = pathlib.Path('')
+    _inputRoot = pathlib.Path('')
 
     @classmethod
-    def set_rootPath(cls, path):
-        cls._rootPath = pathlib.Path(path)
+    def set_inputRoot(cls, path):
+        cls._inputRoot = pathlib.Path(path)
 
-    def __init__(self, name, alias={}, file_name='', **kwargs):
+    def __init__(self, name, alias={}, file='', **kwargs):
         self.name = name; self.alias = alias
         self.group = ''
         self.operate = []
@@ -46,8 +46,8 @@ class Well_Design:
         self.icv_control_law = []
         self.wag_operation = []
 
-        if file_name: self.path_to_file = self._rootPath / file_name
-        else: self.path_to_file = self._rootPath / '{}.input'.format(self.name)
+        if file: self.path_to_file = self._inputRoot / file
+        else: self.path_to_file = self._inputRoot / '{}.input'.format(self.name)
 
         for key in kwargs:
             if hasattr(self, key): self.__dict__[key] = kwargs[key]

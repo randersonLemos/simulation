@@ -13,11 +13,12 @@ class Producer:
     def __init__(self, well_design):
         self._wd = well_design
         self._ag = agregator.Agregator()
+        self._build()
 
-    def build(self):
+    def _build(self):
         if self._builder:
             self._builder.build(self._ag, self._wd)
-            return self
+            return
         raise NameError('Builder object not defined...')
 
     def write(self, path_to_folder):

@@ -11,11 +11,13 @@ class Builder_Injector_Wag:
         well_name = {}
         well_name['G'] = "'"+wd.alias['G']+"'"
         well_name['W'] = "'"+wd.alias['W']+"'"
+        
+        well_group = "'" + wd.group + "'"
 
         operate = [lst[1:] for lst in wd.operate if 'G' == lst[0]]
         monitor = [lst[1:] for lst in wd.monitor if 'G' == lst[0]]
 
-        Header.default(agregator, well_name['G'], kw.injector(), wd.group,
+        Header.default(agregator, well_name['G'], kw.injector(), well_group,
                 kw.gas(), operate, monitor, wd.geometry, wd.perf_ff)
         if wd.perf_table:
             Completion.default(agregator, wd.perf_table)
@@ -24,7 +26,7 @@ class Builder_Injector_Wag:
         operate = [lst[1:] for lst in wd.operate if 'W' == lst[0]]
         monitor = [lst[1:] for lst in wd.monitor if 'W' == lst[0]]
 
-        Header.default(agregator, well_name['W'], kw.injector(), wd.group,
+        Header.default(agregator, well_name['W'], kw.injector(), well_group,
                 kw.water(), operate, monitor, wd.geometry, wd.perf_ff)
         if wd.perf_table:
             Completion.default(agregator, wd.perf_table)

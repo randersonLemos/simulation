@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 MARK_SIMTIME  = '$#@SIMTIME@#$'
 
@@ -34,14 +35,14 @@ prds.append(Well_Design(name='Wildcat'))
 for wd in prds: Producer(wd).write('./out/wells')
 
 injs = []
-injs.append(Well_Design(name='IRK004',alias={'G': 'IRK004_G', 'W': 'IRK004_W'}))
-injs.append(Well_Design(name='IRK028',alias={'G': 'IRK028_G', 'W': 'IRK028_W'}))
-injs.append(Well_Design(name='IRK029',alias={'G': 'IRK029_G', 'W': 'IRK029_W'}))
-injs.append(Well_Design(name='IRK036',alias={'G': 'IRK036_G', 'W': 'IRK036_W'}))
-injs.append(Well_Design(name='IRK049',alias={'G': 'IRK049_G', 'W': 'IRK049_W'}))
-injs.append(Well_Design(name='IRK050',alias={'G': 'IRK050_G', 'W': 'IRK050_W'}))
-injs.append(Well_Design(name='IRK056',alias={'G': 'IRK056_G', 'W': 'IRK056_W'}))
-injs.append(Well_Design(name='IRK063',alias={'G': 'IRK063_G', 'W': 'IRK063_W'}))
+injs.append(Well_Design(name='IRK004',alias={'G': 'IRK004-G', 'W': 'IRK004-W'}))
+injs.append(Well_Design(name='IRK028',alias={'G': 'IRK028-G', 'W': 'IRK028-W'}))
+injs.append(Well_Design(name='IRK029',alias={'G': 'IRK029-G', 'W': 'IRK029-W'}))
+injs.append(Well_Design(name='IRK036',alias={'G': 'IRK036-G', 'W': 'IRK036-W'}))
+injs.append(Well_Design(name='IRK049',alias={'G': 'IRK049-G', 'W': 'IRK049-W'}))
+injs.append(Well_Design(name='IRK050',alias={'G': 'IRK050-G', 'W': 'IRK050-W'}))
+injs.append(Well_Design(name='IRK056',alias={'G': 'IRK056-G', 'W': 'IRK056-W'}))
+injs.append(Well_Design(name='IRK063',alias={'G': 'IRK063-G', 'W': 'IRK063-W'}))
 for wd in injs: Injector(wd).write('./out/wells')
 
 st = Simtime((2022, 4, 30), (2023, 12, 31), 2038)
@@ -49,4 +50,4 @@ st = Simtime((2022, 4, 30), (2023, 12, 31), 2038)
 bd = Builder_Dat()
 bd.replace_mark(MARK_SIMTIME, st.simtime())
 bd.write(datRoot='./out', datFile='mainn.dat')
-imexx = imex.Imex_Local(path_to_dat='./out/mainn.dat', folder_to_output='./out', see_log=True, verbose=True, run=True)
+imexx = Imex_Local(path_to_dat='U:/simulation/tests/out/mainn.dat', folder_to_output='U:/simulation/tests/out', see_log=True, verbose=True, run=True)

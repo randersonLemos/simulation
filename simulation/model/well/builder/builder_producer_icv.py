@@ -9,7 +9,8 @@ class Builder_Producer_Icv:
     def build(agregator, well_design):
         wd = well_design
         well_name = "'" + wd.name + "'"
-        Header.default(agregator, well_name, kw.producer(), wd.group,
+        well_group = "'" + wd.group + "'"
+        Header.default(agregator, well_name, kw.producer(), well_group,
                 '', wd.operate, wd.monitor, wd.geometry, wd.perf_ff)
 
         if wd.perf_table:

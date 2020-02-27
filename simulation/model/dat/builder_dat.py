@@ -28,11 +28,12 @@ class Builder_Dat:
         if not datFile:
             datFile = self.path_to_file.stem
         datFile = pathlib.Path(datFile).stem
-        p = pathlib.Path(datRoot)
-        p.mkdir(parents=True, exist_ok=True)
-        with (p / '{}.dat'.format(datFile)).open('w') as fh: fh.write(self.frame)
+        datRoot = pathlib.Path(datRoot)
+        datRoot.mkdir(parents=True, exist_ok=True)
+        with (datRoot / '{}.dat'.format(datFile)).open('w') as fh: fh.write(self.frame)
         for orin in self.path_to_include.glob('**/*'):
             if orin.is_file():
-                dest = pathlib.Path(str(p / str(orin).replace(str(self._frameRoot)+'/','')))
-                dest.mkdir(parents=True, exist_ok=True)
+                idx = orin.parts.index(str(self._frameRoot))
+                dest = datRoot.joinpath(*orin.parts[idx+1:])
+                dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy(str(orin), str(dest))

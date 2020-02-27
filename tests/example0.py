@@ -1,6 +1,6 @@
-
 # -*- coding: utf-8 -*-
-MARK_SIMTIME  = '$#@SIMTIME@#$'
+MARK_SIMTIME = '$#@SIMTIME@#$'
+MARK_IRFFILE = '$#@IRFFILE@#$'
 
 import pathlib
 from os import sys, path; sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
@@ -15,15 +15,13 @@ from simulation.model.dat.builder_dat import Builder_Dat
 from simulation.model.rwd.builder_rwd import Builder_Rwd
 from simulation.model.dat.simtime import Simtime
 from simulation.run.imex import Imex_Local
+from simulation.run.report import Report
 
-Builder_Dat.set_frameRoot('./frame')
-Builder_Dat.set_datRoot('./out')
-Builder_Rwd.set_frameRoot('./frame')
-Builder_Rwd.set_rwdRoot('./out')
 Well_Design.set_inputRoot('./input')
 Producer.set_builder(Builder_Producer_Icv)
 Injector.set_builder(Builder_Injector_Wag)
-Imex_Local.set_exe_imex(setup.LOCAL_IMEX_EXE)
+Imex_Local.set_exe(setup.LOCAL_IMEX_EXE)
+Report.set_exe(setup.LOCAL_REPO_EXE)
 
 prds = []
 prds.append(Well_Design(name='PRK014'))
@@ -51,9 +49,14 @@ for wd in injs: Injector(wd).write('./out/wells')
 
 st = Simtime((2022, 4, 30), (2023, 12, 31), 2038)
 
-bd = Builder_Dat(frameFile='main.dat.frame', frameIncludeFolder='include')
+bd = Builder_Dat(frameRoot='./frame', frameFile='main.dat.frame', frameIncludeFolder='include')
 bd.replace_mark(MARK_SIMTIME, st.simtime())
-bd.write(datFile='mainn.dat')
-br = Builder_Rwd(frameFile='main.rwd.frame')
-br.write(rwdFile='mainn.rwd')
-#imexx = Imex_Local(path_to_dat='U:/simulation/tests/out/mainn.dat', folder_to_output='U:/simulation/tests/out', see_log=True, verbose=True, run=True)
+bd.write(datRoot='./out', datFile='main.dat')
+imexx = Imex_Local(path_to_dat='U:/simulation/tests/out/main.dat', folder_to_output='U:/simulation/tests/out', see_log=True, verbose=True, run=True)
+while imexx.is_alive(): pass
+
+br = Builder_Rwd(frameRoot='./frame', frameFile='main.rwd.frame')
+br.replace_mark(MARK_IRFFILE, " *FILES '{}'".format(pathlib.Path('U:/simulation/tests/out/main.irf')))
+br.write(rwdRoot='./out', rwdFile='main.rwd')
+repo = Report(path_to_rwd='U:/simulation/tests/out/main.rwd', path_to_rep='U:/simulation/tests/out/main.rep', verbose=True, run=True)
+while repo.is_alive(): pass

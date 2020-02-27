@@ -9,11 +9,11 @@ import subprocess
 from pathlib import Path, PurePosixPath
 
 class Imex_Local:
-    exe_imex = 'NEED TO BE SET VIA SET CLASS METHOD'
+    exe = 'NEED TO BE SET VIA SET CLASS METHOD'
 
     @classmethod
-    def set_exe_imex(cls, exe):
-        cls.exe_imex = exe
+    def set_exe(cls, exe):
+        cls.exe = exe
 
     def __init__(self, path_to_dat, folder_to_output, see_log, verbose, run):
         self.path_to_dat = Path(path_to_dat)
@@ -25,7 +25,7 @@ class Imex_Local:
     def run(self):
         self.folder_to_output.mkdir(parents=True, exist_ok=True)
 
-        command = str(self.exe_imex) +\
+        command = str(self.exe) +\
                   ' -f '+str(self.path_to_dat) +\
                   ' -wd '+str(self.folder_to_output) +\
                   ' -parasol 12' +\
@@ -53,15 +53,15 @@ class Imex_Local:
         return True if self.process.poll() == None else False
 
 class Imex_Remote:
-    exe_imex     = 'NEED TO BE SET VIA SET CLASS METHOD'
+    exe          = 'NEED TO BE SET VIA SET CLASS METHOD'
     exe_putt     = 'NEED TO BE SET VIA SET CLASS METHOD'
     local_root   = 'NEED TO BE SET VIA SET CLASS METHOD'
     user         = 'NEED TO BE SET VIA SET CLASS METHOD'
     clsuter_name = 'NEED TO BE SET VIA SET CLASS METHOD'
 
     @classmethod
-    def set_exe_imex(cls, exe):
-        cls.exe_imex = exe
+    def set_exe(cls, exe):
+        cls.exe = exe
 
     @classmethod
     def set_exe_putt(cls, exe):
@@ -79,18 +79,19 @@ class Imex_Remote:
     def set_cluster_name(cls, name):
         cls.cluster_name = name
 
-    def __init__(self, path_to_dat, folder_to_output, queue_kind, nr_processors, see_log, verbose):
+    def __init__(self, path_to_dat, folder_to_output, queue_kind, nr_processors, see_log, verbose, run):
         self.path_to_dat = PurePosixPath(path_to_dat)
         self.folder_to_output = PurePosixPath(folder_to_output)
         self.queue_kind = queue_kind
         self.nr_processors = nr_processors
         self.see_log = see_log
         self.verbose = verbose
+        if run: self.run()
 
     def run(self):
         self._to_root_local(self.folder_to_output).mkdir(parents=True, exist_ok=True)
 
-        path_to_pbs = self._handle_pbs(self.exe_imex, self.path_to_dat
+        path_to_pbs = self._handle_pbs(self.exe, self.path_to_dat
             , self.path_to_dat.parent, self.folder_to_output, self.queue_kind, self.nr_processors)
         if self.verbose: print('Path to pbs_template:\n\t{}'.format(self._to_root_local(path_to_pbs)))
 

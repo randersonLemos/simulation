@@ -12,10 +12,14 @@ from simulation.model.well.injector import Injector
 from simulation.model.well.builder.builder_producer_icv import Builder_Producer_Icv
 from simulation.model.well.builder.builder_injector_wag import Builder_Injector_Wag
 from simulation.model.dat.builder_dat import Builder_Dat
+from simulation.model.rwd.builder_rwd import Builder_Rwd
 from simulation.model.dat.simtime import Simtime
 from simulation.run.imex import Imex_Local
 
 Builder_Dat.set_frameRoot('./frame')
+Builder_Dat.set_datRoot('./out')
+Builder_Rwd.set_frameRoot('./frame')
+Builder_Rwd.set_rwdRoot('./out')
 Well_Design.set_inputRoot('./input')
 Producer.set_builder(Builder_Producer_Icv)
 Injector.set_builder(Builder_Injector_Wag)
@@ -47,7 +51,9 @@ for wd in injs: Injector(wd).write('./out/wells')
 
 st = Simtime((2022, 4, 30), (2023, 12, 31), 2038)
 
-bd = Builder_Dat()
+bd = Builder_Dat(frameFile='main.dat.frame', frameIncludeFolder='include')
 bd.replace_mark(MARK_SIMTIME, st.simtime())
-bd.write(datRoot='./out', datFile='mainn.dat')
-imexx = Imex_Local(path_to_dat='U:/simulation/tests/out/mainn.dat', folder_to_output='U:/simulation/tests/out', see_log=True, verbose=True, run=True)
+bd.write(datFile='mainn.dat')
+br = Builder_Rwd(frameFile='main.rwd.frame')
+br.write(rwdFile='mainn.rwd')
+#imexx = Imex_Local(path_to_dat='U:/simulation/tests/out/mainn.dat', folder_to_output='U:/simulation/tests/out', see_log=True, verbose=True, run=True)

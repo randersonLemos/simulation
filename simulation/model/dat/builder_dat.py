@@ -1,21 +1,21 @@
 import pathlib
-import warnings
 import shutil
 
 class Builder_Dat:
     _frameRoot = pathlib.Path('')
+    _datRoot   = pathlib.Path('')
 
     @classmethod
     def set_frameRoot(cls, path):
         cls._frameRoot = pathlib.Path(path)
 
-    def __init__(self, frameFile='', frameIncludeFolder=''):
-        if frameFile: self.path_to_file = self._frameRoot / frameFile
-        else: self.path_to_file = self._frameRoot / 'main.frame'
+    @classmethod
+    def set_datRoot(cls, path):
+        cls._datRoot = pathlib.Path(path)
 
-        if frameIncludeFolder: self.path_to_include = self._frameRoot / frameIncludeFolder
-        else: self.path_to_include = self._frameRoot / 'include'
-
+    def __init__(self, frameFile, frameIncludeFolder):
+        self.path_to_file = self._frameRoot / frameFile
+        self.path_to_include = self._frameRoot / frameIncludeFolder
         with self.path_to_file.open(mode='r') as fh: self.frame = fh.read()
 
     def replace_mark(self, mark, stg):
@@ -24,13 +24,12 @@ class Builder_Dat:
             return
         raise  NameError('Mark \"{}\" not find...'.format(mark))
 
-    def write(self, datRoot, datFile=''):
-        if not datFile:
-            datFile = self.path_to_file.stem
-        datFile = pathlib.Path(datFile).stem
-        datRoot = pathlib.Path(datRoot)
+    def write(self, datFile):
+        datFile = self._datRoot / pathlib.Path(datFile)
+        datRoot = datFile.parent
+        datName = pathlib.Path(datFile).stem
         datRoot.mkdir(parents=True, exist_ok=True)
-        with (datRoot / '{}.dat'.format(datFile)).open('w') as fh: fh.write(self.frame)
+        with (datRoot / '{}.dat'.format(datName)).open('w') as fh: fh.write(self.frame)
         for orin in self.path_to_include.glob('**/*'):
             if orin.is_file():
                 idx = orin.parts.index(str(self._frameRoot))

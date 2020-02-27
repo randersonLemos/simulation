@@ -12,12 +12,13 @@ from simulation.model.well.builder.builder_producer_icv import Builder_Producer_
 from simulation.model.well.builder.builder_injector_wag import Builder_Injector_Wag
 from simulation.model.dat.builder_dat import Builder_Dat
 from simulation.model.dat.simtime import Simtime
-
+from simulation.run.imex import Imex_Local
 
 Builder_Dat.set_frameRoot('./frame')
 Well_Design.set_inputRoot('./input')
 Producer.set_builder(Builder_Producer_Icv)
 Injector.set_builder(Builder_Injector_Wag)
+Imex_Local.set_exe_imex(setup.LOCAL_IMEX_EXE)
 
 prds = []
 prds.append(Well_Design(name='PRK014'))
@@ -47,4 +48,5 @@ st = Simtime((2022, 4, 30), (2023, 12, 31), 2038)
 
 bd = Builder_Dat()
 bd.replace_mark(MARK_SIMTIME, st.simtime())
-bd.write('./out')
+bd.write(datRoot='./out', datFile='mainn.dat')
+imexx = imex.Imex_Local(path_to_dat='./out/mainn.dat', folder_to_output='./out', see_log=True, verbose=True, run=True)

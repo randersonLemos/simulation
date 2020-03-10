@@ -16,6 +16,7 @@ from simulation.model.rwd.builder_rwd import Builder_Rwd
 from simulation.model.dat.simtime import Simtime
 from simulation.run.imex import Imex_Local
 from simulation.run.report import Report
+from simulation.output.utils import get_tables
 
 Well_Design.set_inputRoot('./input')
 Producer.set_builder(Builder_Producer_Icv)
@@ -50,13 +51,17 @@ for wd in injs: Injector(wd).write('./local/sim/wells')
 st = Simtime((2022, 4, 30), (2023, 12, 31), 2038)
 
 bd = Builder_Dat(frameRoot='./frame', frameFile='main.dat.frame', frameIncludeFolder='include')
-bd.replace_mark(MARK_SIMTIME, st.simtime())
-bd.write(datRoot='./local/sim', datFile='main.dat')
-imexx = Imex_Local(path_to_dat='U:/simulation/tests/local/sim/main.dat', folder_to_output='U:/simulation/tests/local/sim', see_log=True, verbose=True, run=True)
-while imexx.is_alive(): pass
+#bd.replace_mark(MARK_SIMTIME, st.simtime())
+#bd.write(datRoot='./local/sim', datFile='main.dat')
+#imexx = Imex_Local(path_to_dat='U:/simulation/tests/local/sim/main.dat', folder_to_output='U:/simulation/tests/local/sim', see_log=True, verbose=True, run=True)
+#while imexx.is_alive(): pass
 
 br = Builder_Rwd(frameRoot='./frame', frameFile='main.rwd.frame')
-br.replace_mark(MARK_IRFFILE, " *FILES '{}'".format(pathlib.Path('U:/simulation/tests/local/sim/main.irf')))
-br.write(rwdRoot='./local/sim', rwdFile='main.rwd')
-repo = Report(path_to_rwd='U:/simulation/tests/local/sim/main.rwd', path_to_rep='U:/simulation/tests/local/sim/main.rep', verbose=True, run=True)
-while repo.is_alive(): pass
+#br.replace_mark(MARK_IRFFILE, " *FILES '{}'".format(pathlib.Path('U:/simulation/tests/local/sim/main.irf')))
+#br.write(rwdRoot='./local/sim', rwdFile='main.rwd')
+#repo = Report(path_to_rwd='U:/simulation/tests/local/sim/main.rwd', path_to_rep='U:/simulation/tests/local/sim/main.rep', verbose=True, run=True)
+#while repo.is_alive(): pass
+
+df = get_tables('./local/sim/main.rep').get('GOR').df
+for key in df:
+    print(key, df[key])

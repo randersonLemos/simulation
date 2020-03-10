@@ -1,6 +1,6 @@
 import pandas as pd
 from itertools import zip_longest
-from dictionary.scripts.special_keys import Special_Keys
+from simulation.common.special_keys import Special_Keys
 
 class Special_Table:
 
@@ -20,9 +20,9 @@ class Special_Table:
         elif 'CTRL GC' in lst[1]:
             what = 'GPC'
         elif 'CTRL WCUT' in lst[1]:
-            what = 'WCUT'        
+            what = 'WCUT'
         elif 'CTRL GOR' in lst[1]:
-            what = 'GOR'        
+            what = 'GOR'
 
         self.file = lst[0]
         self.what = what

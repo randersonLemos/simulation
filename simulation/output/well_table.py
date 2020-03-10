@@ -1,5 +1,5 @@
 import pandas as pd
-from dictionary.scripts.well_keys import Well_Keys
+from simulation.common.well_keys import Well_Keys
 
 class Well_Table:
     dic = {}

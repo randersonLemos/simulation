@@ -1,5 +1,5 @@
 from .graph import Graph
-from dictionary.scripts.well_keys import Well_Keys
+from simulation.common.well_keys import Well_Keys
 import matplotlib.pyplot as plt
 
 

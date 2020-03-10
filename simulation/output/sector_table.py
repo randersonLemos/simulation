@@ -1,6 +1,6 @@
 import pandas as pd
 from itertools import zip_longest
-from dictionary.scripts.sector_keys import Sector_Keys
+from simulation.common.sector_keys import Sector_Keys
 
 class Sector_Table:
     dic = {}

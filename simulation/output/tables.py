@@ -13,8 +13,8 @@ import pandas as pd
 from .well_table import Well_Table
 from .sector_table import Sector_Table
 from .special_table import Special_Table
-from dictionary.scripts.well_keys import Well_Keys
-from dictionary.scripts.sector_keys import Sector_Keys
+from simulation.common.well_keys import Well_Keys
+from simulation.common.sector_keys import Sector_Keys
 
 class Tables():
     def __init__(self):

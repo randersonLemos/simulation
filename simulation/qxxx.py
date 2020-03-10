@@ -6,32 +6,28 @@ Created on Wed Aug 14 14:58:55 2019
 """
 
 import subprocess
-from config.scripts import settings as sett
-
+from . import setup
 class Qxxx:
     @classmethod
     def _cmd_qstat_username(cls, username, verbose):
-        command = str(sett.LOCAL_PUTT_EXE) +\
-                " -load {} qstat -u {}".format(sett.CLUSTER_NAME, username)
+        command = str(setup.LOCAL_PUTT_EXE) +\
+                " -load {} qstat -u {}".format(setup.CLUSTER_NAME, username)
         if verbose: print("qstat command:\n\t{}".format(command))
         return command
-
 
     @classmethod
     def _cmd_qstat_pid(cls, pid, verbose):
-        command = str(sett.LOCAL_PUTT_EXE) +\
-                " -load {} qstat {}".format(sett.CLUSTER_NAME, pid)
+        command = str(setup.LOCAL_PUTT_EXE) +\
+                " -load {} qstat {}".format(setup.CLUSTER_NAME, pid)
         if verbose: print("qstat command:\n\t{}".format(command))
         return command
-
 
     @classmethod
     def _cmd_qstat_all(cls, verbose):
-        command = str(sett.LOCAL_PUTT_EXE) +\
-                " -load {} qstat".format(sett.CLUSTER_NAME)
+        command = str(setup.LOCAL_PUTT_EXE) +\
+                " -load {} qstat".format(setup.CLUSTER_NAME)
         if verbose: print("qstat command:\n\t{}".format(command))
         return command
-
 
     @classmethod
     def qstat(cls, pid='', username='', verbose=False):
@@ -47,8 +43,7 @@ class Qxxx:
         stdout, _ = process.communicate()
         
         if stdout: print(stdout.decode('utf-8'))
-        else: raise ProcessLookupError        
-        
+        else: raise ProcessLookupError              
         
     @classmethod
     def _cmd_qdel_username(cls, username, verbose):
@@ -56,19 +51,17 @@ class Qxxx:
         
     @classmethod
     def _cmd_qdel_pid(cls, pid, verbose):
-        command = str(sett.LOCAL_PUTT_EXE) +\
-                " -load {} qdel {}".format(sett.CLUSTER_NAME, pid)
+        command = str(setup.LOCAL_PUTT_EXE) +\
+                " -load {} qdel {}".format(setup.CLUSTER_NAME, pid)
         if verbose: print("qdel command:\n\t{}".format(command))
         return command
 
-
     @classmethod
     def _cmd_qdel_all(cls, verbose):
-        command = str(sett.LOCAL_PUTT_EXE) +\
-                " -load {} qdel all".format(sett.CLUSTER_NAME)
+        command = str(setup.LOCAL_PUTT_EXE) +\
+                " -load {} qdel all".format(setup.CLUSTER_NAME)
         if verbose: print("qstat command:\n\t{}".format(command))
-        return command
-    
+        return command    
     
     @classmethod
     def qdel(cls, pid='', username='', verbose=False):

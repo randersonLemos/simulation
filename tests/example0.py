@@ -2,7 +2,24 @@
 MARK_SIMTIME = '$#@SIMTIME@#$'
 MARK_IRFFILE = '$#@IRFFILE@#$'
 
+def add_months(sourcedate, months):
+    month = sourcedate.month - 1 + months
+    year = sourcedate.year + month // 12
+    month = month % 12 + 1
+    day = min(sourcedate.day, calendar.monthrange(year,month)[1])
+    return datetime.date(year, month, day)
+
+def gaussian_kernel(size, std):
+    if size % 2 == 0: raise ValueError("Just odd numbers for variable 'size'...")
+    xs = np.linspace(-(size-1)/2.0, (size-1)/2.0, size)
+    kernel = np.exp(-0.5 * (xs / std)**2)
+    return kernel / np.sum(kernel)
+
+import datetime
+import calendar
 import pathlib
+import numpy as np
+import matplotlib.pyplot as plt
 from os import sys, path; sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from simulation import setup
 from simulation.common.words import Words as wrd
@@ -62,6 +79,15 @@ br = Builder_Rwd(frameRoot='./frame', frameFile='main.rwd.frame')
 #repo = Report(path_to_rwd='U:/simulation/tests/local/sim/main.rwd', path_to_rep='U:/simulation/tests/local/sim/main.rep', verbose=True, run=True)
 #while repo.is_alive(): pass
 
-df = get_tables('./local/sim/main.rep').get('GOR').df
-for key in df:
-    print(key, df[key])
+df = get_tables('./local/sim/main.rep').get('GOR').df.iloc[:100,:]
+for well in prds:
+    signal = []
+    for zone in well.get_icv_zones():
+        if df[zone].diff()[-1] > 50 or df[zone][-1] == 0.0:
+            print(zone, df[zone].diff()[-1], 0.0)
+            signal.append(0.0)
+        else:
+            print(zone, df[zone].diff()[-1], 1.0)
+            signal.append(1.0)
+    well.icv_control_signal = signal
+    Producer(well).write('./local/sim/wells')

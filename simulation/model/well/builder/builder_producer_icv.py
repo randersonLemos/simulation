@@ -29,3 +29,8 @@ class Builder_Producer_Icv:
 
         if wd.icv_operation:
             Icv.deafult(agregator, well_name, wd.layerclump, wd.icv_operation, wd.icv_control_law)
+
+        if wd.icv_control_signal:
+            for zone, signal in zip(wd.get_icv_zones(), wd.icv_control_signal):
+                agregator.add_three(kw.clumpsetting(), "'"+zone+"'", signal)
+

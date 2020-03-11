@@ -44,6 +44,7 @@ class Well_Design:
         self.icv_nr = ''
         self.icv_operation = []
         self.icv_control_law = []
+        self.icv_control_signal = []
         self.wag_operation = []
 
         if file: self.path_to_file = self._inputRoot / file
@@ -54,6 +55,9 @@ class Well_Design:
             else: raise AttributeError('{} is not an attribute class')
 
         self._load()
+
+    def get_icv_zones(self):
+        return ['{}_Z{}'.format(self.name, i+1) for i in range(int(self.icv_nr))]
 
     def _load(self):
         self._outer_load_group()
@@ -68,6 +72,7 @@ class Well_Design:
         self._outer_load_layerclump()
         self._outer_load_icv_operation()
         self._outer_load_icv_control_law()
+        self._outer_load_icv_control_signal()
         self._outer_load_wag_operation()
 
     @handle_assignment
@@ -129,6 +134,11 @@ class Well_Design:
     def _outer_load_icv_control_law(self):
         lst = self._data_picker('---ICV_CONTROL_LAW---', self.path_to_file)
         self._load_icv_control_law(lst)
+
+    @handle_assignment
+    def _outer_load_icv_control_signal(self):
+        lst = self._data_picker('---ICV_CONTROL_SIGNAL---', self.path_to_file)
+        self._load_icv_control_signal(lst)
 
     @handle_assignment
     def _outer_load_wag_operation(self):
@@ -197,6 +207,10 @@ class Well_Design:
             dic[idx].append(instr)
         for i in range(len(dic)):
             self.icv_control_law.append(dic['{}'.format(i+1)])
+
+    @handle_lst
+    def _load_icv_control_signal(self, lst):
+        raise NotImplementedError("Method for keyword '---ICV_CONTROL_SIGNAL---' need to be implemented...")
 
     @handle_lst
     def _load_wag_operation(self, lst):

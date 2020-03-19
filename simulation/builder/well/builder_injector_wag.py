@@ -1,6 +1,6 @@
-from simulation.model.well.part.header import Header
-from simulation.model.well.part.completion import Completion
-from simulation.model.well.part.others import Others
+from simulation.builder.well.part.header import Header
+from simulation.builder.well.part.completion import Completion
+from simulation.builder.well.part.others import Others
 from simulation.common.keywords import Keywords as kw
 
 class Builder_Injector_Wag:
@@ -11,7 +11,7 @@ class Builder_Injector_Wag:
         well_name = {}
         well_name['G'] = "'"+wd.alias['G']+"'"
         well_name['W'] = "'"+wd.alias['W']+"'"
-        
+
         well_group = "'" + wd.group + "'"
 
         operate = [lst[1:] for lst in wd.operate if 'G' == lst[0]]

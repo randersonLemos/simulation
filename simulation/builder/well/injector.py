@@ -1,6 +1,6 @@
 import re
 import pathlib
-from simulation.model.well import agregator
+from simulation.builder.well import agregator
 from simulation.common.keywords import Keywords as kw
 
 class Injector:

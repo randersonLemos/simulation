@@ -10,6 +10,7 @@ from simulation.input.parts.monitor import Monitor
 from simulation.input.parts.geometry import Geometry
 from simulation.input.parts.perf import Perf
 from simulation.input.parts.on_time import On_Time
+from simulation.input.parts.layerclump import Layerclump
 from simulation.input.design_producer_dual_icv import Design_Producer_Dual_Icv
 from simulation.builder.well.producer_dual_icv import Producer_Dual_Icv
 
@@ -32,5 +33,11 @@ perf.add(25, 10, 20, 1.0, '*CLOSED')
 perf.add(25, 10, 30, 1.0, '*OPEN')
 design.set_perf(perf)
 design.set_on_time(On_Time(1.0))
+layerclump = Layerclump(base_name_mode=True)
+layerclump.set_suffix('_Z')
+layerclump.add(25, 10, ( 1,12,))
+layerclump.add(25, 10, (14,19,))
+layerclump.add(25, 10, (21,30,))
+design.set_layerclump(layerclump)
 PRK014 = Producer_Dual_Icv(design)
 print(PRK014)

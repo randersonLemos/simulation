@@ -6,6 +6,7 @@ from simulation.input.parts.monitor import Monitor
 from simulation.input.parts.geometry import Geometry
 from simulation.input.parts.perf import Perf
 from simulation.input.parts.on_time import On_Time
+from simulation.input.parts.layerclump import Layerclump
 
 class Design_Producer_Dual_Icv:
     def __init__(self):
@@ -17,6 +18,7 @@ class Design_Producer_Dual_Icv:
         self._geometry = None
         self._perf = None
         self._on_time = None
+        self._layerclump = None
 
     def kind(self):
         return self._kind
@@ -81,6 +83,20 @@ class Design_Producer_Dual_Icv:
     def set_on_time(self, on_time):
         if isinstance(on_time, On_Time):
             self._on_time = on_time
+            return
+        raise TypeError('Not allowed type...')
+
+    def layerclump(self):
+        return self._layerclump
+
+    def set_layerclump(self, layerclump):
+        if isinstance(layerclump, Layerclump):
+            if layerclump.is_base_name_mode:
+                if self._name:
+                    layerclump.set_base_name(self._name())
+                else:
+                    raise ValueError("Set value for 'name'...")
+            self._layerclump = layerclump
             return
         raise TypeError('Not allowed type...')
 

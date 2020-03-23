@@ -16,15 +16,20 @@ class Perf:
             goal = np.array(head[:3])
             vec = ((goal - init) / np.linalg.norm(goal - init)).astype(int)
 
-            middle = list(tail[3:-1])
-
             body = []
-            body.append(list(tail))
+            body.append(tail)
             init += vec
             while (init != goal).any():
-                body.append(init.tolist() + middle + ['*OPEN'])
+                body.append(tuple(init) + tail[3:-1] + ('*OPEN',))
                 init += vec
             lst += body
-        lst.append(list(head))
+        lst.append(head)
         self._lst = lst
 
+    def keys(self):
+        return self._args
+
+    def table(self, fill=True):
+        if fill:
+            self.fill()
+        return self._lst

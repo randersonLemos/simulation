@@ -9,5 +9,5 @@ class Shutin(Agregator):
         self._build()
 
     def _build(self):
-        name = "'{}'".format(self.well_name)
+        name = "'{}'".format(self.well_name())
         self.add_two(kw.shutin(), name)

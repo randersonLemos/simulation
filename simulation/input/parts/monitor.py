@@ -12,7 +12,4 @@ class Monitor:
         return self._lst[idx]
 
     def __call__(self):
-        lst = []
-        for el in self._lst:
-            lst.append(' '.join(map(str, el)))
-        return lst
+        return self._lst

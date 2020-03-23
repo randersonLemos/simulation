@@ -3,9 +3,9 @@ from simulation.builder.well.parts.producer import Producer
 from simulation.builder.well.parts.operate import Operate
 from simulation.builder.well.parts.monitor import Monitor
 from simulation.builder.well.parts.geometry import Geometry
-from simulation.builder.well.parts.perf import Perf
+from simulation.builder.well.parts.perf_dual import Perf_Dual
 from simulation.builder.well.parts.shutin import Shutin
-from simulation.builder.well.parts.ontime import Ontime
+from simulation.builder.well.parts.on_time import On_Time
 from simulation.builder.well.parts.layerclumps import Layerclumps
 from simulation.builder.well.parts.clumpsetting import Clumpsetting
 from simulation.builder.well.agregator import Agregator
@@ -29,6 +29,6 @@ class Producer_Dual_Icv(Agregator):
         self.add_one(Operate(de.operate()))
         self.add_one(Monitor(de.monitor()))
         self.add_one(Geometry(de.geometry()))
-        #self.add_one(Perf_ff(dw.name, dw.perf_ff, dw.perf_table))
-        #self.add_one(Shutin(dw.name))
-        #self.add_one(Ontime(dw.name, dw.on_time))
+        self.add_one(Perf_Dual(de.name(), de.perf(), de.kind()))
+        self.add_one(Shutin(de.name()))
+        self.add_one(On_Time(de.name(), de.on_time()))

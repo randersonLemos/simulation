@@ -1,5 +1,5 @@
 from simulation.common.keywords import Keywords as kw
-from simulation.builder.well.part.layerclump import Layerclump
+from simulation.builder.well.parts.layerclump import Layerclump
 from simulation.builder.well.agregator import Agregator
 
 class Layerclumps(Agregator):

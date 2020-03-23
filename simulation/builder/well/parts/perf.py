@@ -2,7 +2,7 @@ from simulation.common.keywords import Keywords as kw
 from simulation.common.words import Words as wrd
 from simulation.builder.well.agregator import Agregator
 
-class Perf_ff(Agregator):
+class Perf(Agregator):
     def __init__(self, well_name, perf_ff, completions):
         super().__init__()
         self.well_name = well_name

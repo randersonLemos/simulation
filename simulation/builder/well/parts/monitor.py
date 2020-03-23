@@ -2,12 +2,12 @@ from simulation.common.keywords import Keywords as kw
 from simulation.builder.well.agregator import Agregator
 
 class Monitor(Agregator):
-    def __init__(self, conditions):
+    def __init__(self, lst):
         super().__init__()
-        self.conditions = conditions
+        self.lst = lst
 
         self._build()
 
     def _build(self):
-        for condition in self.conditions:
-            self.add_four(kw.monitor(), *condition)
+        for el in self.lst:
+            self.add_two(kw.monitor(), el)

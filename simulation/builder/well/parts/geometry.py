@@ -9,4 +9,4 @@ class Geometry(Agregator):
         self._build()
 
     def _build(self):
-        self.add_six(kw.geometry(), *self.geometry)
+        self.add_two(kw.geometry(), self.geometry)

@@ -13,9 +13,10 @@ from simulation.input.well.parts.on_time import On_Time
 from simulation.input.well.parts.layerclump import Layerclump
 from simulation.input.well.parts.trigger import Trigger
 from simulation.input.well.parts.on_elapsed import On_Elapsed
+from simulation.input.well.parts.on_ctrllump import On_Ctrllump
 from simulation.input.well.parts.andd import AND
 from simulation.input.well.parts.orr import OR
-from simulation.input.well.parts.treltd import Treltd
+from simulation.input.well.parts.on_elapsed_treltd import Treltd
 from simulation.input.well.parts.clumpsetting import Clumpsetting
 from simulation.input.well.design_producer_dual_icv import Design_Producer_Dual_Icv
 from simulation.builder.well.producer_dual_icv import Producer_Dual_Icv
@@ -53,18 +54,29 @@ on_elapsed.set_avrgtime(10)
 
 clumpsetting = Clumpsetting()
 clumpsetting.set_value(0.0)
-clumpsetting.set_layerclump_name('Cawesome')
+clumpsetting.set_layerclump_name(Name('Cawesome'))
 
 Trigger.set_default_test_times(1)
 Trigger.set_default_apply_times(200)
 
 trigger = Trigger()
-trigger.set_name('Tawesome')
+trigger.set_name(Name('Tawesome'))
 trigger.add_stat(on_elapsed)
 trigger.add_stat(OR())
 trigger.add_stat(on_elapsed)
 trigger.add_action(clumpsetting)
-design.set_trigger(trigger)
+trigger.add_action(clumpsetting)
+trigger.add_action(clumpsetting)
 
-PRK014 = Producer_Dual_Icv(design)
-print(PRK014)
+trigger2 = Trigger()
+trigger2.set_name(Name('T2awesome'))
+trigger2.add_stat(on_elapsed)
+trigger2.add_stat(OR())
+trigger2.add_stat(on_elapsed)
+trigger2.add_action(trigger)
+
+print(trigger.repr())
+print(trigger2.repr())
+
+#design.set_trigger(trigger)
+#PRK014 = Producer_Dual_Icv(design)

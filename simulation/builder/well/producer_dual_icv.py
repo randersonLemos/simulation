@@ -8,6 +8,7 @@ from simulation.builder.well.parts.shutin import Shutin
 from simulation.builder.well.parts.on_time import On_Time
 from simulation.builder.well.parts.layerclump_dual import Layerclump_Dual
 from simulation.builder.well.parts.clumpsetting import Clumpsetting
+from simulation.builder.well.parts.trigger import Trigger
 from simulation.builder.well.agregator import Agregator
 from simulation.common.keywords import Keywords as kw
 
@@ -33,4 +34,5 @@ class Producer_Dual_Icv(Agregator):
         self.add_one(Shutin(de.name()))
         self.add_one(On_Time(de.name(), de.on_time()))
         self.add_one(Layerclump_Dual(de.name(), de.layerclump()))
+        self.add_one(Trigger(de.trigger()))
 

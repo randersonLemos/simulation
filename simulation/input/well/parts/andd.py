@@ -12,6 +12,9 @@ class AND(Trigger_Object):
     def __init__(self):
         pass
 
+    def repr(self):
+        return 'AND'
+
     def increment(self):
         raise AttributeError("Not allowed attribute...")
 

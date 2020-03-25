@@ -12,6 +12,9 @@ class OR(Trigger_Object):
     def __init__(self):
         pass
 
+    def repr(self):
+        return 'OR'
+
     def increment(self):
         raise AttributeError("Not allowed attribute...")
 

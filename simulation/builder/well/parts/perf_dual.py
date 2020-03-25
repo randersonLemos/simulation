@@ -1,7 +1,7 @@
-from simulation.input.parts.name import Name as iName
-from simulation.input.parts.perf import Perf as iPerf
-from simulation.input.parts.kind import Kind as iKind
-from simulation.input.parts.producer import Producer as iProducer
+from simulation.input.well.parts.name import Name as iName
+from simulation.input.well.parts.perf import Perf as iPerf
+from simulation.input.well.parts.kind import Kind as iKind
+from simulation.input.well.parts.producer import Producer as iProducer
 from simulation.common.keywords import Keywords as kw
 from simulation.common.words import Words as wrd
 from simulation.builder.well.agregator import Agregator

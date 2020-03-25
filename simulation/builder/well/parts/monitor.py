@@ -1,4 +1,4 @@
-from simulation.input.parts.monitor import Monitor as iMonitor
+from simulation.input.well.parts.monitor import Monitor as iMonitor
 from simulation.common.keywords import Keywords as kw
 from simulation.builder.well.agregator import Agregator
 

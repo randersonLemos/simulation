@@ -1,4 +1,4 @@
-from simulation.input.parts.name import Name as iName
+from simulation.input.well.parts.name import Name as iName
 from simulation.common.keywords import Keywords as kw
 from simulation.builder.well.agregator import Agregator
 

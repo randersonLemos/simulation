@@ -1,12 +1,13 @@
-from simulation.input.parts.name import Name
-from simulation.input.parts.group import Group
-from simulation.input.parts.producer import Producer
-from simulation.input.parts.operate import Operate
-from simulation.input.parts.monitor import Monitor
-from simulation.input.parts.geometry import Geometry
-from simulation.input.parts.perf import Perf
-from simulation.input.parts.on_time import On_Time
-from simulation.input.parts.layerclump import Layerclump
+from simulation.input.well.parts.name import Name
+from simulation.input.well.parts.group import Group
+from simulation.input.well.parts.producer import Producer
+from simulation.input.well.parts.operate import Operate
+from simulation.input.well.parts.monitor import Monitor
+from simulation.input.well.parts.geometry import Geometry
+from simulation.input.well.parts.perf import Perf
+from simulation.input.well.parts.on_time import On_Time
+from simulation.input.well.parts.layerclump import Layerclump
+from simulation.input.well.parts.trigger import Trigger
 
 class Design_Producer_Dual_Icv:
     def __init__(self):
@@ -19,6 +20,7 @@ class Design_Producer_Dual_Icv:
         self._perf = None
         self._on_time = None
         self._layerclump = None
+        self._trigger = None
 
     def kind(self):
         return self._kind
@@ -91,12 +93,16 @@ class Design_Producer_Dual_Icv:
 
     def set_layerclump(self, layerclump):
         if isinstance(layerclump, Layerclump):
-            if layerclump.is_base_name_mode:
-                if self._name:
-                    layerclump.set_base_name(self._name())
-                else:
-                    raise ValueError("Set value for 'name'...")
             self._layerclump = layerclump
+            return
+        raise TypeError('Not allowed type...')
+
+    def trigger(self):
+        return self._trigger
+
+    def set_trigger(self, trigger):
+        if isinstance(trigger, Trigger):
+            self._trigger = trigger
             return
         raise TypeError('Not allowed type...')
 

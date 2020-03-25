@@ -1,4 +1,4 @@
-from simulation.input.parts.operate import Operate as iOperate
+from simulation.input.well.parts.operate import Operate as iOperate
 from simulation.common.keywords import Keywords as kw
 from simulation.builder.well.agregator import Agregator
 

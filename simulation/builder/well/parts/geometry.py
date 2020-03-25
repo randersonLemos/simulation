@@ -1,4 +1,4 @@
-from simulation.input.parts.geometry import Geometry as iGeometry
+from simulation.input.well.parts.geometry import Geometry as iGeometry
 from simulation.common.keywords import Keywords as kw
 from simulation.builder.well.agregator import Agregator
 

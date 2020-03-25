@@ -11,7 +11,7 @@ from simulation.builder.well.parts.clumpsetting import Clumpsetting
 from simulation.builder.well.agregator import Agregator
 from simulation.common.keywords import Keywords as kw
 
-from simulation.input.design_producer_dual_icv import Design_Producer_Dual_Icv
+from simulation.input.well.design_producer_dual_icv import Design_Producer_Dual_Icv
 
 class Producer_Dual_Icv(Agregator):
     def __init__(self, design):

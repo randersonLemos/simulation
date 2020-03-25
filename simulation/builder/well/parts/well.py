@@ -1,5 +1,5 @@
-from simulation.input.parts.name import Name as iName
-from simulation.input.parts.group import Group as iGroup
+from simulation.input.well.parts.name import Name as iName
+from simulation.input.well.parts.group import Group as iGroup
 from simulation.common.keywords import Keywords as kw
 from simulation.builder.well.agregator import Agregator
 

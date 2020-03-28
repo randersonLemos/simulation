@@ -44,10 +44,7 @@ class Trigger:
         return self._name
 
     def set_name(self, name):
-        if isinstance(name, Name):
-            self._name = name
-            return
-        raise TypeError('Not allowed type...')
+        self._name = Name(name)
 
     def apply_times(self):
         return self._apply_times

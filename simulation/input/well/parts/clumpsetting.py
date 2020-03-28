@@ -7,13 +7,10 @@ class Clumpsetting:
         self._value = ''
 
     def layerclump(self):
-        return self._layerclump_name.strip("'")
+        return self._layerclump_name()
 
     def set_layerclump_name(self, name):
-        if isinstance(name, Name):
-            self._layerclump_name = name
-            return
-        raise TypeError('Not allowed type...')
+        self._layerclump_name = Name(name)
 
     def value(self):
         return self._value

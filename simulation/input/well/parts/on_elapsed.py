@@ -14,6 +14,5 @@ class On_Elapsed(Trigger_Object):
         stg = ''
         stg += '{} {} > {}'.format(Kw.on_elapsed(), Wrd.time(), self._condition.repr())
         if self._increment: stg += ' {} {}'.format(Kw.increment(), self._increment)
-        if self._avgrtime:  stg += ' {} {}'.format(Kw.avgrtime(), self._avgrtime)
-
+        if self._avrgtime:  stg += ' {} {}'.format(Kw.avrgtime(), self._avrgtime)
         return stg

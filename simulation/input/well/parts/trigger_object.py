@@ -29,11 +29,11 @@ class Trigger_Object:
         raise ValueError('Only positive values...')
 
     def avrgtime(self):
-        return self._avgrtime
+        return self._avrgtime
 
-    def set_avrgtime(self, avgrtime):
-        if avgrtime > 0:
-            self._avgrtime = avgrtime
+    def set_avrgtime(self, avrgtime):
+        if avrgtime > 0:
+            self._avrgtime = avrgtime
             return
         raise ValueError('Only positive values...')
 

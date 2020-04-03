@@ -12,15 +12,6 @@ from simulation.input.well.parts.trigger import Trigger
 class Design_Producer_Dual_Icv:
     def __init__(self):
         self._kind = Producer()
-        self._name = None
-        self._group = None
-        self._operate = None
-        self._monitor = None
-        self._geometry = None
-        self._perf = None
-        self._on_time = None
-        self._layerclump = None
-        self._trigger = None
 
     def kind(self):
         return self._kind
@@ -29,10 +20,7 @@ class Design_Producer_Dual_Icv:
         return self._name
 
     def set_name(self, name):
-        if isinstance(name, Name):
-            self._name = name
-            return
-        raise TypeError('Not allowed type...')
+            self._name = Name(name)
 
     def group(self):
         return self._group

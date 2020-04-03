@@ -120,7 +120,7 @@ class Keywords:
     def increment(): return '*INCREMENT'
 
     @staticmethod
-    def avgrtime(): return '*AVGRTIME'
+    def avrgtime(): return '*AVRGTIME'
 
     @staticmethod
     def on_elapsed(): return '*ON_ELAPSED'

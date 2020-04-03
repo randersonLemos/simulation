@@ -33,6 +33,3 @@ class Producer_Dual_Icv(Agregator):
         self.add_one(Perf_Dual(de.name(), de.perf(), de.kind()))
         self.add_one(Shutin(de.name()))
         self.add_one(On_Time(de.name(), de.on_time()))
-        self.add_one(Layerclump_Dual(de.name(), de.layerclump()))
-        self.add_one(Trigger(de.trigger()))
-

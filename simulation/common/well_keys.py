@@ -1,60 +1,48 @@
 class Well_Keys:
     @staticmethod
-    def time(): return 'Time'
+    def time(): return 'TIME'
 
     @staticmethod
-    def date(): return 'Date'
+    def date(): return 'DATE'
 
     @staticmethod
-    def well_state(): return 'Well State'
+    def well_state(): return 'WELL STATE'
 
     @staticmethod
-    def oil_rate_sc(): return 'Oil Rate SC'
+    def oil_dot_prod_sc(): return 'WELL OIL RATE SC'
 
     @staticmethod
-    def ins_oil_rate_sc(): return 'Inst. Oil Rate SC'
+    def oil_prod_sc(): return 'WELL OIL CUMU SC'
 
     @staticmethod
-    def cum_oil_sc(): return 'Cum. Oil SC'
+    def gas_dot_prod_sc(): return 'WELL GAS RATE SC'
 
     @staticmethod
-    def gas_rate_sc(): return 'Gas Rate SC'
+    def gas_prod_sc(): return 'WELL GAS CUMU SC'
 
     @staticmethod
-    def ins_gas_rate_sc(): return 'Inst. Gas Rate SC'
+    def wat_dot_prod_sc(): return 'WELL WATER RATE SC'
 
     @staticmethod
-    def cum_gas_sc(): return 'Cum. Gas SC'
+    def wat_prod_sc(): return 'WELL WATER CUMU SC'
 
     @staticmethod
-    def wat_rate_sc(): return 'Water Rate SC'
+    def liq_dot_prod_sc(): return 'WELL LIQ RATE SC'
 
     @staticmethod
-    def ins_wat_rate_sc(): return 'Inst. Water Rate SC'
+    def liq_prod_sc(): return 'WELL LIQ CUMU SC'
 
     @staticmethod
-    def cum_wat_sc(): return 'Cum. Water SC'
+    def gor_sc(): return 'WELL GOR SC'
 
     @staticmethod
-    def liq_rate_sc(): return 'Liq. Rate SC'
+    def oil_cut_sc(): return 'WELL OCUT SC'
 
     @staticmethod
-    def ins_liq_rate_sc(): return 'Inst. Liq. Rate SC'
+    def wat_cut_sc(): return 'WELL WCUT SC'
 
     @staticmethod
-    def cum_liq_sc(): return 'Cum. Liq. SC'
+    def well_bhp(): return 'WELL BHP'
 
     @staticmethod
-    def gor_sc(): return 'Gas Oil Ratio SC'
-
-    @staticmethod
-    def oil_cut_sc(): return 'Oil Cut SC'
-
-    @staticmethod
-    def wat_cut_sc(): return 'Water Cut SC'
-
-    @staticmethod
-    def well_bhp(): return 'Well BHP'
-
-    @staticmethod
-    def well_bhpd(): return 'Well BHPD'
+    def well_bhpd(): return 'WELL BHPD'

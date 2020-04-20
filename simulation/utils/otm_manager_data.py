@@ -21,7 +21,7 @@ class OtmManagerData:
             X = X.loc[y.index]
         return Data(X,y)
     
-    
+        
     def _inputs(self):        
         lst = []
         for path in self.omf.hldg_sample_file_paths():

@@ -1,5 +1,4 @@
 import os
-import time
 if os.path.dirname(os.path.dirname(os.path.abspath(__file__))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from simulation.model.rwd.builder_rwd import Builder_Rwd
 from simulation.utils.otm_manager_file import OtmManagerFile
@@ -18,7 +17,7 @@ Report.set_exe(setup.LOCAL_REPO_EXE)
 
 if __name__ == '__main__':   
     omf = OtmManagerFile()
-    omf.set_project_root('H:/OTM_ICV_01S_WIDE')
+    omf.set_project_root('H:/OTM_ICV_01S_SSS1')
     omf.set_simulation_folder_prefix('otm_iteration')
     omf.set_simulation_file_prefix('model')
     
@@ -35,4 +34,4 @@ if __name__ == '__main__':
     
         reports.append(Report(path_to_rwd=rwd_path, path_to_rwo=rwo_path, verbose=True, run=False))
       
-    rm = RunManager(reports, 20)                 
+    rm = RunManager(reports, 40)                 

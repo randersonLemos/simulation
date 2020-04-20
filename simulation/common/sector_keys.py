@@ -1,45 +1,69 @@
 class Sector_Keys:
     @staticmethod
-    def time(): return 'Time'
+    def time(): return 'TIME'
 
     @staticmethod
-    def date(): return 'Date'
+    def date(): return 'DATE'
 
     @staticmethod
-    def sector(): return 'Sector'
+    def sector(): return 'SECTOR'
 
     @staticmethod
-    def recovery_factor(): return 'Field Recovery Factor'
+    def recovery_factor(): return 'FIELD RECOVERY FACTOR'
 
     @staticmethod
-    def avg_pressure(): return 'Field Avg. Pressure'
+    def avg_pressure(): return 'FIELD AVG PRESSURE'
 
     @staticmethod
-    def oil_rate_sc(): return 'Field Oil Rate SC'
+    def oil_dot_prod_sc(): return 'FIELD OIL PROD RATE SC'
 
     @staticmethod
-    def cum_oil_sc(): return 'Field Cum. Oil SC'
+    def oil_prod_sc(): return 'FIELD OIL PROD CUMU SC'
 
     @staticmethod
-    def gas_rate_sc(): return 'Field Gas Rate SC'
+    def gas_dot_prod_sc(): return 'FIELD GAS PROD RATE SC'
 
     @staticmethod
-    def cum_gas_sc(): return 'Field Cum. Gas SC'
+    def gas_prod_sc(): return 'FIELD GAS PROD CUMU SC'
 
     @staticmethod
-    def wat_rate_sc(): return 'Field Water Rate SC'
+    def wat_dot_prod_sc(): return 'FIELD WATER PROD RATE SC'
 
     @staticmethod
-    def cum_wat_sc(): return 'Field Cum. Water SC'
+    def wat_prod_sc(): return 'FIELD WATER PROD CUMU SC'
 
     @staticmethod
-    def liq_rate_sc(): return 'Field Liq. Rate SC'
+    def liq_dot_prod_sc(): return 'FIELD LIQ PROD RATE SC'
 
     @staticmethod
-    def cum_liq_sc(): return 'Field Cum. Liq. Rate SC'
+    def liq_prod_sc(): return 'FIELD LIQ PROD CUMU SC'
 
     @staticmethod
-    def gor_sc(): return 'Field Gas Oil Ratio SC'
+    def oil_dot_inje_sc(): return 'FIELD OIL INJE RATE SC'
 
     @staticmethod
-    def wat_cut_sc(): return 'Field Water Cut SC'
+    def oil_inje_sc(): return 'FIELD OIL INJE CUMU SC'
+
+    @staticmethod
+    def gas_dot_inje_sc(): return 'FIELD GAS INJE RATE SC'
+
+    @staticmethod
+    def gas_inje_sc(): return 'FIELD GAS INJE CUMU SC'
+
+    @staticmethod
+    def wat_dot_inje_sc(): return 'FIELD WATER INJE RATE SC'
+
+    @staticmethod
+    def wat_inje_sc(): return 'FIELD WATER INJE CUMU SC'
+
+    @staticmethod
+    def liq_dot_inje_sc(): return 'FIELD LIQ INJE RATE SC'
+
+    @staticmethod
+    def liq_inje_sc(): return 'FIELD LIQ INJE CUMU SC'
+    
+    @staticmethod
+    def gor_sc(): return 'FIELD GOR SC'
+
+    @staticmethod
+    def wat_cut_sc(): return 'FIELD WCUT SC'

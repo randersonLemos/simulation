@@ -53,7 +53,7 @@ def best_solutions_distribution_values(Df, suptitle, figname):
     
 if __name__ == '__main__':   
     omf = OtmManagerFile()
-    omf.set_project_root('H:/OTM_ICV_01S_SSS1')
+    omf.set_project_root('H:/OTM_ICV_01S_WIDE')
     omf.set_simulation_folder_prefix('otm_iteration')
     omf.set_simulation_file_prefix('model')
     omf.set_result_file('otm.csv')
@@ -66,11 +66,11 @@ if __name__ == '__main__':
     Df = data.X.apply(pd.value_counts).T.stack().reset_index()
     Df = Df.rename(columns={'level_1':'GOR', 0:'COUNT'})
     Df['ZONE'] = Df['ZONE'].str.replace('_GOR','')
-    best_solutions_distribution_values(Df, 'Best solutions distribution and values', 'fig/bsol.png')
+    best_solutions_distribution_values(Df, 'Best solutions distribution and values', 'tmp/bsol.png')
     
     data = omd.data().head(5)    
     data.X.columns.name = 'ZONE'   
     Df = data.X.apply(pd.value_counts).T.stack().reset_index()
     Df = Df.rename(columns={'level_1':'GOR', 0:'COUNT'})
     Df['ZONE'] = Df['ZONE'].str.replace('_GOR','')
-    best_solutions_distribution_values(Df, 'Worst solutions distribution and values', 'fig/wsol.png')
+    best_solutions_distribution_values(Df, 'Worst solutions distribution and values', 'tmp/wsol.png')

@@ -1,3 +1,4 @@
+import re
 import pathlib
 
 class OtmManagerFile():           
@@ -39,21 +40,19 @@ class OtmManagerFile():
     def simulation_file_paths(self, ext='', to_string=False, sort=True):
         prefix = '{}*'.format(self._simulation_file_prefix)
         if ext:
-            prefix = '{}*{}'.format(self._simulation_file_prefix, ext)
-            
+            prefix = '{}*{}'.format(self._simulation_file_prefix, ext)            
+            pattern = re.compile('{}\d\d\d\d{}'.format(self._simulation_file_prefix, ext))    
+                
         lst = []
         for simulation_folder_path in self.simulation_folder_paths():
             for simulation_file in simulation_folder_path.glob(prefix):
-                if not self._is_rstr(simulation_file):
+                if pattern.search(str(simulation_file)):
                     lst.append(simulation_file)
          
         if sort: lst = sorted(lst)
         if to_string: lst = list(map(str, lst))
         return lst
-   
-    def _is_rstr(self, pathlib_obj):
-        return pathlib_obj.match('*.rstr*')
-    
+
     
     def result_file_path(self):
         return self._project_root / self._result_file

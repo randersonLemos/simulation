@@ -1,18 +1,11 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Aug 25 14:06:08 2019
-
-@author: randerson
-"""
-
 import pathlib
 import warnings
 import pandas as pd
+from itertools import zip_longest
 from .tables import Tables
 from .well_table import Well_Table
 from .sector_table import Sector_Table
 from .special_table import Special_Table
-from itertools import zip_longest
 
 def is_well_table(lst):
     return 'WELL' in ''.join(lst)
@@ -23,10 +16,11 @@ def is_special_table(lst):
 def is_sector_table(lst):
     return 'SECTOR' in ''.join(lst)
 
-def get_tables(path_to_rep_file):
+def get_tables(path_to_rwo_file):
     tabs = Tables()
+    tabs.path_to_rwo_file = path_to_rwo_file
     lst = []
-    with pathlib.Path(path_to_rep_file).open() as fh:
+    with pathlib.Path(path_to_rwo_file).open() as fh:
         for raw_line in reversed(list(fh)):
             line = raw_line.strip('\n').strip()
             if 'TABLE' in line:

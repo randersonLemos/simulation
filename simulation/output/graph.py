@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Aug 25 14:24:07 2019
-
-@author: randerson
-"""
-
-
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
@@ -24,7 +16,7 @@ class Graph():
         ax.xaxis.set_major_formatter(formatter)
         ax.set_title(title)
         ax.set_xlabel('date')
-        ax.set_ylabel('$mmsm^3 std$')
+        ax.set_ylabel('$mmsm^3$')
 
     @staticmethod
     def gas_dot(ax, df, title):
@@ -46,7 +38,7 @@ class Graph():
         ax.xaxis.set_major_formatter(formatter)
         ax.set_title(title)
         ax.set_xlabel('date')
-        ax.set_ylabel('$msm^3 std$')
+        ax.set_ylabel('$msm^3$')
 
     @staticmethod
     def fluid_dot(ax, df, title):
@@ -66,7 +58,7 @@ class Graph():
         ax.xaxis.set_major_locator(locator)
         ax.xaxis.set_major_formatter(formatter)
         ax.set_xlabel('date')
-        ax.set_ylabel('$m^3/m^3$')
+        ax.set_ylabel('$sm^3/sm^3$')
         ax.set_title(title)
 
     @staticmethod

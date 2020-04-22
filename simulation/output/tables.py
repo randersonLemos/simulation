@@ -1,24 +1,20 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Aug 24 14:04:55 2019
-
-@author: randerson
-"""
-
 import re
 import copy
 import pathlib
 import warnings
 import pandas as pd
+
+from .well_keys import Well_Keys
+from .sector_keys import Sector_Keys
+
 from .well_table import Well_Table
 from .sector_table import Sector_Table
 from .special_table import Special_Table
-from simulation.common.well_keys import Well_Keys
-from simulation.common.sector_keys import Sector_Keys
 
 class Tables():
     def __init__(self):
         self._dic = {}
+        self.path_to_rwo_file = ''
 
     def add(self, obj_tab):
         self._dic[obj_tab.what] = obj_tab

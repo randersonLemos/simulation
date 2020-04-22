@@ -1,6 +1,6 @@
 import pandas as pd
 from itertools import zip_longest
-from simulation.common.special_keys import Special_Keys
+from .special_keys import Special_Keys
 
 class Special_Table:
 

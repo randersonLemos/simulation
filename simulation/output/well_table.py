@@ -1,22 +1,22 @@
 import pandas as pd
-from simulation.common.well_keys import Well_Keys
+from .well_keys import Well_Keys
 
 class Well_Table:
     dic = {}
     dic['Well state'] = Well_Keys.well_state()
     dic['DATE'] = Well_Keys.date()
     dic['TIME'] = Well_Keys.time()
- 
+
     dic['Cumulative Oil SC'] = Well_Keys.oil_prod_sc()
     dic['Cumulative Gas SC'] = Well_Keys.gas_prod_sc()
     dic['Cumulative Water SC'] = Well_Keys.wat_prod_sc()
-    dic['Cumulative Liquid SC'] = Well_Keys.liq_prod_sc() 
-    
+    dic['Cumulative Liquid SC'] = Well_Keys.liq_prod_sc()
+
     dic['Oil Rate SC'] = Well_Keys.oil_dot_prod_sc()
     dic['Gas Rate SC'] = Well_Keys.gas_dot_prod_sc()
     dic['Water Rate SC'] = Well_Keys.wat_dot_prod_sc()
     dic['Liquid Rate SC'] = Well_Keys.liq_dot_prod_sc()
-    
+
     dic['Gas Oil Ratio SC'] = Well_Keys.gor_sc()
     dic['Oil Cut SC'] = Well_Keys.oil_cut_sc()
     dic['Water Cut SC'] = Well_Keys.wat_cut_sc()

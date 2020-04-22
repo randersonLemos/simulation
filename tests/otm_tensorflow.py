@@ -25,16 +25,15 @@ from simulation.utils.otm_manager_data import OtmManagerData
 
 def build_model():
     model = keras.Sequential([
-        layers.Dense(1000, activation='relu', input_shape=[len(X.keys())]),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
-        layers.Dense(1000, activation='relu'),
+        layers.Dense(2500, activation='relu', input_shape=[len(X.keys())]),
+        layers.Dense(2500, activation='relu'),
+        layers.Dense(2500, activation='relu'),
+        layers.Dense(2500, activation='relu'),
+        layers.Dense(2500, activation='relu'),
+        layers.Dense(2500, activation='relu'),
+        layers.Dense(2500, activation='relu'),
+        layers.Dense(2500, activation='relu'),
+        layers.Dense(2500, activation='relu'),
         layers.Dense(1),
         ])
 
@@ -80,7 +79,7 @@ if __name__ == '__main__':
 
     plotter = tfdocs.plots.HistoryPlotter(smoothing_std=2)
     plotter.plot({'Basic': history}, metric='mse')
-    
+
     import random
     sample_space = list(range(300,3300,100))
     np.array(random.sample(sample_space,27)).reshape(1,27)
@@ -90,10 +89,6 @@ if __name__ == '__main__':
         print('count: {}'.format(count)); count += 1
         arr = np.array(random.sample(sample_space,27)).reshape(1,27)
         pre = model.predict(arr).item()
-        if pre > y.max().item():
+        if pre > y.max().item()*1.1:
             print(pre, arr)
             bag.append((pre, arr ))
-
-    
-    
-

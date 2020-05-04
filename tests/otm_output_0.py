@@ -3,12 +3,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 if os.path.dirname(os.path.dirname(os.path.abspath(__file__))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from simulation.utils.otm_manager_file import OtmManagerFile
-from simulation.utils.otm_manager_data import OtmManagerData
+from simulation.manager.otm_manager_file import OtmManagerFile
+from simulation.manager.otm_manager_data import OtmManagerData
 
 def best_solutions_distribution_values(Df, suptitle, figname):
     plt.ioff()
-    fig, axs = plt.subplots(1,9, figsize=(12,4), sharey=True, gridspec_kw={'wspace':0.05})
+    fig, axs = plt.subplots(1,9, figsize=(15,5), sharey=True, gridspec_kw={'wspace':0.05})
     fig.suptitle(suptitle, fontsize=20, y=1.0)
 
     count = 1
@@ -53,7 +53,7 @@ def best_solutions_distribution_values(Df, suptitle, figname):
 
 if __name__ == '__main__':
     omf = OtmManagerFile()
-    omf.set_project_root(input('Enter with project root path:\n'))
+    omf.set_project_root('/media/pamonha/DATA/DRIVE/IDLHC_20200101/OTM_ICV_01S_WIDE')
     omf.set_simulation_folder_prefix('otm_iteration')
     omf.set_simulation_file_prefix('model')
     omf.set_result_file('otm.csv')
@@ -61,16 +61,17 @@ if __name__ == '__main__':
 
     omd = OtmManagerData(omf)
 
-    data = omd.data().tail(5)
-    data.X.columns.name = 'ZONE'
-    Df = data.X.apply(pd.value_counts).T.stack().reset_index()
+    X = omd.data().X().tail(10)
+    X.columns.name = 'ZONE'
+    Df = X.apply(pd.value_counts).T.stack().reset_index()
     Df = Df.rename(columns={'level_1':'GOR', 0:'COUNT'})
     Df['ZONE'] = Df['ZONE'].str.replace('_GOR','')
-    best_solutions_distribution_values(Df, 'Best Solutions', 'bsol_wide.png')
+    best_solutions_distribution_values(Df, '10 best solution', 'destribution_bsols.png')
+    print('Hi')
 
-    data = omd.data().head(5)
-    data.X.columns.name = 'ZONE'
-    Df = data.X.apply(pd.value_counts).T.stack().reset_index()
-    Df = Df.rename(columns={'level_1':'GOR', 0:'COUNT'})
-    Df['ZONE'] = Df['ZONE'].str.replace('_GOR','')
-    best_solutions_distribution_values(Df, 'Worst Solutions', 'wsol_wide.png')
+    #data = omd.data().head(5)
+    #data.X.columns.name = 'ZONE'
+    #Df = data.X.apply(pd.value_counts).T.stack().reset_index()
+    #Df = Df.rename(columns={'level_1':'GOR', 0:'COUNT'})
+    #Df['ZONE'] = Df['ZONE'].str.replace('_GOR','')
+    #best_solutions_distribution_values(Df, 'Worst Solutions', 'wsol_wide.png')

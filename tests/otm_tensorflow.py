@@ -3,9 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 
-from sklearn import preprocessing
-
-import seaborn as sns
+import seaborn as sb
 import tensorflow as tf
 
 from tensorflow import keras
@@ -19,21 +17,13 @@ import tensorflow_docs.modeling
 
 
 if os.path.dirname(os.path.dirname(os.path.abspath(__file__))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from simulation.utils.otm_manager_file import OtmManagerFile
-from simulation.utils.otm_manager_data import OtmManagerData
+from simulation.manager.otm_manager_file import OtmManagerFile
+from simulation.manager.otm_manager_data import OtmManagerData
 
 
 def build_model():
     model = keras.Sequential([
         layers.Dense(2500, activation='relu', input_shape=[len(X.keys())]),
-        layers.Dense(2500, activation='relu'),
-        layers.Dense(2500, activation='relu'),
-        layers.Dense(2500, activation='relu'),
-        layers.Dense(2500, activation='relu'),
-        layers.Dense(2500, activation='relu'),
-        layers.Dense(2500, activation='relu'),
-        layers.Dense(2500, activation='relu'),
-        layers.Dense(2500, activation='relu'),
         layers.Dense(1),
         ])
 
@@ -57,38 +47,43 @@ if __name__ == '__main__':
     omd = OtmManagerData(omf)
     X, y = omd.data().X(), omd.data().y()
 
-    # Create the Scaler object
-    scaler = preprocessing.StandardScaler()
-    # Fit your data on the scaler object
-    scaled_X= scaler.fit_transform(X)
-    scaled_X = pd.DataFrame(scaled_X, columns=X.columns)
-
-
-    model = build_model()
-
-    EPOCHS = 5000
-
-    history = model.fit(
-            X, y,
-            epochs=EPOCHS, validation_split=0.1, verbose=0,
-            callbacks=[tfdocs.modeling.EpochDots()])
-
-    hist = pd.DataFrame(history.history)
-    hist['epoch'] = history.epoch
-    hist.tail()
-
-    plotter = tfdocs.plots.HistoryPlotter(smoothing_std=2)
-    plotter.plot({'Basic': history}, metric='mse')
-
-    import random
-    sample_space = list(range(300,3300,100))
-    np.array(random.sample(sample_space,27)).reshape(1,27)
-    bag = []
-    count = 1
-    while len(bag) < 50:
-        print('count: {}'.format(count)); count += 1
-        arr = np.array(random.sample(sample_space,27)).reshape(1,27)
-        pre = model.predict(arr).item()
-        if pre > y.max().item()*1.1:
-            print(pre, arr)
-            bag.append((pre, arr ))
+#    model = build_model()
+#
+#    EPOCHS = 5000
+#
+#    history = model.fit(
+#            X, y,
+#            epochs=EPOCHS, validation_split=0.1, verbose=0,
+#            callbacks=[tfdocs.modeling.EpochDots()])
+#
+#    hist = pd.DataFrame(history.history)
+#    hist['epoch'] = history.epoch
+#    hist.tail()
+#
+#    plotter = tfdocs.plots.HistoryPlotter(smoothing_std=2)
+#    plotter.plot({'Basic': history}, metric='mse')
+#
+#    import random
+#    sample_space = list(range(300,3300,100))
+#    np.array(random.sample(sample_space,27)).reshape(1,27)
+#    bag = []
+#    count = 1
+#    while len(bag) < 50:
+#        print('count: {}'.format(count)); count += 1
+#        arr = np.array(random.sample(sample_space,27)).reshape(1,27)
+#        pre = model.predict(arr).item()
+#        if pre > y.max().item()*1.1:
+#            print(pre, arr)
+#            bag.append((pre, arr ))
+#        
+#    for model in X.T:
+#        si_npv = y.T[model].to_numpy()
+#        si_arr = X.T[model].to_numpy()        
+#        for dl_npv, dl_arr in bag:
+#            if np.linalg.norm(si_arr - dl_arr) < 4000:
+#                print('npv: {}, arr: {} (si)'.format(si_npv.item(), si_arr.squeeze().tolist()))            
+#                print('npv: {}, arr: {} (dl)'.format(dl_npv, dl_arr.squeeze().tolist()))
+#
+#        
+#
+#            

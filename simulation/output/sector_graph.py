@@ -46,10 +46,35 @@ class Sector_Graph:
             title = custom_title
         self._gas(SK.gas_prod_sc(), title)
 
+    def oil_inje(self, custom_title=''):
+        title = 'Field oil injection'
+        if custom_title:
+            title = custom_title
+        self._fluid(SK.oil_inje_sc(), title)
 
-    def pressure(self):
-        Graph.pressure(self.table_obj.\
-                field_average_pressure(), 'Field Avg. Pressure')
+    def wat_inje(self, custom_title=''):
+        title = 'Field water injection'
+        if custom_title:
+            title = custom_title
+        self._fluid(SK.wat_inje_sc(), title)
+
+    def gas_inje(self, custom_title=''):
+        title = 'Field gas injection'
+        if custom_title:
+            title = custom_title
+        self._gas(SK.gas_inje_sc(), title)
+
+    def avg_pres(self, custom_title=''):
+        title = 'Field pressure'
+        if custom_title:
+            title = custom_title
+
+        fig, ax = plt.subplots()
+        legend = []
+        for tables in self.tables:
+            Graph.pressure(ax, tables.get(SK.sector()).df[SK.avg_pressure()], title)
+            legend.append(tables.path_to_rwo_file.stem)
+        ax.legend(legend)
 
     def recovery_factor(self):
         Graph.percent(self.table_obj.\

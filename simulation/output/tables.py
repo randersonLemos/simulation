@@ -16,14 +16,26 @@ class Tables():
         self._dic = {}
         self.path_to_rwo_file = ''
 
+    def date_range(self, ini='', end=''):
+        for key in self._dic:
+            df = self._dic[key].df
+            if ini:
+                df = df[df.index > ini]
+            if end:
+                df = df[df.index < end]
+            self._dic[key].df = df
+
     def add(self, obj_tab):
         self._dic[obj_tab.what] = obj_tab
+
 
     def get(self, key):
         return self._dic[key]
 
+
     def dell(self, key):
         del self._dic[key]
+
 
     def join(self, key, key1, key2, dell=False):
         if type(self._dic[key1]) != type(self._dic[key2]):
@@ -41,42 +53,14 @@ class Tables():
             self.dell(key2)
         return table
 
+
     def keys(self):
         return self._dic.keys()
+
 
     def columns(self):
         return set([col for key in self._dic for col in self._dic[key].df.columns])
 
-    def field_recovery_factor(self):
-        return self._dic[Sector_Keys.sector()].df[Sector_Keys.recovery_factor()].copy()
-
-    def field_average_pressure(self):
-        return self._dic[Sector_Keys.sector()].df[Sector_Keys.avg_pressure()].copy()
-
-    def field_oil_production(self):
-        return self._dic[Sector_Keys.sector()].df[Sector_Keys.cum_oil_sc()].copy()
-
-    def field_gas_production(self):
-        return self._dic[Sector_Keys.sector()].df[Sector_Keys.cum_gas_sc()].copy()
-
-    def field_water_production(self):
-        return self._dic[Sector_Keys.sector()].df[Sector_Keys.cum_wat_sc()].copy()
-
-    def grp_col(self, column):
-        dic = {}
-        for key in self._dic:
-            if column in self._dic[key].df.columns:
-                dic[key] = self._dic[key].df[column]
-        return pd.DataFrame.from_dict(dic)
-
-    def grp_col_spe_well(self, well):
-        dic = {}
-        for key in self._dic:
-            if isinstance(self._dic[key], Special_Table):
-                for col in self._dic[key].df.columns:
-                    if well in col:
-                        dic[re.sub(r'\w\w\w\d\d\d',key,col)] = self._dic[key].df[col]
-        return pd.DataFrame.from_dict(dic)
 
     def to_csv(self, dir):
         dir = pathlib.Path(dir)
@@ -90,3 +74,41 @@ class Tables():
                 df2 = self.grp_col_spe_well(key) # specials
                 df = pd.concat([df1, df2], axis=1, sort=False)
                 df.fillna(0).to_csv(dir / '{}.csv'.format(key))
+
+
+    def field_recovery_factor(self):
+        return self._dic[Sector_Keys.sector()].df[Sector_Keys.recovery_factor()].copy()
+
+
+    def field_average_pressure(self):
+        return self._dic[Sector_Keys.sector()].df[Sector_Keys.avg_pressure()].copy()
+
+
+    def field_oil_production(self):
+        return self._dic[Sector_Keys.sector()].df[Sector_Keys.cum_oil_sc()].copy()
+
+
+    def field_gas_production(self):
+        return self._dic[Sector_Keys.sector()].df[Sector_Keys.cum_gas_sc()].copy()
+
+
+    def field_water_production(self):
+        return self._dic[Sector_Keys.sector()].df[Sector_Keys.cum_wat_sc()].copy()
+
+
+    def grp_col(self, column):
+        dic = {}
+        for key in self._dic:
+            if column in self._dic[key].df.columns:
+                dic[key] = self._dic[key].df[column]
+        return pd.DataFrame.from_dict(dic)
+
+
+    def grp_col_spe_well(self, well):
+        dic = {}
+        for key in self._dic:
+            if isinstance(self._dic[key], Special_Table):
+                for col in self._dic[key].df.columns:
+                    if well in col:
+                        dic[re.sub(r'\w\w\w\d\d\d',key,col)] = self._dic[key].df[col]
+        return pd.DataFrame.from_dict(dic)

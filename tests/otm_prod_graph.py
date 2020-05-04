@@ -23,6 +23,7 @@ inje_lst.append(('IRK063',('IRK063-G','IRK063-W', ), ))
 
 import os
 import pandas as pd
+import seaborn as sb
 import matplotlib.pyplot as plt
 if os.path.dirname(os.path.dirname(os.path.abspath(__file__))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from simulation.output.utils import get_tables
@@ -31,16 +32,22 @@ from simulation.output.sector_keys import Sector_Keys
 from simulation.manager.otm_manager_file import OtmManagerFile
 from simulation.manager.otm_manager_data import OtmManagerData
 
+
 if __name__ == '__main__':
     omf = OtmManagerFile()
     omf.set_project_root('/media/pamonha/DATA/DRIVE/IDLHC_20200101/OTM_ICV_01S_WIDE')
+    #omf.set_project_root('/media/pamonha/DATA/DRIVE/IDLHC_20200101/OTM_ICV_01S_SSS1')
     omf.set_simulation_folder_prefix('otm_iteration')
     omf.set_simulation_file_prefix('model')
     omf.set_result_file('otm.csv')
     omf.set_hldg_sample_file('hldg.txt')
 
     omd = OtmManagerData(omf)
-    X, y = omd.data().X().tail(3), omd.data().y().tail(3)
+    X = omd.data().X().tail(10)
+    y = omd.data().y().tail(10)
+
+    #X = omd.data().X().head(10)
+    #y = omd.data().y().head(10)
 
     Tables = []
     for path in omf.simulation_file_paths('.rwo'):
@@ -48,15 +55,18 @@ if __name__ == '__main__':
         if model in X.index:
             tables = get_tables(path)
 
+            tables.date_range(ini='2020-01-01')
+
             for well_name, alias in inje_lst:
-                tables.add(tables.join(well_name, *alias)) # join xxxxxx-w and xxxxxx-g to xxxxxx
-                tables.dell(alias[0]); tables.dell(alias[1])
+                tables.add(tables.join(well_name, *alias, dell=True)) # join xxxxxx-w and xxxxxx-g to xxxxxx
 
             Tables.append(tables)
 
-    sg = Sector_Graph(Tables)
-    sg.oil_prod()
-    sg.gas_prod()
-    sg.wat_prod()
-    sg.tight_layout(); sg.show()
-
+    #sg = Sector_Graph(Tables)
+    #sg.oil_prod()
+    #sg.gas_prod()
+    #sg.gas_inje()
+    #sg.wat_prod()
+    #sg.wat_inje()
+    #sg.avg_pres()
+    #sg.tight_layout(); sg.show()

@@ -7,10 +7,10 @@ class Data:
         self._y = y
 
     def X(self):
-        return self._X
+        return self._X.copy()
 
     def y(self):
-        return self._y
+        return self._y.copy()
 
     def Xy(self):
         return pd.merge(self._X, self._y, on='ID')

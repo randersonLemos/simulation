@@ -1,93 +1,43 @@
-# -*- coding: utf-8 -*-
-MARK_SIMTIME = '$#@SIMTIME@#$'
-MARK_IRFFILE = '$#@IRFFILE@#$'
-
-def add_months(sourcedate, months):
-    month = sourcedate.month - 1 + months
-    year = sourcedate.year + month // 12
-    month = month % 12 + 1
-    day = min(sourcedate.day, calendar.monthrange(year,month)[1])
-    return datetime.date(year, month, day)
-
-def gaussian_kernel(size, std):
-    if size % 2 == 0: raise ValueError("Just odd numbers for variable 'size'...")
-    xs = np.linspace(-(size-1)/2.0, (size-1)/2.0, size)
-    kernel = np.exp(-0.5 * (xs / std)**2)
-    return kernel / np.sum(kernel)
-
-import datetime
-import calendar
-import pathlib
-import numpy as np
-import matplotlib.pyplot as plt
+import random
 from os import sys, path; sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-from simulation import setup
-from simulation.common.words import Words as wrd
-from simulation.input.well_design import Well_Design
-from simulation.model.well.producer import Producer
-from simulation.model.well.injector import Injector
-from simulation.model.well.builder.builder_producer_icv import Builder_Producer_Icv
-from simulation.model.well.builder.builder_injector_wag import Builder_Injector_Wag
-from simulation.model.dat.builder_dat import Builder_Dat
-from simulation.model.rwd.builder_rwd import Builder_Rwd
-from simulation.model.dat.simtime import Simtime
-from simulation.run.imex import Imex_Local
-from simulation.run.report import Report
-from simulation.output.utils import get_tables
+from simulation.manager.template_manager import TemplateManager
 
-Well_Design.set_inputRoot('./input')
-Producer.set_builder(Builder_Producer_Icv)
-Injector.set_builder(Builder_Injector_Wag)
-Imex_Local.set_exe(setup.LOCAL_IMEX_EXE)
-Report.set_exe(setup.LOCAL_REPO_EXE)
+MARKS = []
+MARKS.append('#PRK014_Z1_GOR#')
+MARKS.append('#PRK014_Z2_GOR#')
+MARKS.append('#PRK014_Z3_GOR#')
+MARKS.append('#PRK028_Z1_GOR#')
+MARKS.append('#PRK028_Z2_GOR#')
+MARKS.append('#PRK028_Z3_GOR#')
+MARKS.append('#PRK045_Z1_GOR#')
+MARKS.append('#PRK045_Z2_GOR#')
+MARKS.append('#PRK045_Z3_GOR#')
+MARKS.append('#PRK052_Z1_GOR#')
+MARKS.append('#PRK052_Z2_GOR#')
+MARKS.append('#PRK052_Z3_GOR#')
+MARKS.append('#PRK060_Z1_GOR#')
+MARKS.append('#PRK060_Z2_GOR#')
+MARKS.append('#PRK060_Z3_GOR#')
+MARKS.append('#PRK061_Z1_GOR#')
+MARKS.append('#PRK061_Z2_GOR#')
+MARKS.append('#PRK061_Z3_GOR#')
+MARKS.append('#PRK083_Z1_GOR#')
+MARKS.append('#PRK083_Z2_GOR#')
+MARKS.append('#PRK083_Z3_GOR#')
+MARKS.append('#PRK084_Z1_GOR#')
+MARKS.append('#PRK084_Z2_GOR#')
+MARKS.append('#PRK084_Z3_GOR#')
+MARKS.append('#PRK085_Z1_GOR#')
+MARKS.append('#PRK085_Z2_GOR#')
+MARKS.append('#PRK085_Z3_GOR#')
 
-prds = []
-prds.append(Well_Design(name='PRK014'))
-prds.append(Well_Design(name='PRK028'))
-prds.append(Well_Design(name='PRK045'))
-prds.append(Well_Design(name='PRK052'))
-prds.append(Well_Design(name='PRK060'))
-prds.append(Well_Design(name='PRK061'))
-prds.append(Well_Design(name='PRK083'))
-prds.append(Well_Design(name='PRK084'))
-prds.append(Well_Design(name='PRK085'))
-prds.append(Well_Design(name='Wildcat'))
-for wd in prds: Producer(wd).write('./local/sim/wells')
+CHOICES = list(map(str,[300, 500, 700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2400, 2700, 2900, 3100, 3300]))
 
-injs = []
-injs.append(Well_Design(name='IRK004',alias={'G': 'IRK004-G', 'W': 'IRK004-W'}))
-injs.append(Well_Design(name='IRK028',alias={'G': 'IRK028-G', 'W': 'IRK028-W'}))
-injs.append(Well_Design(name='IRK029',alias={'G': 'IRK029-G', 'W': 'IRK029-W'}))
-injs.append(Well_Design(name='IRK036',alias={'G': 'IRK036-G', 'W': 'IRK036-W'}))
-injs.append(Well_Design(name='IRK049',alias={'G': 'IRK049-G', 'W': 'IRK049-W'}))
-injs.append(Well_Design(name='IRK050',alias={'G': 'IRK050-G', 'W': 'IRK050-W'}))
-injs.append(Well_Design(name='IRK056',alias={'G': 'IRK056-G', 'W': 'IRK056-W'}))
-injs.append(Well_Design(name='IRK063',alias={'G': 'IRK063-G', 'W': 'IRK063-W'}))
-for wd in injs: Injector(wd).write('./local/sim/wells')
+N_ITERATION = 1
+N_SAMPLE = 5
 
-st = Simtime((2022, 4, 30), (2023, 12, 31), 2038)
-
-bd = Builder_Dat(frameRoot='./frame', frameFile='main.dat.frame', frameIncludeFolder='include')
-#bd.replace_mark(MARK_SIMTIME, st.simtime())
-#bd.write(datRoot='./local/sim', datFile='main.dat')
-#imexx = Imex_Local(path_to_dat='U:/simulation/tests/local/sim/main.dat', folder_to_output='U:/simulation/tests/local/sim', see_log=True, verbose=True, run=True)
-#while imexx.is_alive(): pass
-
-br = Builder_Rwd(frameRoot='./frame', frameFile='main.rwd.frame')
-#br.replace_mark(MARK_IRFFILE, " *FILES '{}'".format(pathlib.Path('U:/simulation/tests/local/sim/main.irf')))
-#br.write(rwdRoot='./local/sim', rwdFile='main.rwd')
-#repo = Report(path_to_rwd='U:/simulation/tests/local/sim/main.rwd', path_to_rep='U:/simulation/tests/local/sim/main.rep', verbose=True, run=True)
-#while repo.is_alive(): pass
-
-df = get_tables('./local/sim/main.rep').get('GOR').df.iloc[:100,:]
-for well in prds:
-    signal = []
-    for zone in well.get_icv_zones():
-        if df[zone].diff()[-1] > 50 or df[zone][-1] == 0.0:
-            print(zone, df[zone].diff()[-1], 0.0)
-            signal.append(0.0)
-        else:
-            print(zone, df[zone].diff()[-1], 1.0)
-            signal.append(1.0)
-    well.icv_control_signal = signal
-    Producer(well).write('./local/sim/wells')
+for i in range(N_ITERATION):    
+    for j in range(N_SAMPLE):
+        tm = TemplateManager(template_file_path='H:/DEV_AREA/templates/U2DBO_IM80_E0_WAG_IW.dat.tlp')
+        tm.replace_mark(MARKS, random.choices(CHOICES, k=len(MARKS)))
+        tm.write(file_path='H:/DEV_AREA/iteration{:04d}/run{:04d}.dat'.format(i+1,i+j+1))

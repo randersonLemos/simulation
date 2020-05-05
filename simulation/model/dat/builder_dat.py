@@ -2,7 +2,7 @@ import pathlib
 import shutil
 
 class Builder_Dat:
-    def __init__(self, frameRoot, frameFile, frameIncludeFolder):
+    def __init__(self, frameRoot, frameFile, frameIncludeFolder=''):
         self.root = pathlib.Path(frameRoot)
         self.path_to_frame = self.root / frameFile
         self.path_to_frameInclude = self.root / frameIncludeFolder

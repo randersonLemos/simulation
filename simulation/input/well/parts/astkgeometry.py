@@ -33,6 +33,6 @@ class AstkGeometry:
         self._wdfac = '{:.4f}'.format(wdfac)
         return self
 
-    def repr(self):
+    def __call__(self):
         stg = '{} {} {} {} {} {} {}'.format(Kw.geometry(), self._dir, self._rw, self._geofac, self._wfrac, self._skin, self._wdfac).strip()
         return stg

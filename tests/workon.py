@@ -7,18 +7,28 @@ from simulation.input.well.parts.astkoperate import AstkOperate
 from simulation.input.well.parts.astkmonitor import AstkMonitor
 from simulation.input.well.parts.astkgeometry import AstkGeometry
 from simulation.input.well.parts.astkperf import AstkPerf
+from simulation.input.well.parts.astkopen import AstkOpen
+from simulation.input.well.parts.astkshutin import AstkShutin
+from simulation.input.well.parts.astkontime import AstkOntime
 
 astkwell = AstkWell().set_name('PRK014').set_group('PRODUCTION')
 astkproducer = AstkProducer().set_well_name('PRK014')
 astkoperate = AstkOperate().add('*MAX *STL', 3000.0, '*CONT *REPEAT').add('*MIN *BHP',  295.0, '*CONT *REPEAT')
 astkmonitor = AstkMonitor().add('*WCUT', 0.95, '*SHUTIN').add('*GOR', 1200.0, '*SHUTIN')
 astkgeometry = AstkGeometry().set_dir('*K').set_rw(0.108).set_geofac(0.370).set_wfrac(1.0).set_skin(0.0)
-astkperf = AstkPerf().set_dual_mode().set_well_name('PRK014').set_index_keys('*GEOA').set_connection('*FLOW-TO')
-astkperf.add((25, 10, 1, ) , (1.0, ), '*OPEN')
-astkperf.add((25, 10, 13, ), (1.0, ), '*CLOSED')
-astkperf.add((25, 10, 20, ), (1.0, ), '*CLOSED')
-astkperf.add((25, 10, 30, ), (1.0, ), '*OPEN')
+astkperf = AstkPerf(dual_mode_on=True).set_well_name('PRK014').set_index_keys('*GEOA')
+astkperf.set_default_status('*OPEN')
+astkperf.set_default_connection('*FLOW-TO')
+astkperf.set_default_index_values((1.0, ))
+astkperf.add_completion((25, 10,  1, ))
+astkperf.add_completion((25, 10, 13, ), status='*CLOSED')
+astkperf.add_completion((25, 10, 20, ), status='*CLOSED')
+astkperf.add_completion((25, 10, 30, ))
 astkperf.fill()
+astkopen = AstkOpen().set_well_name('PRK014')
+astkshutin = AstkShutin().set_well_name('PRK014')
+astkontime = AstkOntime().set_well_name('PRK014').set_on_time(1.0)
+
 
 
 #from simulation.input.well.parts.name import Name

@@ -4,11 +4,11 @@ class AstkMonitor:
     def __init__(self):
         self._lst = []
 
-    def add(self, condition, value, action):
-        self._lst.append((condition, value, action, ))
+    def add(self, measure, value, action):
+        self._lst.append((measure, value, action, ))
         return self
 
-    def repr(self):
+    def __call__(self):
         lst = []
         for el in self._lst:
             lst.append('{} {}'.format(Kw.operate(), ' '.join(map(str, el))))

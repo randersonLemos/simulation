@@ -1,12 +1,12 @@
 from simulation.common.keywords import Keywords as Kw
 
-class AstkProducer():
+class AstkOpen:
     def __init__(self):
-        self._name = ''
+        self._well_name = ''
 
     def set_well_name(self, name):
-        self._name = "'" + name + "'"
+        self._well_name = "'" + name + "'"
         return self
 
     def __call__(self):
-        return '{} {}'.format(Kw.producer(), self._name)
+        return '{} {}'.format(Kw.open(), self._well_name)

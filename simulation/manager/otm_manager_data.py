@@ -13,7 +13,7 @@ class OtmManagerData:
         y = self._outputs()
 
         del X['PROBABILITY']
-        del y['ITERATION']
+        #del y['ITERATION']
 
         if npv_sorted:
             warnings.warn('Sorted from the worst to the best NPV value...')

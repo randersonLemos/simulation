@@ -11,7 +11,7 @@ from simulation.manager.otm_manager_data import OtmManagerData
 
 def load_data(path):
     omf = OtmManagerFile()
-    omf.set_project_root('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_ICV1_WIDE1')
+    omf.set_project_root(path)
     omf.set_simulation_folder_prefix('otm_iteration')
     omf.set_simulation_file_prefix('model')
     omf.set_result_file('otm.csv')
@@ -19,18 +19,7 @@ def load_data(path):
 
     return omf, OtmManagerData(omf)
 
-if __name__ == '__main__':
-    omf, omd = load_data()
-    X = omd.data().X()
-    y = omd.data().y()
-
-    X = X.head(6).append(X.tail(6))
-    X = X.apply(lambda x: (x - x.min())/(x.max()-x.min()))
-
-    y = y.head(6).append(y.tail(6))
-    y = (y/1000000).applymap(int)
-
-
+def heamap_solutions(title):
     from sklearn.metrics.pairwise import euclidean_distances
     XdmatrixArr = euclidean_distances(X,X)
     NXdmatrixArr = XdmatrixArr/XdmatrixArr.max()
@@ -41,11 +30,10 @@ if __name__ == '__main__':
     ydmatrixArr = euclidean_distances(y, y)
     NydmatrixArr = ydmatrixArr#/ydmatrixArr.max()
 
-
     with sb.plotting_context('talk'):
         fig, ax = plt.subplots(figsize=(10,10), tight_layout=True)
 
-        fig.suptitle('PRODUTION STRATEGY DISTANCES', y=0.925)
+        fig.suptitle(title, y=0.925)
 
         sb.heatmap(NXdmatrixArr, annot=NXdmatrixArr, annot_kws={"size": 13}, fmt='^0.2f', mask=mask.T, square=True, cmap=sb.cubehelix_palette(10), cbar=False, ax=ax, linewidths=0.75)
         sb.heatmap(NydmatrixArr, annot=NydmatrixArr, annot_kws={"size": 13}, fmt='^4.0f', mask=mask, square=True, cmap=sb.cubehelix_palette(10), cbar=False, ax=ax, linewidth=0.75)
@@ -89,4 +77,44 @@ if __name__ == '__main__':
         cbar2.ax.yaxis.set_ticks_position("left")
         cbar2.ax.tick_params(size=0)
 
-        plt.show()
+SOURCES = []
+SOURCES.append('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_ICV1_SSS1')
+SOURCES.append('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_ICV1_SSS1_FLEX1')
+SOURCES.append('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_ICV1_WIDE1')
+
+GROUPS = []
+GROUPS.append('sss')
+GROUPS.append('sss_relaxed')
+GROUPS.append('wide')
+
+if __name__ == '__main__':
+    #Xs = pd.DataFrame()
+    #ys = pd.DataFrame()
+
+    for source, group in zip(SOURCES, GROUPS):
+        omf = OtmManagerFile()
+        omf.set_project_root(source)
+        omf.set_simulation_folder_prefix('otm_iteration')
+        omf.set_simulation_file_prefix('model')
+        omf.set_result_file('otm.csv')
+        omf.set_hldg_sample_file('hldg.txt')
+
+        omd = OtmManagerData(omf)
+
+        X = omd.data(npv_sorted=True).X()
+        X = X.head(5).append(X.tail(5))
+        X = X.apply(lambda x: (x - x.min())/(x.max()-x.min()))
+        #X.index = pd.MultiIndex.from_product([[group], X.index] , names=['REGION', 'RUN'])
+        #Xs = Xs.append(X)
+
+        y = omd.data(npv_sorted=True).y()
+        y = y.head(5).append(y.tail(5))
+        y['NPV'] = y['NPV'] / 1000000
+        #y['ITERATION'] = y['ITERATION'].apply(str)
+        #y.index = pd.MultiIndex.from_product([[group], y.index] , names=['REGION', 'RUN'])
+        #ys = ys.append(y)
+
+        heamap_solutions('PRODUTION STRATEGY DISTANCES ({})'.format(group.upper()))
+        plt.savefig('distances_{}.png'.format(group))
+
+    #plt.show()

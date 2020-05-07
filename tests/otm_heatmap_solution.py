@@ -11,7 +11,7 @@ from simulation.manager.otm_manager_data import OtmManagerData
 
 def load_data():
     omf = OtmManagerFile()
-    omf.set_project_root('/media/pamonha/DATA/DRIVE/IDLHC_20200101/OTM_ICV_01S_WIDE')
+    omf.set_project_root('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_ICV1_WIDE1')
     omf.set_simulation_folder_prefix('otm_iteration')
     omf.set_simulation_file_prefix('model')
     omf.set_result_file('otm.csv')
@@ -24,10 +24,10 @@ if __name__ == '__main__':
     X = omd.data().X()
     y = omd.data().y()
 
-    X = X.head(5).append(X.tail(5))
+    X = X.head(6).append(X.tail(6))
     X = X.apply(lambda x: (x - x.min())/(x.max()-x.min()))
 
-    y = y.head(5).append(y.tail(5))
+    y = y.head(6).append(y.tail(6))
     y = (y/1000000).applymap(int)
 
 
@@ -45,8 +45,10 @@ if __name__ == '__main__':
     with sb.plotting_context('talk'):
         fig, ax = plt.subplots(figsize=(10,10), tight_layout=True)
 
-        sb.heatmap(NXdmatrixArr, annot=NXdmatrixArr, fmt='^0.2f', mask=mask.T, square=True, cmap=sb.cubehelix_palette(10), cbar=False, ax=ax, linewidths=0.75)
-        sb.heatmap(NydmatrixArr, annot=NydmatrixArr, fmt='^4.0f', mask=mask, square=True, cmap=sb.cubehelix_palette(10), cbar=False, ax=ax, linewidth=0.75)
+        fig.suptitle('PRODUTION STRATEGY DISTANCES', y=0.925)
+
+        sb.heatmap(NXdmatrixArr, annot=NXdmatrixArr, annot_kws={"size": 13}, fmt='^0.2f', mask=mask.T, square=True, cmap=sb.cubehelix_palette(10), cbar=False, ax=ax, linewidths=0.75)
+        sb.heatmap(NydmatrixArr, annot=NydmatrixArr, annot_kws={"size": 13}, fmt='^4.0f', mask=mask, square=True, cmap=sb.cubehelix_palette(10), cbar=False, ax=ax, linewidth=0.75)
 
         ax.tick_params(labeltop=True, labelright=True)
         ticklabels = []
@@ -75,13 +77,15 @@ if __name__ == '__main__':
 
         ax_divider = make_axes_locatable(ax)
 
-        cax1 = ax_divider.append_axes("right", size="7%", pad="20%")
+        cax1 = ax_divider.append_axes("right", size="5%", pad="20%")
         cbar1 = fig.colorbar(ax.get_children()[0], cax=cax1, ticks=np.linspace(0,1,11))
+        cbar1.ax.set_ylabel('NORMALIZED DISTANCE BETWEEN STRATEGIES', labelpad=20, rotation=270)
         cbar1.ax.yaxis.set_ticks_position("right")
         cbar1.ax.tick_params(size=0)
 
-        cax2 = ax_divider.append_axes("left", size="7%", pad="20%")
+        cax2 = ax_divider.append_axes("left", size="5%", pad="20%")
         cbar2 = fig.colorbar(ax.get_children()[1], cax=cax2, ticks=np.linspace(0,265,11).astype('int'))
+        cbar2.ax.set_ylabel('NPV DISTANCES [$MM]', labelpad=-75)
         cbar2.ax.yaxis.set_ticks_position("left")
         cbar2.ax.tick_params(size=0)
 

@@ -1,26 +1,21 @@
-class Trigger_Object:
+class TriggerObject:
     _increment = 0
     _avrgtime = 0
 
     @classmethod
     def set_default_increment(cls, increment):
-        if increment > 0:
+        if int(increment) > 0:
             cls._increment = increment
             return
         raise ValueError('Only positive values...')
 
     @classmethod
     def set_default_avrgtime(cls, avrgtime):
-        if avrgtime > 0:
-            cls._avrgtime= avgrtime
+        if int(avrgtime) > 0:
+            cls._avrgtime= avrgtime
             return
         raise ValueError('Only positive values...')
 
-    def __init__(self):
-        pass
-
-    def increment(self):
-        return self._increment
 
     def set_increment(self, increment):
         if increment > 0:
@@ -28,8 +23,6 @@ class Trigger_Object:
             return
         raise ValueError('Only positive values...')
 
-    def avrgtime(self):
-        return self._avrgtime
 
     def set_avrgtime(self, avrgtime):
         if avrgtime > 0:
@@ -37,5 +30,5 @@ class Trigger_Object:
             return
         raise ValueError('Only positive values...')
 
-    def repr():
+    def __call__():
         raise NotImplementedError('Method for child class...')

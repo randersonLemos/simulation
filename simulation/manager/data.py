@@ -13,16 +13,5 @@ class Data:
         return self._y.copy()
 
     def Xy(self):
-        return pd.merge(self._X, self._y, on='ID')
-
-    #def head(self, num):
-    #    other = copy.deepcopy(self)
-    #    other.X = self._X.iloc[:num,:]
-    #    other.y = self._y.iloc[:num,:]
-    #    return other
-
-    #def tail(self, num):
-    #    other = copy.deepcopy(self)
-    #    other.X = self._X.iloc[-num:,:]
-    #    other.y = self._y.iloc[-num:,:]
-    #    return other
+        raise NotImplementedError('Not implemented...')
+        #return pd.merge(self._X, self._y, on='ID')

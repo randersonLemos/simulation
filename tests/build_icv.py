@@ -3,7 +3,7 @@ os.sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from simulation.input.well.parts.astktrigger import AstkTrigger
 from simulation.input.well.parts.triggerobject_onctrllump import OnCtrllump
 from simulation.input.well.parts.triggerobject_onelapsed import OnElapsed
-from simulation.input.well.parts.clumpsetting import Clumpsetting
+from simulation.input.well.parts.astkclumpsetting import AstkClumpsetting
 
 AstkTrigger.set_default_test_times(1)
 astktrigger = AstkTrigger()
@@ -29,3 +29,6 @@ onelapsed.set_condition('*TIMSIM', '>', '1000')
 
 astktrigger2.add_trigger_obj(onelapsed)
 astktrigger2.add_action(astktrigger)
+
+astkclumpsetting = AstkClumpsetting()
+astkclumpsetting.set_layerclump_name('ICV_PRK014_Z1').set_value(0.5)

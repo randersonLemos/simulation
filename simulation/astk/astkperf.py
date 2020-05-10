@@ -1,6 +1,6 @@
 from collections.abc import Iterable
-from simulation.common.words import Words as Wd
-from simulation.common.keywords import Keywords as Kw
+from simulation.dict.words import Words as Wd
+from simulation.dict.keywords import Keywords as Kw
 import numpy as np
 
 class AstkPerf:

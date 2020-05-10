@@ -1,17 +1,17 @@
 from os import sys, path; sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
-from simulation.common.keywords import Keywords as Kw
-from simulation.input.well.parts.astkwell import AstkWell
-from simulation.input.well.parts.astkproducer import AstkProducer
-from simulation.input.well.parts.astkoperate import AstkOperate
-from simulation.input.well.parts.astkmonitor import AstkMonitor
-from simulation.input.well.parts.astkgeometry import AstkGeometry
-from simulation.input.well.parts.astkperf import AstkPerf
-from simulation.input.well.parts.astkopen import AstkOpen
-from simulation.input.well.parts.astkshutin import AstkShutin
-from simulation.input.well.parts.astkontime import AstkOntime
-from simulation.input.well.parts.astklayerclump import AstkLayerclump
-from simulation.input.well.parts.astklayerclump import AstkLayerclumps
+from simulation.dict.keywords import Keywords as Kw
+from simulation.astk.astkwell import AstkWell
+from simulation.astk.astkproducer import AstkProducer
+from simulation.astk.astkoperate import AstkOperate
+from simulation.astk.astkmonitor import AstkMonitor
+from simulation.astk.astkgeometry import AstkGeometry
+from simulation.astk.astkperf import AstkPerf
+from simulation.astk.astkopen import AstkOpen
+from simulation.astk.astkshutin import AstkShutin
+from simulation.astk.astkontime import AstkOntime
+from simulation.astk.astklayerclump import AstkLayerclump
+from simulation.astk.astklayerclump import AstkLayerclumps
 
 astkwell = AstkWell().set_name('PRK014').set_group('PRODUCTION')
 

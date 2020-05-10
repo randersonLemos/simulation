@@ -1,4 +1,4 @@
-from simulation.common.keywords import Keywords as Kw
+from simulation.dict.keywords import Keywords as Kw
 
 class AstkOntime:
     def set_well_name(self, name):

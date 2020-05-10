@@ -1,9 +1,9 @@
 import os
 os.sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from simulation.input.well.parts.astktrigger import AstkTrigger
-from simulation.input.well.parts.triggerobject_onctrllump import OnCtrllump
-from simulation.input.well.parts.triggerobject_onelapsed import OnElapsed
-from simulation.input.well.parts.astkclumpsetting import AstkClumpsetting
+from simulation.astk.astktrigger import AstkTrigger
+from simulation.astk.triggerobject_onctrllump import OnCtrllump
+from simulation.astk.triggerobject_onelapsed import OnElapsed
+from simulation.astk.astkclumpsetting import AstkClumpsetting
 
 AstkTrigger.set_default_test_times(1)
 astktrigger = AstkTrigger()

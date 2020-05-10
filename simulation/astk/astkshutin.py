@@ -1,4 +1,4 @@
-from simulation.common.keywords import Keywords as Kw
+from simulation.dict.keywords import Keywords as Kw
 
 class AstkShutin:
     def __init__(self):

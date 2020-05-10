@@ -1,5 +1,5 @@
-from simulation.common.keywords import Keywords as Kw
-from simulation.input.well.parts.triggerobject import TriggerObject
+from simulation.dict.keywords import Keywords as Kw
+from simulation.astk.triggerobject import TriggerObject
 
 class AstkTrigger:
     _apply_times = 0

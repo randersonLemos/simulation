@@ -81,6 +81,9 @@ class Keywords:
     def timsim(): return '*TIMSIM'
 
     @staticmethod
+    def treltd(): return '*TRELTD'
+
+    @staticmethod
     def sto_rp(): return '*STO-RP'
 
     @staticmethod
@@ -117,10 +120,16 @@ class Keywords:
     def increment(): return '*INCREMENT'
 
     @staticmethod
+    def avrgtime(): return '*AVRGTIME'
+
+    @staticmethod
     def on_elapsed(): return '*ON_ELAPSED'
 
     @staticmethod
     def layerclump(): return '*LAYERCLUMP'
+
+    @staticmethod
+    def test_times(): return '*TEST_TIMES'
 
     @staticmethod
     def apply_times(): return '*APPLY_TIMES'

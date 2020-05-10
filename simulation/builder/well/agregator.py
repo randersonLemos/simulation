@@ -1,4 +1,4 @@
-from simulation.model.well.slots import Slots
+from simulation.builder.well.slots import Slots
 
 class Agregator:
     def __init__(self):
@@ -37,5 +37,8 @@ class Agregator:
     def _suffix(self, stg, suf):
         return '{}{}'.format(stg,suf)
 
-    def __repr__(self):
+    def to_string(self):
         return '\n'.join(self._lst)
+
+    def __repr__(self):
+        return self.to_string()

@@ -28,7 +28,7 @@ class AstkTrigger:
     def add_trigger_obj(self, obj): # statement
         if isinstance(obj, TriggerObject):
             self._stat.append(obj)
-            return
+            return self
         raise TypeError('Not allowed type...')
 
 
@@ -38,6 +38,7 @@ class AstkTrigger:
 
     def set_name(self, name):
         self._name = "'" + name + "'"
+        return self
 
 
     def set_apply_times(self, apply_times):
@@ -55,7 +56,7 @@ class AstkTrigger:
         '''
         if apply_times > 0:
             self._apply_times = apply_times
-            return
+            return self
         raise ValueError('Only positive values...')
 
 
@@ -76,7 +77,7 @@ class AstkTrigger:
         '''
         if test_times > 0:
             self._test_times = test_times
-            return
+            return self
         raise ValueError('Only positive values...')
 
 

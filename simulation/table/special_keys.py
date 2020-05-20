@@ -1,6 +1,6 @@
 class Special_Keys:
     @staticmethod
-    def time(): return 'Time'
+    def time(): return 'TIME'
 
     @staticmethod
-    def date(): return 'Date'
+    def date(): return 'DATE'

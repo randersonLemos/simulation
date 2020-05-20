@@ -1,0 +1,178 @@
+** Arquivo gerado pelo MERO em 04/09/2019 14:15:18
+** cp=0
+** ff=1
+** img=80
+** kr=1
+** ogr=0.91
+** oiw=0.98
+** opl=1
+** opw=1
+** pvt=0
+RESULTS SIMULATOR IMEX 201710
+
+******************************************************************************
+**                                UNISIM-II-D-BO                            **
+**                                                                          **
+**           Production Optimization - Black Oil Simulation Model           **
+**                                                                          **
+******************************************************************************
+
+******************************************************************************
+** I/O Control Section                                                      **
+******************************************************************************
+**CHECKONLY
+**NOLIST
+*INCLUDE './include/iocontrol/config.inc'
+
+******************************************************************************
+** Reservoir Description Section                                            **
+******************************************************************************
+*GRID *CORNER 46 69 30
+*CORNERS
+*INCLUDE './include/reservoir/grid.inc'
+*DUALPERM
+*SHAPE *GK
+*POR *MATRIX *ALL
+*INCLUDE './include/reservoir/POR80.inc'
+*POR *FRACTURE *ALL
+*INCLUDE './include/reservoir/PFR80.inc'
+*PERMI *MATRIX *ALL
+*INCLUDE './include/reservoir/KX80.inc'
+*PERMI *FRACTURE *ALL
+*INCLUDE './include/reservoir/KFX80.inc'
+*PERMJ *MATRIX *ALL
+*INCLUDE './include/reservoir/KY80.inc'
+*PERMJ *FRACTURE *ALL
+*INCLUDE './include/reservoir/KFY80.inc'
+*PERMK *MATRIX *ALL
+*INCLUDE './include/reservoir/KZ80.inc'
+*PERMK *FRACTURE *ALL
+*INCLUDE './include/reservoir/KFZ80.inc'
+*DIFRAC *ALL
+*INCLUDE './include/reservoir/SGX80.inc'
+*DJFRAC *ALL
+*INCLUDE './include/reservoir/SGY80.inc'
+*DKFRAC *ALL
+*INCLUDE './include/reservoir/SGZ80.inc'
+*NETGROSS *MATRIX *ALL
+*INCLUDE './include/reservoir/NTG80.inc'
+*NULL *MATRIX *ALL
+*INCLUDE './include/reservoir/null_mtrx.inc'
+*NULL *FRACTURE *ALL
+*INCLUDE './include/reservoir/null_frac.inc'
+*INCLUDE './include/reservoir/fltrans.inc'
+*INCLUDE './include/reservoir/pinc.inc'
+*TRANSFER 0
+
+******************************************************************************
+** Component Properties Section                                             **
+******************************************************************************
+*PRPOR *MATRIX   450.0
+*PRPOR *FRACTURE 450.0
+*CPOR *MATRIX
+*INCLUDE './include/component/CP0.inc'
+*CPOR *FRACTURE
+*INCLUDE './include/component/CP0.inc'
+*INCLUDE './include/component/PVT0.inc'
+*PTYPE *MATRIX   *CON 1
+*PTYPE *FRACTURE *CON 1
+
+******************************************************************************
+** Rock-Fluid Properties Section                                            **
+******************************************************************************
+*ROCKFLUID
+*INCLUDE './include/petrophysics/KR1.inc'
+*RTYPE *MATRIX *ALL
+*INCLUDE './include/petrophysics/RTP80.inc'
+*RTYPE *FRACTURE *CON 2
+
+******************************************************************************
+** Initial Conditions Section                                               **
+******************************************************************************
+*INITIAL
+*VERTICAL *Block_Center *WATER_OIL
+*REFDEPTH 4850
+*REFPRES   450
+*DWOC     9999
+*PB *MATRIX *CON
+*INCLUDE './include/initial/PB0.inc'
+*PB *FRACTURE *CON
+*INCLUDE './include/initial/PB0.inc'
+
+******************************************************************************
+** Numerical Control Section                                                **
+******************************************************************************
+*INCLUDE './include/numerical/config.inc'
+
+******************************************************************************
+** Wells and Recurrent Section                                              **
+******************************************************************************
+*RUN
+*DATE 2016 9 30.00000
+*AIMSET *FRACTURE *CON 1
+*DTWELL 1
+
+**----------------------------------------------------------------------------
+** Wildcat and History Match                                                --
+** From 2016 10 01 (TIME 1) until 2018 02 28 (TIME 516)                     --
+** Wildcat well defined and history match performed                         --
+**----------------------------------------------------------------------------
+*INCLUDE './include/recurrent/wells/wildcat.inc
+*INCLUDE './include/recurrent/history-match/wildcat/time-00001-00516.inc'
+
+**----------------------------------------------------------------------------
+** Period to set up exploitation strategy                                   --
+** From 2018 03 01 (TIME 517) until 2020 02 28 (TIME 1246)                  --
+** Nothing done. The time just passes.                                      --
+**----------------------------------------------------------------------------
+*INCLUDE './include/recurrent/development/drilling/time-00517-01246.inc'
+
+**----------------------------------------------------------------------------
+** Production Unit                                                          --
+** Groups, groups constraints, inguide approach, and available time         --
+**----------------------------------------------------------------------------
+*INCLUDE './include/recurrent/facilities/config.inc'
+
+**----------------------------------------------------------------------------
+** Producers (9 + Wildcat)                                                  --
+**----------------------------------------------------------------------------
+*INCLUDE './wells/PRK085.inc'
+*INCLUDE './wells/PRK084.inc'
+*INCLUDE './wells/PRK045.inc'
+*INCLUDE './wells/PRK083.inc'
+*INCLUDE './wells/PRK060.inc'
+*INCLUDE './wells/Wildcat.inc'
+*INCLUDE './wells/PRK028.inc'
+*INCLUDE './wells/PRK061.inc'
+*INCLUDE './wells/PRK014.inc'
+*INCLUDE './wells/PRK052.inc'
+
+**----------------------------------------------------------------------------
+** Injectors - WAG(8)                                                       --
+**----------------------------------------------------------------------------
+*INCLUDE './wells/IRK004.inc'
+*INCLUDE './wells/IRK028.inc'
+*INCLUDE './wells/IRK029.inc'
+*INCLUDE './wells/IRK036.inc'
+*INCLUDE './wells/IRK049.inc'
+*INCLUDE './wells/IRK050.inc'
+*INCLUDE './wells/IRK056.inc'
+*INCLUDE './wells/IRK063.inc'
+
+**----------------------------------------------------------------------------
+** Well schedule                                                            --
+** From 2020 02 29 (TIME 1247) until 2022 03 31 (TIME 2008)                 --
+**----------------------------------------------------------------------------
+**DTMAX 1.0
+*INCLUDE './include/recurrent/development/opening/time-01247-02008.inc'
+
+**----------------------------------------------------------------------------
+** Field production - Opening Schedule and Management stage                 --
+** From 2022 04 30 (TIME 2038) until the rest of simulation is field        --
+** management stage                                                         --
+**----------------------------------------------------------------------------
+**DTMAX 15.0
+
+$#@SIMTIME@#$
+
+*STOP

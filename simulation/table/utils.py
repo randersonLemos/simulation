@@ -18,7 +18,7 @@ def is_sector_table(lst):
 
 def get_tables(path_to_rwo_file):
     tabs = Tables()
-    tabs.path_to_rwo_file = path_to_rwo_file
+    tabs.path_to_rwo_file = pathlib.Path(path_to_rwo_file)
     lst = []
     with pathlib.Path(path_to_rwo_file).open() as fh:
         for raw_line in reversed(list(fh)):

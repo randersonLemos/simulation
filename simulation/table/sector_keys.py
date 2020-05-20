@@ -6,7 +6,8 @@ class Sector_Keys:
     def date(): return 'DATE'
 
     @staticmethod
-    def sector(): return 'SECTOR'
+    #def sector(): return 'SECTOR'
+    def sector(): return 'FIELD'
 
     @staticmethod
     def recovery_factor(): return 'FIELD RECOVERY FACTOR'

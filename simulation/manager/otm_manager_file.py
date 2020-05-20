@@ -77,6 +77,7 @@ class OtmManagerFile():
             simulation_file_prefix = self._default_simulation_file_prefix
 
         prefix = '{}*'.format(simulation_file_prefix)
+        pattern = re.compile('{}\d\d\d\d{}'.format(simulation_file_prefix, ext))
         if ext:
             prefix = '{}*{}'.format(simulation_file_prefix, ext)
             pattern = re.compile('{}\d\d\d\d{}'.format(simulation_file_prefix, ext))

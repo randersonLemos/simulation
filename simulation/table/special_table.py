@@ -7,22 +7,22 @@ class Special_Table:
     def __init__(self, lst):
         if 'CTRL LR' in lst[1]:
             if 'Oil Production Rate' in lst[3]:
-                what = 'OPR'
+                what = 'ZOPR'
             elif 'Water Production Rate' in lst[3]:
-                what = 'WPR'
+                what = 'ZWPR'
         elif 'CTRL LC' in lst[1]:
             if 'Oil Production Cum.' in lst[3]:
-                what = 'OPC'
+                what = 'ZOPC'
             elif 'Water Production Cum.' in lst[3]:
-                what = 'WPC'
+                what = 'ZWPC'
         elif 'CTRL GR' in lst[1]:
-            what = 'GPR'
+            what = 'ZGPR'
         elif 'CTRL GC' in lst[1]:
-            what = 'GPC'
+            what = 'ZGPC'
         elif 'CTRL WCUT' in lst[1]:
-            what = 'WCUT'
+            what = 'ZWCUT'
         elif 'CTRL GOR' in lst[1]:
-            what = 'GOR'
+            what = 'ZGOR'
 
         self.file = lst[0]
         self.what = what
@@ -38,8 +38,9 @@ class Special_Table:
         data = [raw.split('\t') for raw in lst[5:]]
         self.df = pd.DataFrame(data, columns=cols)
         self.df = self.df.apply(pd.to_numeric, errors='ignore')
-        self.df['Date'] = self.df['Date'].apply(pd.to_datetime, format='%Y/%m/%d', errors='ignore')
-        self.df = self.df.set_index('Date', drop=True)
+        self.df['DATE'] = self.df['DATE'].apply(pd.to_datetime, format='%Y/%m/%d', errors='ignore')
+        self.df = self.df.set_index('DATE', drop=True)
+
 
     def _get_cols(self, line):
         cols = [Special_Keys.time(),Special_Keys.date()]

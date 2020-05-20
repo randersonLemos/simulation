@@ -6,31 +6,55 @@ class Well_Keys:
     def date(): return 'DATE'
 
     @staticmethod
-    def well_state(): return 'WELL STATE'
+    def state(): return 'WELL STATE'
 
     @staticmethod
-    def oil_dot_prod_sc(): return 'WELL OIL RATE SC'
+    def oil_prod_sc(): return 'WELL OIL PROD CUMU SC'
 
     @staticmethod
-    def oil_prod_sc(): return 'WELL OIL CUMU SC'
+    def oil_prod_dot_sc(): return 'WELL OIL PROD RATE SC'
 
     @staticmethod
-    def gas_dot_prod_sc(): return 'WELL GAS RATE SC'
+    def gas_prod_sc(): return 'WELL GAS PROD CUMU SC'
 
     @staticmethod
-    def gas_prod_sc(): return 'WELL GAS CUMU SC'
+    def gas_prod_dot_sc(): return 'WELL GAS PROD RATE SC'
 
     @staticmethod
-    def wat_dot_prod_sc(): return 'WELL WATER RATE SC'
+    def wat_prod_sc(): return 'WELL WATER PROD CUMU SC'
 
     @staticmethod
-    def wat_prod_sc(): return 'WELL WATER CUMU SC'
+    def wat_prod_dot_sc(): return 'WELL WATER PROD RATE SC'
 
     @staticmethod
-    def liq_dot_prod_sc(): return 'WELL LIQ RATE SC'
+    def liq_prod_sc(): return 'WELL LIQ PROD CUMU SC'
 
     @staticmethod
-    def liq_prod_sc(): return 'WELL LIQ CUMU SC'
+    def liq_prod_dot_sc(): return 'WELL LIQ PROD RATE SC'
+
+    @staticmethod
+    def oil_inje_sc(): return 'WELL OIL INJE CUMU SC'
+
+    @staticmethod
+    def oil_inje_dot_sc(): return 'WELL OIL INJE RATE SC'
+
+    @staticmethod
+    def gas_inje_sc(): return 'WELL GAS INJE CUMU SC'
+
+    @staticmethod
+    def gas_inje_dot_sc(): return 'WELL GAS INJE RATE SC'
+
+    @staticmethod
+    def wat_inje_sc(): return 'WELL WATER INJE CUMU SC'
+
+    @staticmethod
+    def wat_inje_dot_sc(): return 'WELL WATER INJE RATE SC'
+
+    @staticmethod
+    def liq_inje_sc(): return 'WELL LIQ INJE CUMU SC'
+
+    @staticmethod
+    def liq_inje_dot_sc(): return 'WELL LIQ INJE RATE SC'
 
     @staticmethod
     def gor_sc(): return 'WELL GOR SC'
@@ -42,7 +66,7 @@ class Well_Keys:
     def wat_cut_sc(): return 'WELL WCUT SC'
 
     @staticmethod
-    def well_bhp(): return 'WELL BHP'
+    def bhp(): return 'WELL BHP'
 
     @staticmethod
-    def well_bhpd(): return 'WELL BHPD'
+    def bhp_dot(): return 'WELL BHPD'

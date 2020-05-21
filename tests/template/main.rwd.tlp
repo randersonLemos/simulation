@@ -5,7 +5,8 @@
 ** results file:
 
 
-$#@IRFFILE@#$
+*FILES '$#@IRFFILE@#$'
+*OUTPUT '$#@RWOFILE@#$'
 
 
 *LINES-PER-PAGE  50000     ** Don't have any page breaks in the table

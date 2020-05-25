@@ -1,102 +1,109 @@
-from .graph import Graph
-import matplotlib.pyplot as plt
+from ._graph import *
+
+class Special_Graph(Default):
+    @Preprocessing
+    def oil_prod(self, zone_lst, title=None, ax=None):
+        if not title: title = 'ZONE OIL PRODUCTION'
+        key = 'ZOPC'
+        self._fluid(zone_lst, title, key, ax)
+        return ax
+
+    @Preprocessing
+    def gas_prod(self, zone_lst, title=None, ax=None):
+        if not title: title = 'ZONE GAS PRODUCTION'
+        key = 'ZGPC'
+        self._gas(zone_lst, title, key, ax)
+        return ax
+
+    @Preprocessing
+    def wat_prod(self, zone_lst, title=None, ax=None):
+        if not title: title = 'ZONE WATER PRODUCTION'
+        key = 'ZWPC'
+        self._fluid(zone_lst, title, key, ax)
+        return ax
+
+    @Preprocessing
+    def gor(self, zone_lst, title=None, ax=None):
+        if not title: title = 'ZONE GOR'
+        key = 'ZGOR'
+        self._gor(zone_lst, title, key, ax)
+        return ax
+
+    @Preprocessing
+    def wcut(self, zone_lst, tile=None, ax=None):
+        title = 'ZONE WCUT'
+        key = 'ZWCUT'
+        self._wcut(zone_lst, title, key, ax)
+        return ax
+
+    def _fluid(self, zone_lst, title, key, ax):
+        Df = pd.DataFrame()
+        lst = []
+        for tables in self.tables:
+            #import pdb; pdb.set_trace()
+            df = pd.DataFrame(tables.get(key).df[zone_lst] / 1000)
+            df['RUN'] = tables.path_to_rwo_file.stem
+            lst.append(df)
+        Df = pd.concat(lst).reset_index()
+        Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
+
+        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+
+        ax.set_title(title)
+        ax.set_ylabel('$msm^3$')
+
+        self._default_ax(ax)
+
+    def _gas(self, zone_lst, title, key, ax):
+        Df = pd.DataFrame()
+        lst = []
+        for tables in self.tables:
+            df = pd.DataFrame(tables.get(key).df[zone_lst] / 1000000)
+            df['RUN'] = tables.path_to_rwo_file.stem
+            lst.append(df)
+        Df = pd.concat(lst).reset_index()
+        Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
+
+        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+
+        ax.set_title(title)
+        ax.set_ylabel('$mmsm^3$')
+
+        self._default_ax(ax)
+
+    def _gor(self, zone_lst, title, key, ax):
+        Df = pd.DataFrame()
+        lst = []
+        for tables in self.tables:
+            df = pd.DataFrame(tables.get(key).df[zone_lst])
+            df['RUN'] = tables.path_to_rwo_file.stem
+            lst.append(df)
+        Df = pd.concat(lst).reset_index()
+        Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
+
+        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+
+        ax.set_title(title)
+        ax.set_ylabel('$sm^3/sm^3$')
+
+        self._default_ax(ax)
+
+    def _wcut(self, zone_lst, title, key, ax):
+        Df = pd.DataFrame()
+        lst = []
+        for tables in self.tables:
+            df = pd.DataFrame(tables.get(key).df[zone_lst]).fillna(0)
+            df['RUN'] = tables.path_to_rwo_file.stem
+            lst.append(df)
+        Df = pd.concat(lst).reset_index()
+        Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
+
+        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+
+        ax.set_title(title)
+        ax.set_ylabel('$\\%$')
+
+        self._default_ax(ax)
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{:0.0f}'.format(x)))
 
 
-class Special_Graph:
-    def __init__(self, well_lst, table_obj):
-        self.well_lst = well_lst
-        self.table_obj = table_obj
-
-    def essential_prod(self, well_lst=[]):
-        fig, axs = plt.subplots(2, 2, sharex=True, sharey=False)
-        self.opr(axs[0,0], well_lst)
-        self.wcut(axs[0,1], well_lst)
-        self.gor(axs[1,1], well_lst)
-
-    def essential_inje(self, well_lst=[]):
-        fig, axs = plt.subplots(2, sharex=True, sharey=False)
-        self.wpr(axs[0], well_lst)
-        self.gpr(axs[1], well_lst)
-
-    def opc(self, ax=None, well_lst=[]):
-        tab = self.table_obj
-        if not well_lst: well_lst = self.well_lst
-
-        for well in well_lst:
-            df = tab.grp_col_spe_well(well)
-            df = df.filter(like='OPC', axis=1)
-            if ax is None: fig, ax = plt.subplots()
-            if not df.empty: Graph.fluid_dot(ax, df, well)
-
-    def opr(self, ax=None, well_lst=[]):
-        tab = self.table_obj
-        if not well_lst: well_lst = self.well_lst
-
-        for well in well_lst:
-            df = tab.grp_col_spe_well(well)
-            df = df.filter(like='OPR', axis=1)
-            if ax is None: fig, ax = plt.subplots()
-            if not df.empty: Graph.fluid_dot(ax, df, well)
-
-    def gpc(self, ax=None, well_lst=[]):
-        tab = self.table_obj
-        if not well_lst: well_lst = self.well_lst
-
-        for well in well_lst:
-            df = tab.grp_col_spe_well(well)
-            df = df.filter(like='GPC', axis=1)
-            if ax is None: fig, ax = plt.subplots()
-            if not df.empty: Graph.fluid_dot(ax, df, well)
-
-    def wpr(self, ax=None, well_lst=[]):
-        tab = self.table_obj
-        if not well_lst: well_lst = self.well_lst
-
-        for well in well_lst:
-            df = tab.grp_col_spe_well(well)
-            df = df.filter(like='WPR', axis=1)
-            if ax is None: fig, ax = plt.subplots()
-            if not df.empty: Graph.fluid_dot(ax, df, well)
-
-    def wpc(self, ax=None, well_lst=[]):
-        tab = self.table_obj
-        if not well_lst: well_lst = self.well_lst
-
-        for well in well_lst:
-            df = tab.grp_col_spe_well(well)
-            df = df.filter(like='WPC', axis=1)
-            if ax is None: fig, ax = plt.subplots()
-            if not df.empty: Graph.fluid_dot(ax, df, well)
-
-    def gpr(self, ax=None, well_lst=[]):
-        tab = self.table_obj
-        if not well_lst: well_lst = self.well_lst
-
-        for well in well_lst:
-            df = tab.grp_col_spe_well(well)
-            df = df.filter(like='GPR', axis=1)
-            if ax is None: fig, ax = plt.subplots()
-            if not df.empty: Graph.fluid_dot(ax, df, well)
-
-    def wcut(self, ax=None, well_lst=[]):
-        tab = self.table_obj
-        if not well_lst: well_lst = self.well_lst
-
-        for well in well_lst:
-            df = tab.grp_col_spe_well(well)
-            df = df.filter(like='WCUT', axis=1)
-            if ax is None: fig, ax = plt.subplots()
-            if not df.empty: Graph.percent(ax, df, well)
-
-    def gor(self, ax=None, well_lst=[]):
-        tab = self.table_obj
-        if not well_lst: well_lst = self.well_lst
-
-        for well in well_lst:
-            df = tab.grp_col_spe_well(well)
-            df = df.filter(like='GOR', axis=1)
-            if ax is None: fig, ax = plt.subplots()
-            if not df.empty: Graph.fluid_ratio(ax, df, well)
-
-    def show(self):
-        Graph.show()

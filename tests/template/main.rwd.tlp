@@ -5,7 +5,7 @@
 ** results file:
 
 
-*FILES '$#@IRFFILE@#$'
+*FILES  '$#@IRFFILE@#$'
 *OUTPUT '$#@RWOFILE@#$'
 
 

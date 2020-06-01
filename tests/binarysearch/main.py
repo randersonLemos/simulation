@@ -10,7 +10,7 @@ holder = []
 holder.append(st.simtime().split('\n'))
 curr = holder
 
-count = 3
+count = 4
 while count:
     tmp = []
     for lst in curr:
@@ -21,6 +21,11 @@ while count:
         holder.append(lst)
     count -= 1
 
+
+llst = []
 for lst in holder:
-    stg = '{} {}'.format(lst[int(len(lst)*1/4)], lst[int(len(lst)*3/4)])
-    print(stg)
+    llst.append('{} --> {} {}'.format(lst[int(len(lst)*1/2)].split('**')[0], lst[int(len(lst)*1/4)].split('**')[0], lst[int(len(lst)*3/4)].split('**')[0]))
+
+llst = sorted(llst)
+for el in llst:
+    print(el, file=open('out.txt', 'a'))

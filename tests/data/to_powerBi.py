@@ -9,15 +9,19 @@ if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) 
 from simulation.manager.otm_manager_file import OtmManagerFile
 from simulation.manager.otm_manager_data import OtmManagerData
 
-root = pathlib.Path('/media/pamonha/DATA/DRIVE/OTM_20200101')
+if os.name == 'posix':
+    root = pathlib.Path('/media/pamonha/DATA/DRIVE/OTM_20200101')
+else:
+    root = pathlib.Path('H:/')
+    
 pathprojects = {}
-pathprojects['SSS1'] = root / 'OTM_ICV1_SSS1_1'
-pathprojects['SSS2'] = root / 'OTM_ICV1_SSS1_2'
-pathprojects['WIDE'] = root / 'OTM_ICV1_WIDE1_1'
-pathprojects['TIM1'] = root / 'OTM_ICV1_TIME1_RANGE1_1'
-pathprojects['TIM2'] = root / 'OTM_ICV1_TIME1_RANGE2_1'
-pathprojects['TIM3'] = root / 'OTM_ICV1_TIME1_RANGE3_1'
-pathprojects['TIM4'] = root / 'OTM_ICV1_TIME1_RANGE4_1'
+pathprojects['SSS1'] = root / 'OTM_GOR_ICV1_SSS1_1'
+pathprojects['SSS2'] = root / 'OTM_GOR_ICV1_SSS2_1'
+pathprojects['WIDE'] = root / 'OTM_GOR_ICV1_WIDE1_1'
+pathprojects['TIM1'] = root / 'OTM_TIME_ICV1_RANGE1_1'
+pathprojects['TIM2'] = root / 'OTM_TIME_ICV1_RANGE2_1'
+pathprojects['TIM3'] = root / 'OTM_TIME_ICV1_RANGE3_1'
+pathprojects['TIM4'] = root / 'OTM_TIME_ICV1_RANGE4_1'
 
 from simulation.manager.otm_manager_file import OtmManagerFile
 from simulation.manager.otm_manager_data import OtmManagerData

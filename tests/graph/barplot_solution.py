@@ -16,6 +16,8 @@ _Order['WIDE'] = 2
 _Order['TIM1'] = 3
 _Order['TIM2'] = 4
 _Order['TIM3'] = 5
+_Order['TIM4'] = 6
+_Order['TIM5'] = 7
 
 root = pathlib.Path('/media/pamonha/DATA/DRIVE/OTM_20200101')
 pathprojects = {}
@@ -25,7 +27,8 @@ pathprojects['WIDE'] = root / 'OTM_GOR_ICV1_WIDE1_1'
 pathprojects['TIM1'] = root / 'OTM_TIME_ICV1_RANGE1_1'
 pathprojects['TIM2'] = root / 'OTM_TIME_ICV1_RANGE2_1'
 pathprojects['TIM3'] = root / 'OTM_TIME_ICV1_RANGE3_1'
-pathprojects['TIM3'] = root / 'OTM_TIME_ICV1_RANGE4_1'
+pathprojects['TIM4'] = root / 'OTM_TIME_ICV1_RANGE4_1'
+pathprojects['TIM5'] = root / 'OTM_TIME_ICV1_RANGE5_1'
 
 from simulation.manager.otm_manager_file import OtmManagerFile
 from simulation.manager.otm_manager_data import OtmManagerData
@@ -71,3 +74,4 @@ for index, row in pivs[pivs['FUNC'] == 'MAX'].groupby('GROUP').max().iterrows():
 
 for index, row in pivs[pivs['FUNC'] == 'LEN'].groupby('GROUP').sum().iterrows():
     axs[1].text(_Order[index], row['NPV']+1, row['NPV'], color='black', ha="center", fontsize='x-large')
+axs[1].set_xlabel('')

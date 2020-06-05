@@ -1,3 +1,29 @@
+def search_space():
+    path = omf.project_root() / 'otm.mero'
+    with path.open('r') as fh:
+        cols = []
+        content = []
+        do_append = False
+        for line in fh:
+            if line == '\n': do_append = False
+
+            if do_append:
+                line = line.replace('_GOR INT', '')
+                line = line.replace('RK0', '')
+                line = line.replace('_', '')
+
+                cols.append(line.strip().split(' ')[0])
+                content.append(list(map(int, line.strip().split(' ')[1:])))
+
+
+            if line == '*ATTRIBUTE_LIST\n': do_append = True
+
+    df = pd.DataFrame(content).T
+    df.columns = cols
+
+    return df
+
+
 import os
 import numpy as np
 import pandas as pd
@@ -7,14 +33,14 @@ if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) 
 from simulation.manager.otm_manager_file import OtmManagerFile
 from simulation.manager.otm_manager_data import OtmManagerData
 
-OtmManagerFile.set_default_simulation_folder_prefix('otm_iteration')
-OtmManagerFile.set_default_simulation_file_prefix('model')
-OtmManagerFile.set_default_result_file('otm.csv')
+OtmManagerFile.set_default_simulation_folder_prefix('otm_IT')
+OtmManagerFile.set_default_simulation_file_prefix('run')
+OtmManagerFile.set_default_result_file('otm.otm.csv')
 OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
-omf = OtmManagerFile('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_SSS1_1')
-group = 'SSS1'
-omd = OtmManagerData([group] ,[omf])
+_Group = 'TIM5'
+omf = OtmManagerFile('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_TIME_ICV1_RANGE5_1')
+omd = OtmManagerData([_Group] ,[omf])
 X = omd.data().X()
 
 y = omd.data().y()
@@ -24,15 +50,20 @@ toPlot = X.copy()
 toPlot.columns = toPlot.columns.str.replace('_GOR', '')
 toPlot.columns = toPlot.columns.str.replace('PRK0', 'P')
 toPlot.columns = toPlot.columns.str.replace('_', '')
+
+toPlot.columns = toPlot.columns.str.replace('CLOSETIME', '')
+toPlot.columns = toPlot.columns.str.replace('PRK0', 'P')
+toPlot.columns = toPlot.columns.str.replace('_', '')
+
+
 toPlot['NPV'] = y['NPV'].astype('int')
 toPlot = toPlot.set_index('NPV')
 
-with sb.plotting_context('talk'):
+with sb.plotting_context('notebook'):
     fig, ax = plt.subplots(figsize=(15,5), tight_layout=True)
-    sb_heatmap = sb.heatmap(toPlot.iloc[-20:,:], fmt='d', annot=True, annot_kws={'fontsize':'x-small'}, cbar=False, square=False, ax=ax)
-    plt.title('BEST {} STRATEGIES'.format(group))
-    #plt.ylabel('RUNS')
-    sb_heatmap.get_figure().savefig('fig/strategies_{}.png'.format(group))
+    sb.heatmap(toPlot.iloc[-20:,:], fmt='d', annot=True, annot_kws={'fontsize':'medium'}, cbar=False, square=False, ax=ax)
+    plt.title('BEST {} STRATEGIES'.format(_Group))
+    fig.savefig('fig/strategies_{}.png'.format(_Group))
 
 #if __name__ == '__main__':
 #    omf, omd = load_data()

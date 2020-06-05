@@ -16,13 +16,17 @@ import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from simulation.table.utils import get_tables
 
-tables = get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_SSS1_1/otm_IT001/run0001.rwo')
-tables.date_range(ini='2020')
-for well_name, alias in inje_lst: tables.add(tables.join(well_name, *alias, dell=True)) # join xxxxxx-w and xxxxxx-g to xxxxxx
+Tables = []
+#Tables.append(get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_SSS2_1/otm_IT020/run1996.rwo'))
+Tables.append(get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_TIME_ICV1_RANGE5_1/otm_IT006/run0540.rwo'))
+
+for tables in Tables:
+    tables.date_range(ini='2020')
+    for well_name, alias in inje_lst: tables.add(tables.join(well_name, *alias, dell=True)) # join xxxxxx-w and xxxxxx-g to xxxxxx
 
 from simulation.table.sector_graph import Sector_Graph
 
-sg = Sector_Graph(tables)
+sg = Sector_Graph(Tables)
 _, _, path = sg.oil_prod(savefig_rootpath='./fig'); plt.savefig(path)
 
 _, _, path = sg.gas_prod(savefig_rootpath='./fig'); plt.savefig(path)

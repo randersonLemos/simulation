@@ -19,56 +19,27 @@ import matplotlib.pyplot as plt
 
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+from simulation.table.utils import get_tables
 
-ROOTPROJECTS = pathlib.Path('/media/pamonha/DATA/DRIVE/OTM_20200101')
-pathprojects = {}
-pathprojects['WIDE1'] = ROOTPROJECTS / 'OTM_ICV1_WIDE1_1'
-pathprojects['WIDE2'] = ROOTPROJECTS / 'OTM_ICV1_WIDE1_2'
-pathprojects['WIDE3'] = ROOTPROJECTS / 'OTM_ICV1_WIDE1_3'
-pathprojects['SSS'] = ROOTPROJECTS / 'OTM_ICV1_SSS1_1'
-pathprojects['SSSFLEX'] = ROOTPROJECTS / 'OTM_ICV1_SSS1_FLEX1_1'
-pathprojects['TIME'] = ROOTPROJECTS / 'OTM_ICV1_TIME1_RANGE1_3'
+Tables = []
+Tables.append(get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_SSS2_1/otm_IT020/run1996.rwo'))
 
-from simulation.manager.otm_manager_file import OtmManagerFile
-from simulation.manager.otm_manager_data import OtmManagerData
+for tables in Tables:
+    tables.date_range(ini='2020')
+    for well_name, alias in inje_lst: tables.add(tables.join(well_name, *alias, dell=True)) # join xxxxxx-w and xxxxxx-g to xxxxxx
 
-OtmManagerFile.set_default_simulation_folder_prefix('otm_IT')
-OtmManagerFile.set_default_simulation_file_prefix('run')
-OtmManagerFile.set_default_result_file('otm.otm.csv')
-OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
+from simulation.table.special_graph import Special_Graph
 
-omd = OtmManagerData()
-for key, value in pathprojects.items():
-    omf = OtmManagerFile(project_root=value)
-    omd.add_omf(key, omf)
+sg = Special_Graph(Tables)
+wells = copy.copy(prod_lst[1:])
+wells.reverse()
+for i in range(0, len(prod_zone_lst), 3):
+    well = wells.pop()
+    root = pathlib.Path('./fig/{}'.format(well))
+    root.mkdir(parents=True, exist_ok=True)
 
-for key, omf in omd.omfs.items():
-    print(omf.result_file_path())
-
-
-
-def main():
-    from simulation.table.utils import get_tables
-    Tables = []
-    Tables.append(get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_ICV1_SSS1_FLEX1_1/otm_iteration_0020/model1996.rwo'))
-    Tables.append(get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_ICV1_SSS1_FLEX1_1/otm_iteration_0001/model0100.rwo'))
-
-    for tables in Tables:
-        tables.date_range(ini='2020')
-        for well_name, alias in inje_lst: tables.add(tables.join(well_name, *alias, dell=True)) # join xxxxxx-w and xxxxxx-g to xxxxxx
-
-    from simulation.table.special_graph import Special_Graph
-
-    sg = Special_Graph(Tables)
-    wells = copy.copy(prod_lst[1:])
-    wells.reverse()
-    for i in range(0, len(prod_zone_lst), 3):
-        well = wells.pop()
-        root = pathlib.Path('./fig/{}'.format(well))
-        root.mkdir(parents=True, exist_ok=True)
-
-        sg.oil_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEOILPROD.png')
-        sg.gas_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEGASPROD.png')
-        sg.wat_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEWATPROD.png')
-        sg.gor(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEGOR.png')
-        sg.wcut(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEWCUT.png')
+    sg.oil_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEOILPROD.png')
+    sg.gas_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEGASPROD.png')
+    sg.wat_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEWATPROD.png')
+    sg.gor(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEGOR.png')
+    sg.wcut(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEWCUT.png')

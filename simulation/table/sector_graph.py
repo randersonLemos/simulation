@@ -5,7 +5,7 @@ from .graph import Graph
 from .sector_keys import Sector_Keys
 
 class Sector_Graph:
-    _figsize = (10,5)
+    _figsize = (8,4)
     _tight_layout = True
 
     @classmethod

@@ -16,6 +16,7 @@ class Graph():
         df = df/1000000
         df.plot(ax=ax, x_compat=True)
 
+        plt.style.use('seaborn-talk')
         ax.set_title(title)
         ax.set_xlabel('date')
         ax.set_ylabel('$mmsm^3$')
@@ -44,6 +45,7 @@ class Graph():
         df = df/1000
         df.plot(ax=ax, x_compat=True)
 
+        plt.style.use('seaborn-talk')
         ax.set_title(title)
         ax.set_xlabel('date')
         ax.set_ylabel('$msm^3$')
@@ -56,40 +58,11 @@ class Graph():
         ax.set_ylim(ymin=0)
         ax.grid()
 
-    #@staticmethod
-    #def fluid_dot(ax, df, title):
-    #    df = df/1000
-    #    df.plot(ax=ax, x_compat=True)
-    #    plt.setp(ax.xaxis.get_majorticklabels(), rotation=90, horizontalalignment='center' )
-    #    ax.xaxis.set_major_locator(locator)
-    #    ax.xaxis.set_major_formatter(formatter)
-    #    ax.set_title(title)
-    #    ax.set_xlabel('date')
-    #    ax.set_ylabel('$msm^3/d$')
-
-    #@staticmethod
-    #def fluid_ratio(ax, df, title):
-    #    df.plot(ax=ax, x_compat=True)
-    #    plt.setp(ax.xaxis.get_majorticklabels(), rotation=90, horizontalalignment='center' )
-    #    ax.xaxis.set_major_locator(locator)
-    #    ax.xaxis.set_major_formatter(formatter)
-    #    ax.set_xlabel('date')
-    #    ax.set_ylabel('$sm^3/sm^3$')
-    #    ax.set_title(title)
-
-    #@staticmethod
-    #def percent(ax, df, title):
-    #    df.plot(ax=ax, x_compat=True)
-    #    plt.setp(ax.xaxis.get_majorticklabels(), rotation=90, horizontalalignment='center' )
-    #    ax.xaxis.set_major_locator(locator)
-    #    ax.xaxis.set_major_formatter(formatter)
-    #    ax.set_xlabel('date')
-    #    ax.set_ylabel('%')
-    #    ax.set_title(title)
-
     @staticmethod
     def pressure(df, title, ax):
         df.plot(ax=ax, x_compat=True)
+
+        plt.style.use('seaborn-talk')
 
         ax.set_title(title)
         ax.set_xlabel('date')
@@ -102,13 +75,3 @@ class Graph():
         ax.yaxis.set_major_locator(LinearLocator(5))
         ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{:0.0f}'.format(x)))
         ax.grid()
-
-    #@staticmethod
-    #def pressure_dot(ax, df, title):
-    #    df.plot(ax=ax, x_compat=True)
-    #    plt.setp(ax.xaxis.get_majorticklabels(), rotation=90, horizontalalignment='center' )
-    #    ax.xaxis.set_major_locator(locator)
-    #    ax.xaxis.set_major_formatter(formatter)
-    #    ax.set_xlabel('date')
-    #    ax.set_ylabel('$kg/m^2/day$')
-    #    ax.set_title(title)

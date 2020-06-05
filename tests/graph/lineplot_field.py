@@ -17,7 +17,7 @@ if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) 
 from simulation.table.utils import get_tables
 
 Tables = []
-#Tables.append(get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_SSS2_1/otm_IT020/run1996.rwo'))
+Tables.append(get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_SSS2_1/otm_IT020/run1996.rwo'))
 Tables.append(get_tables('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_TIME_ICV1_RANGE5_1/otm_IT006/run0540.rwo'))
 
 for tables in Tables:

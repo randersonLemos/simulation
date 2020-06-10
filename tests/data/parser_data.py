@@ -43,8 +43,6 @@ def shift_number_simulation_file(first_itFolder, shift):
             #    ))
             path.rename(path.parent / '{}.{}'.format(nname, '.'.join(ext)))
 
-
-
 def hide_hldg_files():
     for path in omf.hldg_sample_file_paths():
         if path.exists():
@@ -55,8 +53,16 @@ def delete_rstr_simulation_files():
         if '.rstr' in ''.join(path.parts):
             path.unlink()
 
+def delete_sr3_simulation_files():
+    for path in omf.simulation_file_paths('.sr3'):
+        path.unlink()
+
 def delete_unitub_simulation_files():
     for path in omf.simulation_file_paths('.unitub'):
+        path.unlink()
+
+def delete_unievent_simulation_files():
+    for path in omf.simulation_file_paths('.unievent'):
         path.unlink()
 
 def delete_SERIES_simulation_files():
@@ -64,3 +70,9 @@ def delete_SERIES_simulation_files():
         if 'SERIES' in ''.join(path.parts):
             path.unlink()
 
+def delete_not_essential_simulation_files():
+    delete_rstr_simulation_files()
+    delete_sr3_simulation_files()
+    delete_unitub_simulation_files()
+    delete_unievent_simulation_files()
+    delete_SERIES_simulation_files()

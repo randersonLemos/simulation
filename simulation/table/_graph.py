@@ -26,8 +26,6 @@ class Default:
         cls._tight_layout = bboll
 
     def __init__(self, tables):
-        plt.style.use('seaborn-talk')
-
         if not isinstance(tables, list):
             lst = []
             lst.append(tables)

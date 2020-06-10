@@ -12,6 +12,7 @@ inje_lst.append(('IRK056',('IRK056-G','IRK056-W', ), )); inje_lst.append(('IRK06
 
 import pathlib
 import matplotlib.pyplot as plt
+plt.style.use('seaborn-talk')
 
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -28,13 +29,14 @@ for tables in Tables:
 from simulation.table.well_graph import Well_Graph
 
 wg = Well_Graph(Tables)
+
 for well in prod_lst:
     root = pathlib.Path('./fig/{}'.format(well))
     root.mkdir(parents=True, exist_ok=True)
 
-    wg.oil_prod(well); plt.savefig(root / 'OILPROD.png')
-    wg.gas_prod(well); plt.savefig(root / 'GASPROD.png')
-    wg.wat_prod(well); plt.savefig(root / 'WATPROD.png')
-    wg.wcut(well); plt.savefig(root / 'WCUT.png')
-    wg.gor(well); plt.savefig(root / 'GOR.png')
-    wg.bhp(well); plt.savefig(root / 'BHP.png')
+    wg.oil_prod(well); plt.savefig(root / 'OILPROD.png'); plt.close()
+    wg.gas_prod(well); plt.savefig(root / 'GASPROD.png'); plt.close()
+    wg.wat_prod(well); plt.savefig(root / 'WATPROD.png'); plt.close()
+    wg.wcut(well); plt.savefig(root / 'WCUT.png'); plt.close()
+    wg.gor(well); plt.savefig(root / 'GOR.png'); plt.close()
+    wg.bhp(well); plt.savefig(root / 'BHP.png'); plt.close()

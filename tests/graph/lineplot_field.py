@@ -11,6 +11,7 @@ inje_lst.append(('IRK049',('IRK049-G','IRK049-W', ), )); inje_lst.append(('IRK05
 inje_lst.append(('IRK056',('IRK056-G','IRK056-W', ), )); inje_lst.append(('IRK063',('IRK063-G','IRK063-W', ), ))
 
 import matplotlib.pyplot as plt
+plt.style.use('seaborn-talk')
 
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -27,14 +28,14 @@ for tables in Tables:
 from simulation.table.sector_graph import Sector_Graph
 
 sg = Sector_Graph(Tables)
-_, _, path = sg.oil_prod(savefig_rootpath='./fig'); plt.savefig(path)
+sg.oil_prod();# plt.savefig(path)
 
-_, _, path = sg.gas_prod(savefig_rootpath='./fig'); plt.savefig(path)
-
-_, _, path = sg.wat_prod(savefig_rootpath='./fig'); plt.savefig(path)
-
-_, _, path = sg.gas_inje(savefig_rootpath='./fig'); plt.savefig(path)
-
-_, _, path = sg.wat_inje(savefig_rootpath='./fig'); plt.savefig(path)
-
-_, _, path = sg.avg_pres(savefig_rootpath='./fig'); plt.savefig(path)
+# sg.gas_prod(savefig_rootpath='./fig'); plt.savefig(path)
+#
+# sg.wat_prod(savefig_rootpath='./fig'); plt.savefig(path)
+#
+# sg.gas_inje(savefig_rootpath='./fig'); plt.savefig(path)
+#
+# sg.wat_inje(savefig_rootpath='./fig'); plt.savefig(path)
+#
+# sg.avg_pres(savefig_rootpath='./fig'); plt.savefig(path)

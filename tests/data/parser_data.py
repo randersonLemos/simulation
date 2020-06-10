@@ -9,7 +9,7 @@ OtmManagerFile.set_default_simulation_file_prefix('run')
 OtmManagerFile.set_default_result_file('otm.otm.csv')
 OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
-omf = OtmManagerFile('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_TIME_ICV1_RANGE4_1')
+omf = OtmManagerFile('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_TIME_ICV1_RANGE5_1')
 
 def rename_rootname_simulation_folders(old_part, new_part):
     for path in omf.simulation_folder_paths():
@@ -65,9 +65,18 @@ def delete_unievent_simulation_files():
     for path in omf.simulation_file_paths('.unievent'):
         path.unlink()
 
+def delete_unipro_simulation_files():
+    for path in omf.simulation_file_paths('.unipro'):
+        path.unlink()
+
 def delete_SERIES_simulation_files():
     for path in omf.simulation_file_paths():
         if 'SERIES' in ''.join(path.parts):
+            path.unlink()
+
+def delete_CONCENSSION_simulation_files():
+    for path in omf.simulation_file_paths():
+        if 'CONCESSION' in ''.join(path.parts):
             path.unlink()
 
 def delete_not_essential_simulation_files():
@@ -75,4 +84,6 @@ def delete_not_essential_simulation_files():
     delete_sr3_simulation_files()
     delete_unitub_simulation_files()
     delete_unievent_simulation_files()
+    delete_unipro_simulation_files()
     delete_SERIES_simulation_files()
+    delete_CONCENSSION_simulation_files()

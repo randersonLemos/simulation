@@ -10,8 +10,15 @@ inje_lst.append(('IRK029',('IRK029-G','IRK029-W', ), )); inje_lst.append(('IRK03
 inje_lst.append(('IRK049',('IRK049-G','IRK049-W', ), )); inje_lst.append(('IRK050',('IRK050-G','IRK050-W', ), ))
 inje_lst.append(('IRK056',('IRK056-G','IRK056-W', ), )); inje_lst.append(('IRK063',('IRK063-G','IRK063-W', ), ))
 
+import pathlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-talk')
+
+mpl.rcParams['axes.titlesize'] = 16.0
+mpl.rcParams['axes.labelsize'] = 16.0
+mpl.rcParams['xtick.labelsize'] = 16.0
+mpl.rcParams['ytick.labelsize'] = 16.0
 
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -28,14 +35,13 @@ for tables in Tables:
 from simulation.table.sector_graph import Sector_Graph
 
 sg = Sector_Graph(Tables)
-sg.oil_prod();# plt.savefig(path)
 
-# sg.gas_prod(savefig_rootpath='./fig'); plt.savefig(path)
-#
-# sg.wat_prod(savefig_rootpath='./fig'); plt.savefig(path)
-#
-# sg.gas_inje(savefig_rootpath='./fig'); plt.savefig(path)
-#
-# sg.wat_inje(savefig_rootpath='./fig'); plt.savefig(path)
-#
-# sg.avg_pres(savefig_rootpath='./fig'); plt.savefig(path)
+root = pathlib.Path('./fig')
+
+sg.oil_prod(); plt.savefig(root / 'FIELDOILPROD.png'); plt.close()
+sg.gas_prod(); plt.savefig(root / 'FIELDGASPROD.png'); plt.close()
+sg.wat_prod(); plt.savefig(root / 'FIELDWATPROD.png'); plt.close()
+sg.gas_inje(); plt.savefig(root / 'FIELDGASINJE.png'); plt.close()
+sg.wat_inje(); plt.savefig(root / 'FIELDWATINJE.png'); plt.close()
+sg.avg_pres(); plt.savefig(root / 'FIELDAVGPRES.png'); plt.close()
+

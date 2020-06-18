@@ -15,7 +15,14 @@ inje_lst.append(('IRK056',('IRK056-G','IRK056-W', ), )); inje_lst.append(('IRK06
 import copy
 import pathlib
 import pandas as pd
+import matplotlib as mpl
 import matplotlib.pyplot as plt
+plt.style.use('seaborn-talk')
+
+mpl.rcParams['axes.titlesize'] = 16.0
+mpl.rcParams['axes.labelsize'] = 16.0
+mpl.rcParams['xtick.labelsize'] = 16.0
+mpl.rcParams['ytick.labelsize'] = 16.0
 
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -39,8 +46,8 @@ for i in range(0, len(prod_zone_lst), 3):
     root = pathlib.Path('./fig/{}'.format(well))
     root.mkdir(parents=True, exist_ok=True)
 
-    sg.oil_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEOILPROD.png')
-    sg.gas_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEGASPROD.png')
-    sg.wat_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEWATPROD.png')
-    sg.gor(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEGOR.png')
-    sg.wcut(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEWCUT.png')
+    sg.oil_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEOILPROD.png'); plt.close()
+    sg.gas_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEGASPROD.png'); plt.close()
+    sg.wat_prod(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEWATPROD.png'); plt.close()
+    sg.gor(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEGOR.png'); plt.close()
+    sg.wcut(prod_zone_lst[i:i+3]); plt.savefig(root / 'ZONEWCUT.png'); plt.close()

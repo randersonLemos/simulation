@@ -11,8 +11,14 @@ inje_lst.append(('IRK049',('IRK049-G','IRK049-W', ), )); inje_lst.append(('IRK05
 inje_lst.append(('IRK056',('IRK056-G','IRK056-W', ), )); inje_lst.append(('IRK063',('IRK063-G','IRK063-W', ), ))
 
 import pathlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-talk')
+
+mpl.rcParams['axes.titlesize'] = 16.0
+mpl.rcParams['axes.labelsize'] = 16.0
+mpl.rcParams['xtick.labelsize'] = 16.0
+mpl.rcParams['ytick.labelsize'] = 16.0
 
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))

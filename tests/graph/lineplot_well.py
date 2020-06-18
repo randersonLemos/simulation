@@ -15,10 +15,10 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-talk')
 
-mpl.rcParams['axes.titlesize'] = 16.0
-mpl.rcParams['axes.labelsize'] = 16.0
-mpl.rcParams['xtick.labelsize'] = 16.0
-mpl.rcParams['ytick.labelsize'] = 16.0
+mpl.rcParams['axes.titlesize'] = 18.0
+mpl.rcParams['axes.labelsize'] = 18.0
+mpl.rcParams['xtick.labelsize'] = 18.0
+mpl.rcParams['ytick.labelsize'] = 18.0
 
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))

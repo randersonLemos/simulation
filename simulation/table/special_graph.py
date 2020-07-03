@@ -9,6 +9,13 @@ class Special_Graph(Default):
         return ax
 
     @Preprocessing
+    def oil_prod_dot(self, zone_lst, title=None, ax=None):
+        if not title: title = 'ZONE OIL PRODUCTION RATE'
+        key = 'ZOPR'
+        self._fluid_dot(zone_lst, title, key, ax)
+        return ax
+
+    @Preprocessing
     def gas_prod(self, zone_lst, title=None, ax=None):
         if not title: title = 'ZONE GAS PRODUCTION'
         key = 'ZGPC'
@@ -16,10 +23,24 @@ class Special_Graph(Default):
         return ax
 
     @Preprocessing
+    def gas_prod_dot(self, zone_lst, title=None, ax=None):
+        if not title: title = 'ZONE GAS PRODUCTION RATE'
+        key = 'ZGPR'
+        self._gas_dot(zone_lst, title, key, ax)
+        return ax
+
+    @Preprocessing
     def wat_prod(self, zone_lst, title=None, ax=None):
         if not title: title = 'ZONE WATER PRODUCTION'
         key = 'ZWPC'
         self._fluid(zone_lst, title, key, ax)
+        return ax
+
+    @Preprocessing
+    def wat_prod_dot(self, zone_lst, title=None, ax=None):
+        if not title: title = 'ZONE WATER PRODUCTION RATE'
+        key = 'ZWPR'
+        self._fluid_dot(zone_lst, title, key, ax)
         return ax
 
     @Preprocessing
@@ -54,6 +75,24 @@ class Special_Graph(Default):
 
         self._default_ax(ax)
 
+    def _fluid_dot(self, zone_lst, title, key, ax):
+        Df = pd.DataFrame()
+        lst = []
+        for tables in self.tables:
+            #import pdb; pdb.set_trace()
+            df = pd.DataFrame(tables.get(key).df[zone_lst])
+            df['RUN'] = tables.path_to_rwo_file.stem
+            lst.append(df)
+        Df = pd.concat(lst).reset_index()
+        Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
+
+        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+
+        ax.set_title(title)
+        ax.set_ylabel('$sm^3/d$')
+
+        self._default_ax(ax)
+
     def _gas(self, zone_lst, title, key, ax):
         Df = pd.DataFrame()
         lst = []
@@ -68,6 +107,23 @@ class Special_Graph(Default):
 
         ax.set_title(title)
         ax.set_ylabel('$mmsm^3$')
+
+        self._default_ax(ax)
+
+    def _gas_dot(self, zone_lst, title, key, ax):
+        Df = pd.DataFrame()
+        lst = []
+        for tables in self.tables:
+            df = pd.DataFrame(tables.get(key).df[zone_lst] / 1000)
+            df['RUN'] = tables.path_to_rwo_file.stem
+            lst.append(df)
+        Df = pd.concat(lst).reset_index()
+        Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
+
+        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+
+        ax.set_title(title)
+        ax.set_ylabel('$msm^3/d$')
 
         self._default_ax(ax)
 

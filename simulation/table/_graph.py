@@ -12,13 +12,14 @@ formatter = mdates.DateFormatter('%Y')
 import functools
 
 class Default:
-    _figsize = (8,4)
+    _figsize = (10,5)
     _tight_layout = True
 
     @classmethod
     def set_figsize(cls, size):
         if isinstance(size, tuple):
             cls._figsize = size
+            return
         raise TypeError('Not allowed type...')
 
     @classmethod

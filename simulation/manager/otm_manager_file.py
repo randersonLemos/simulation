@@ -59,6 +59,13 @@ class OtmManagerFile():
         return self._project_root
 
 
+    def simulation_file_prefix(self):
+        simulation_file_prefix = self._simulation_file_prefix
+        if self._simulation_file_prefix == '':
+            simulation_file_prefix = self._default_simulation_file_prefix
+        return simulation_file_prefix
+
+
     def simulation_folder_paths(self, to_string=False, sort=True):
         simulation_folder_prefix = self._simulation_folder_prefix
         if self._simulation_folder_prefix == '':

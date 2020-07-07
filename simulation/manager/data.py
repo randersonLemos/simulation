@@ -13,5 +13,6 @@ class Data:
         return self._y.copy()
 
     def Xy(self):
-        raise NotImplementedError('Not implemented...')
-        #return pd.merge(self._X, self._y, on='ID')
+        Xy = self._X.copy()
+        Xy.loc[:, 'NPV'] = self._y['NPV']
+        return Xy

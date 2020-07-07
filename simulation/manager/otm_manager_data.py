@@ -20,16 +20,12 @@ class OtmManagerData:
         self.omfs[project_name] = obj
 
 
-    def data(self, npv_sorted=True):
+    def data(self):
         X = self._inputs()
         y = self._outputs()
 
         X = X.loc[y.index]
 
-        if npv_sorted:
-            warnings.warn('Sorted from the worst to the best NPV value...')
-            y = y.sort_values(by=['GROUP', 'NPV'], ascending=True)
-            X = X.loc[y.index]
         return Data(X,y)
 
 
@@ -39,27 +35,26 @@ class OtmManagerData:
             lst = []
             for path in self.omfs[key].hldg_sample_file_paths():
                 try:
-                    lst.append(pd.read_csv(path, sep='\t'))
+                    df = pd.read_csv(path, sep='\t')
+                    del df['PROBABILITY']
+                    lst.append(df)
                 except FileNotFoundError:
                     path = self.omfs[key].result_file_path()
-                    _df = pd.read_csv(path, sep=';', skiprows=2)
-                    _df = _df.rename(columns={'MODEL': 'ID'})
-                    del _df['TEMPLATE']
-                    del _df['ITERATION']
-                    del _df['NPVM']
-                    _df['PROBABILITY'] = -1
-                    lst.append(_df)
+                    df = pd.read_csv(path, sep=';', skiprows=2)
+                    df = df.rename(columns={'MODEL': 'ID'})
+                    del df['TEMPLATE']
+                    del df['ITERATION']
+                    del df['NPVM']
+                    lst.append(df)
                     break
 
-            df = pd.concat(lst)
-            df = df.sort_values(by=['ID'])
-            df = df.set_index('ID')
-            df.index.name = 'RUN'
-            df.index = pd.MultiIndex.from_product([[key], df.index], names=['GROUP', 'RUN'])
-            del df['PROBABILITY']
+            ddf = pd.concat(lst).reset_index(drop=True)
+            ddf['GRP'] = key
+            ddf['ITE'] = self._outputs().reset_index()['ITE']
 
-            Df = Df.append(df)
-
+            ddf = ddf.rename(columns={'ID':'RUN'})
+            ddf = ddf.set_index(['GRP', 'ITE', 'RUN'])
+            Df = Df.append(ddf)
         return Df
 
 
@@ -68,14 +63,14 @@ class OtmManagerData:
         for key in self.omfs:
             df = pd.read_csv(self.omfs[key].result_file_path(), skiprows=2, sep=';')
             if 'VALUE' in df:
-                df = df.rename(columns={'VALUE':'NPV', 'MODEL':'ID'})
+                df = df.rename(columns={'VALUE':'NPV', 'MODEL':'RUN', 'ITERATION':'ITE'})
                 del df['OBJECTIVE FUNCTION']
             else: # For MERO 2020.04
                 df = df[['ITERATION', 'MODEL', 'NPVM']]
-                df = df.rename(columns={'MODEL':'ID', 'NPVM': 'NPV'})
-            df = df.set_index('ID')
-            df.index.name = 'RUN'
-            df.index = pd.MultiIndex.from_product([[key], df.index], names=['GROUP', 'RUN'])
+                df = df.rename(columns={'MODEL':'RUN', 'NPVM': 'NPV', 'ITERATION':'ITE'})
+
+            df['GRP'] = key
+            df = df.set_index(['GRP', 'ITE', 'RUN'])
 
             Df = Df.append(df)
         return Df

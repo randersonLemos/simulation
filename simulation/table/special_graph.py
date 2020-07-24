@@ -68,7 +68,7 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$msm^3$')
@@ -86,7 +86,7 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$sm^3/d$')
@@ -103,7 +103,7 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$mmsm^3$')
@@ -120,7 +120,7 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$msm^3/d$')
@@ -137,7 +137,7 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$sm^3/sm^3$')
@@ -154,7 +154,7 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='ZONE', style='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$\\%$')

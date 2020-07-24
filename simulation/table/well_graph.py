@@ -66,7 +66,10 @@ class Well_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
+        if len(well_lst) == 1 or isinstance(well_lst, str):
+            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+        else:
+            sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$msm^3$')
@@ -83,7 +86,10 @@ class Well_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
+        if len(well_lst) == 1 or isinstance(well_lst, str):
+            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+        else:
+            sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$sm^3/d$')
@@ -99,7 +105,10 @@ class Well_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
+        if len(well_lst) == 1 or isinstance(well_lst, str):
+            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+        else:
+            sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$mmsm^3$')
@@ -116,7 +125,10 @@ class Well_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
+        if len(well_lst) == 1 or isinstance(well_lst, str):
+            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+        else:
+            sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$msm^3/d$')
@@ -133,7 +145,10 @@ class Well_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
+        if len(well_lst) == 1 or isinstance(well_lst, str):
+            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+        else:
+            sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$sm^3/sm^3$')
@@ -150,7 +165,10 @@ class Well_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
+        if len(well_lst) == 1 or isinstance(well_lst, str):
+            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+        else:
+            sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$\\%$')
@@ -168,7 +186,10 @@ class Well_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
+        if len(well_lst) == 1 or isinstance(well_lst, str):
+            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+        else:
+            sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$kg/cm^2$')

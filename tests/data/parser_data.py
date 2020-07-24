@@ -5,12 +5,12 @@ import pandas as pd
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from simulation.manager.otm_manager_file import OtmManagerFile
 
-OtmManagerFile.set_default_simulation_folder_prefix('otm_IT')
-OtmManagerFile.set_default_simulation_file_prefix('model')
+OtmManagerFile.set_default_simulation_folder_prefix('sim')
+OtmManagerFile.set_default_simulation_file_prefix('main')
 OtmManagerFile.set_default_result_file('otm.otm.csv')
 OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
-omf = OtmManagerFile('/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_18WIDE1_1')
+omf = OtmManagerFile('/media/pamonha/DATA/DRIVE/REFERENCE')
 
 def rename_rootname_simulation_folders(old_part, new_part):
     for path in omf.simulation_folder_paths():

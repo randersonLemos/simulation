@@ -20,14 +20,10 @@ import matplotlib.pyplot as plt
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-ROOTPROJECTS = pathlib.Path('/media/pamonha/DATA/DRIVE/OTM_20200101')
+root = pathlib.Path('/media/pamonha/DATA/DRIVE/OTM_20200101')
 pathprojects = {}
-pathprojects['WIDE1'] = ROOTPROJECTS / 'OTM_ICV1_WIDE1_1'
-pathprojects['WIDE2'] = ROOTPROJECTS / 'OTM_ICV1_WIDE1_2'
-pathprojects['WIDE3'] = ROOTPROJECTS / 'OTM_ICV1_WIDE1_3'
-pathprojects['SSS'] = ROOTPROJECTS / 'OTM_ICV1_SSS1_1'
-pathprojects['SSSFLEX'] = ROOTPROJECTS / 'OTM_ICV1_SSS1_FLEX1_1'
-pathprojects['TIME'] = ROOTPROJECTS / 'OTM_ICV1_TIME1_RANGE1_3'
+pathprojects['WIDE1'] = root / 'OTM_GOR_ICV1_18WIDE1_1'
+pathprojects['NSS2'] = root / 'OTM_GOR_ICV1_18WIDE1_1'
 
 from simulation.manager.otm_manager_file import OtmManagerFile
 from simulation.manager.otm_manager_data import OtmManagerData
@@ -39,5 +35,5 @@ OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
 omd = OtmManagerData()
 for key, value in pathprojects.items(): omd.add_omf(key, OtmManagerFile(project_root=value))
-X, y = omd.data(npv_sorted=False).X(), omd.data(npv_sorted=False).y()
-print(X); print(y)
+
+X, y = omd.data().X(), omd.data().y()

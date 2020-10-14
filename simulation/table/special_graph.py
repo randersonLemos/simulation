@@ -68,7 +68,8 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', style='ZONE', dashes=False, markers=['^', 'X', 'o'], markersize=15, mew=1.0, mec='k', alpha=0.70, data=Melt.iloc[0::5,:], ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$msm^3$')
@@ -86,7 +87,8 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', style='ZONE', dashes=False, markers=['^', 'X', 'o'], markersize=15, mew=1.0, mec='k', alpha=0.70, data=Melt.iloc[0::5,:], ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$sm^3/d$')
@@ -103,7 +105,8 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', style='ZONE', dashes=False, markers=['^', 'X', 'o'], markersize=15, mew=1.0, mec='k', alpha=0.70, data=Melt.iloc[0::5,:], ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$mmsm^3$')
@@ -120,11 +123,11 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', style='ZONE', dashes=False, markers=['^', 'X', 'o'], markersize=15, mew=1.0, mec='k', alpha=0.70, data=Melt.iloc[0::5,:], ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$msm^3/d$')
-
         self._default_ax(ax)
 
     def _gor(self, zone_lst, title, key, ax):
@@ -137,7 +140,8 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', style='ZONE', dashes=False, markers=['^', 'X', 'o'], markersize=15, mew=1.0, mec='k', alpha=0.70, data=Melt.iloc[0::5,:], ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$sm^3/sm^3$')
@@ -154,12 +158,11 @@ class Special_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='ZONE', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='ZONE', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', style='ZONE', dashes=False, markers=['^', 'X', 'o'], markersize=15, mew=1.0, mec='k', alpha=0.70, data=Melt.iloc[0::5,:], ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$\\%$')
 
         self._default_ax(ax)
         ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{:0.0f}'.format(x)))
-
-

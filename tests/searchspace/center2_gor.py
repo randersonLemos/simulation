@@ -9,7 +9,7 @@ ini = 300
 end = 3700
 hold = [get_values(ini, end)]
 
-n_levels = 5
+n_levels = 6
 
 for i in range(n_levels):
     print('Level {}'.format(i))

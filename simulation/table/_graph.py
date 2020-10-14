@@ -6,13 +6,11 @@ import matplotlib.dates as mdates
 from matplotlib.ticker import LinearLocator
 from matplotlib.ticker import FuncFormatter
 
-locator = mdates.MonthLocator(bymonth=[1])
-formatter = mdates.DateFormatter('%Y')
 
 import functools
 
 class Default:
-    _figsize = (10,5)
+    _figsize = (10,6)
     _tight_layout = True
 
     @classmethod
@@ -35,11 +33,36 @@ class Default:
         self.tables = tables
 
     def _default_ax(self, ax):
-        ax.xaxis.set_ticklabels(ax.xaxis.get_ticklabels(), rotation=90, horizontalalignment='center')
-        ax.xaxis.set_major_locator(LinearLocator(10))
-        ax.xaxis.set_major_formatter(formatter)
+        #xlocator = mdates.MonthLocator(bymonth=[1])
+        xformatter = mdates.DateFormatter('%Y')
+        ax.xaxis.set_ticklabels(ax.xaxis.get_ticklabels(), rotation=0, horizontalalignment='center')
+        ax.xaxis.set_major_locator(LinearLocator(5))
+        ax.xaxis.set_major_formatter(xformatter)
+
+        def myround(x, base=5):
+            return int(base * round(x/base))
+
+        @FuncFormatter
+        def yformatter(value, pos):
+            if len(str(int(value)))    < 3:
+                stg =  '{}'.format(myround(value, base=10))
+
+            elif len(str(int(value))) == 3:
+                stg =  '{}'.format(myround(value, base=10))
+
+            elif len(str(int(value)))  > 3 and len(str(int(value))) <= 5:
+                stg =  '{}'.format(myround(value, base=100))
+
+            elif len(str(int(value))) >= 6:
+                stg =  '{}'.format(myround(value, base=1000))
+
+            return stg
+
         ax.yaxis.set_major_locator(LinearLocator(5))
+        ax.yaxis.set_major_formatter(yformatter)
+
         ax.set_ylim(ymin=0)
+        #ax.xaxis.set_label_coords(-0.120, -0.045)
         ax.grid()
 
 class Preprocessing(Default):

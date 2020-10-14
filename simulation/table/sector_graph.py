@@ -78,7 +78,8 @@ class Sector_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='VAR', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$msm^3$')
@@ -94,7 +95,8 @@ class Sector_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='VAR', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$sm^3/d$')
@@ -110,7 +112,8 @@ class Sector_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='VAR', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN', data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN', data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$mmsm^3$')
@@ -126,7 +129,8 @@ class Sector_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='VAR', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN',  data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN',  data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$msm^3/d$')
@@ -142,11 +146,16 @@ class Sector_Graph(Default):
         Df = pd.concat(lst).reset_index()
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='VAR', value_name='VALUE')
 
-        sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN',  data=Melt, ax=ax)
+        #sb.lineplot(x='DATE', y='VALUE', style='RUN', hue='RUN',  data=Melt, ax=ax)
+        sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
 
         ax.set_title(title)
         ax.set_ylabel('$kg/cm^2$')
 
         self._default_ax(ax)
-        ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{:0.0f}'.format(x)))
+
+        def myround(x, base):
+            return int(base * round(x/base))
+
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{}'.format(myround(x, 10))))
         ax.set_ylim(ymin=Melt['VALUE'].min()-10)

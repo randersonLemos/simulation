@@ -7,21 +7,19 @@ class Interval_Handle:
         self.end = end
         self.n_int = n_int
 
+        self.lst = []
+        self.lst_ext = []
+
         self._intervals()
-        self._intervals_ext()
 
     def _intervals(self):
-        q = numpy.power(self.end/self.ini, 1/self.n_int)
-        self.lst = [int(self.ini*q**power) for power in range(self.n_int+1)]
-        self.lst[0] = self.ini
-        self.lst[-1] = self.end
-
-    def _intervals_ext(self):
-        self.lst_ext = []
-        self.lst_ext.append(self.lst[0])
-        for a,b in zip(self.lst[:-1], self.lst[1:]):
-            self.lst_ext.append(int((a+b)/2))
-            self.lst_ext.append(b)
+        incr = (self.end - self.ini) / self.n_int
+        curr = self.ini
+        for i in range(self.n_int):
+            self.lst.append(curr + incr/2.0)
+            self.lst_ext.append(curr)
+            curr += incr
+        self.lst_ext.append(curr)
 
     def new_intervals(self, value):
         idx = self.lst_ext.index(value)
@@ -45,14 +43,14 @@ class Interval_Handle:
         other.lst_ext[0] = ini; other.lst_ext[-1] = end
         return other
 
-    def __repr__(self):
-        stg = ''
-        for idx in range(len(self.lst_ext)):
-            if idx%2 == 0:
-                stg += str(self.lst_ext[idx]) + ' '
-            else:
-                stg += '(' + str(self.lst_ext[idx]) + ') '
-        return stg
+    #def __repr__(self):
+    #    stg = ''
+    #    for idx in range(len(self.lst_ext)):
+    #        if idx%2 == 0:
+    #            stg += str(self.lst_ext[idx]) + ' '
+    #        else:
+    #            stg += '(' + str(self.lst_ext[idx]) + ') '
+    #    return stg
 
 
-ih = Interval_Handle(300, 3700, 17)
+ih = Interval_Handle(300, 3700, 5)

@@ -67,7 +67,8 @@ class Well_Graph(Default):
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
         if len(well_lst) == 1 or isinstance(well_lst, str):
-            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
         else:
             sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
@@ -87,7 +88,8 @@ class Well_Graph(Default):
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
         if len(well_lst) == 1 or isinstance(well_lst, str):
-            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
         else:
             sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
@@ -106,7 +108,8 @@ class Well_Graph(Default):
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
         if len(well_lst) == 1 or isinstance(well_lst, str):
-            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
         else:
             sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
@@ -126,7 +129,8 @@ class Well_Graph(Default):
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
         if len(well_lst) == 1 or isinstance(well_lst, str):
-            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
         else:
             sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
@@ -146,7 +150,8 @@ class Well_Graph(Default):
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
         if len(well_lst) == 1 or isinstance(well_lst, str):
-            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
         else:
             sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
@@ -166,7 +171,8 @@ class Well_Graph(Default):
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
         if len(well_lst) == 1 or isinstance(well_lst, str):
-            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
         else:
             sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
@@ -187,7 +193,8 @@ class Well_Graph(Default):
         Melt = Df.melt(id_vars=['DATE', 'RUN'], var_name='WELL', value_name='VALUE')
 
         if len(well_lst) == 1 or isinstance(well_lst, str):
-            sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            #sb.lineplot(x='DATE', y='VALUE', hue='RUN', style='RUN', data=Melt, ax=ax)
+            sb.lineplot(x='DATE', y='VALUE', size='RUN', hue='RUN', data=Melt, ax=ax)
         else:
             sb.lineplot(x='DATE', y='VALUE', hue='WELL', style='RUN', data=Melt, ax=ax)
 
@@ -195,5 +202,10 @@ class Well_Graph(Default):
         ax.set_ylabel('$kg/cm^2$')
 
         self._default_ax(ax)
-        ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{:0.0f}'.format(x)))
+
+        def myround(x, base):
+            return int(base * round(x/base))
+
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda x, pos: '{}'.format(myround(x, 10))))
+
         ax.set_ylim(ymin=Melt['VALUE'].min()-10)

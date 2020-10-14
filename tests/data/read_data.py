@@ -20,10 +20,9 @@ import matplotlib.pyplot as plt
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-root = pathlib.Path('/media/pamonha/DATA/DRIVE/OTM_20200101')
+root = pathlib.Path('/media/beldroega/DATA/DRIVE/OTM_20200101')
 pathprojects = {}
-pathprojects['WIDE1'] = root / 'OTM_GOR_ICV1_18WIDE1_1'
-pathprojects['NSS2'] = root / 'OTM_GOR_ICV1_18WIDE1_1'
+pathprojects['WIDE18'] = root / 'OTM_GOR_ICV1_18WIDE1_1'
 
 from simulation.manager.otm_manager_file import OtmManagerFile
 from simulation.manager.otm_manager_data import OtmManagerData

@@ -18,6 +18,7 @@ class Interval_Handle:
         for i in range(self.n_int):
             self.lst.append(curr + incr/2.0)
             self.lst_ext.append(curr)
+            self.lst_ext.append(curr + incr/2.0)
             curr += incr
         self.lst_ext.append(curr)
 
@@ -34,23 +35,17 @@ class Interval_Handle:
             end = self.lst_ext[idx+1]
 
         other = copy.deepcopy(self)
-        other.ini = ini
-        other.end = end
-        other._intervals()
-        other._intervals_ext()
+        other.__init__(ini, end, other.n_int)
 
-        other.lst[0] = ini; other.lst[-1] = end
-        other.lst_ext[0] = ini; other.lst_ext[-1] = end
         return other
 
-    #def __repr__(self):
-    #    stg = ''
-    #    for idx in range(len(self.lst_ext)):
-    #        if idx%2 == 0:
-    #            stg += str(self.lst_ext[idx]) + ' '
-    #        else:
-    #            stg += '(' + str(self.lst_ext[idx]) + ') '
-    #    return stg
+    def __repr__(self):
+        stg = ''
+        for idx in range(len(self.lst_ext)):
+            if idx%2 == 0: stg += str(self.lst_ext[idx]) + ' '
+            else: stg += '(' + str(self.lst_ext[idx]) + ') '
+        return stg
 
 
 ih = Interval_Handle(300, 3700, 5)
+

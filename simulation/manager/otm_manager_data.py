@@ -24,37 +24,40 @@ class OtmManagerData:
         X = self._inputs()
         y = self._outputs()
 
-        X = X.loc[y.index]
-
-        return Data(X,y)
+        return X.loc[y.index], y
 
 
     def _inputs(self):
         Df = pd.DataFrame()
         for key in self.omfs:
-            lst = []
-            for path in self.omfs[key].hldg_sample_file_paths():
-                try:
-                    df = pd.read_csv(path, sep='\t')
-                    del df['PROBABILITY']
-                    lst.append(df)
-                except FileNotFoundError:
-                    path = self.omfs[key].result_file_path()
-                    df = pd.read_csv(path, sep=';', skiprows=2)
-                    df = df.rename(columns={'MODEL': 'ID'})
-                    del df['TEMPLATE']
-                    del df['ITERATION']
-                    del df['NPVM']
-                    lst.append(df)
-                    break
+            #for path in self.omfs[key].hldg_sample_file_paths():
+            #    try:
+            #        df = pd.read_csv(path, sep='\t')
+            #        del df['PROBABILITY']
+            #        lst.append(df)
+            #    except FileNotFoundError:
+            #        path = self.omfs[key].result_file_path()
+            #        df = pd.read_csv(path, sep=';', skiprows=2)
+            #        df = df.rename(columns={'MODEL': 'ID'})
+            #        del df['TEMPLATE']
+            #        del df['ITERATION']
+            #        del df['NPVM']
+            #        lst.append(df)
+            #        break
 
-            ddf = pd.concat(lst).reset_index(drop=True)
-            ddf['GRP'] = key
-            ddf['ITE'] = self._outputs().reset_index()['ITE']
+            try:
+                path = self.omfs[key].result_file_path()
+                df = pd.read_csv(path, sep=';', skiprows=2)
+                df = df.rename(columns={'MODEL': 'RUN', 'ITERATION': 'ITE'})
+                del df['TEMPLATE']; del df['NPVM']
+                df['GRP'] = key
+                df = df.set_index(['GRP', 'ITE', 'RUN'])
+                Df = Df.append(df)
 
-            ddf = ddf.rename(columns={'ID':'RUN'})
-            ddf = ddf.set_index(['GRP', 'ITE', 'RUN'])
-            Df = Df.append(ddf)
+            except FileNotFoundError:
+                print('Need to be implemented...')
+                raise
+
         return Df
 
 
@@ -73,6 +76,7 @@ class OtmManagerData:
             df = df.set_index(['GRP', 'ITE', 'RUN'])
 
             Df = Df.append(df)
+
         return Df
 
     def __repr__(self):

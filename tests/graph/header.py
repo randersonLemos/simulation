@@ -22,12 +22,21 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 plt.style.use('seaborn-talk')
 
-mpl.rcParams['axes.titlesize']  = 24.0
-mpl.rcParams['axes.labelsize']  = 24.0
-mpl.rcParams['xtick.labelsize'] = 24.0
-mpl.rcParams['ytick.labelsize'] = 24.0
-mpl.rcParams['legend.fontsize'] = 20.0
-mpl.rcParams['lines.linewidth'] =  4.0
+#mpl.rcParams['axes.titlesize']  = 24.0
+#mpl.rcParams['axes.labelsize']  = 24.0
+#mpl.rcParams['xtick.labelsize'] = 24.0
+#mpl.rcParams['ytick.labelsize'] = 24.0
+#mpl.rcParams['legend.fontsize'] = 20.0
+#mpl.rcParams["legend.title_fontsize"] = 24.0
+#mpl.rcParams['lines.linewidth'] =  4.0
+
+mpl.rcParams['axes.titlesize']  = 18.0
+mpl.rcParams['axes.labelsize']  = 18.0
+mpl.rcParams['xtick.labelsize'] = 18.0
+mpl.rcParams['ytick.labelsize'] = 18.0
+mpl.rcParams['legend.fontsize'] = 18.0
+mpl.rcParams["legend.title_fontsize"] = 18.0
+mpl.rcParams['lines.linewidth'] =  2.0
 
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from simulation.manager.otm_manager_file import OtmManagerFile
@@ -48,3 +57,13 @@ def Get_tables(FileDotTables):
             for well_name, alias in inje_lst: tables.add(tables.join(well_name, *alias, dell=True)) # join xxxxxx-w and xxxxxx-g to xxxxxx
             Tables.append(tables)
     return Tables
+
+def Get_dirs(FileDotDirs):
+    dirs = []
+    with open(FileDotDirs) as fh:
+        for line in fh:
+            if line.strip():
+                if(line.strip()[0] != '#'):
+                    left, right = line.split(' ')
+                    dirs.append((left.strip(), right.strip()))
+    return dirs

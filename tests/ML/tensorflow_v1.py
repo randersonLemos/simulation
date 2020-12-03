@@ -1,88 +1,194 @@
 from header import *
-import tensorflow as tf
-from keras.layers.advanced_activations import LeakyReLU
-from sklearn import preprocessing
-from imblearn.over_sampling import SMOTE, SVMSMOTE, BorderlineSMOTE, ADASYN
 
 plt.close()
 
-omd = OtmManagerData()
-omd.add_omf('18WIDE', OtmManagerFile(project_root='/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_18WIDE1_1'))
-#omd.add_omf('2CSS1', OtmManagerFile(project_root='/media/pamonha/DATA/DRIVE/OTM_20200101/OTM_GOR_ICV1_2CSS1_1'))
-data = omd.data().Xy()
+class Aux:
 
-def data_from_it(ite):
-    idx = pd.IndexSlice
-    return data.loc[idx[:, ite, :], :]
+    oversampler = None
+    scaler = None
 
-def Xy_from_data(data):
-    X = data.iloc[:,:-1].to_numpy().reshape(len(data), 27, 1)
-    y = data.iloc[:,-1].to_numpy().squeeze()
-    return X,y
+class TrainData(Aux):
 
-def more_data_with_noise(df, cycles):
-    holder = pd.DataFrame(columns=df.columns)
-    for i in range(cycles):
-        for i in range(len(df)):
-            row = df.iloc[i,:]
-            choice = np.random.choice(27)
-            el = row.iloc[choice]
-            el = int(el + np.random.normal(0, 30, 1))
-            row.iloc[choice] = el
-            holder = holder.append(row)
-        df = df.append(holder)
-    df = df.astype('int')
-    return df
+    def __init__(self, X, y, iteration, qty, mask=None):
+        self.X = X.copy()
+        self.y = y.copy()
 
-data_train, data_test = data_from_it([1]).sort_values(by='NPV'), data_from_it([2]).sort_values(by='NPV')
-data_train['NPV'] = (data_train['NPV'] / 1000).astype('int') / 1000; data_test['NPV'] = (data_test['NPV'] / 1000).astype('int') / 1000
-data_train = data_train.set_index('NPV', append=True); data_test = data_test.set_index('NPV', append=True)
-data_train['CLASS'] = -1; data_test['CLASS'] = -1
-qty = 10
-data_train.loc[:-qty, 'CLASS'] = 0
-data_train.loc[-qty:, 'CLASS'] = 1
+        if not isinstance(mask, type(None)):
+            self.X = self.X[mask]
+            self.y = self.y[mask]
+            #import pdb; pdb.set_trace()
 
-#data_train = more_data_with_noise(data_train, 3)
+        self.iteration = iteration
+        self.qty = qty
 
-#oversample = SMOTE()
-#oversample = SVMSMOTE()
-oversample = BorderlineSMOTE()
-#oversample = ADASYN()
+        self._processing()
 
-Xo, yo = oversample.fit_resample(data_train.iloc[:,:-1], data_train.iloc[:,-1])
-Xo['CLASS'] = yo
+    def _processing(self):
 
-scale = preprocessing.MinMaxScaler()
-Xo.iloc[:,:-1] = scale.fit_transform(Xo.iloc[:,:-1])
+        self.y['NPV'] = ((self.y['NPV'] / 1000).astype(int)) / 1000
 
-X,y = Xy_from_data(Xo)
+        self.y = self.y.sort_values(by='NPV', ascending=False)
+        self.X = self.X.loc[self.y.index, :]
 
-model = tf.keras.Sequential([
-    tf.keras.layers.Flatten(input_shape=(27,1)),
-    tf.keras.layers.Dense(128, activation=tf.nn.relu),
-    tf.keras.layers.Dense( 1, activation=tf.nn.sigmoid),
-])
+        self.y['CLASS'] = -1
+        self.y.iloc[:self.qty, -1] = 1
+        self.y.iloc[self.qty:, -1] = 0
 
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(),
-    loss='binary_crossentropy',
-    metrics=['accuracy']
-)
+        self.Xo = self.X.copy()
+        self.yo = self.y.iloc[:,-1].copy()
+        if self.oversampler:
+            self.Xo, self.yo = self.oversampler.fit_resample(self.Xo, self.yo)
 
-count = 15
-while count:
-    index = np.arange(len(X))
-    np.random.shuffle(index)
-    model.fit(X[index,:,:], y[index], epochs=1)
-    count -= 1
+        self.Xos = self.Xo.copy()
+        if self.scaler:
+            self.Xos = self.scaler.fit_transform(self.Xos)
+            self.Xos = pd.DataFrame(self.Xos, index=self.Xo.index, columns=self.Xo.columns)
 
-data_test.iloc[:,:-1] = scale.transform(data_test.iloc[:,:-1])
-predictions = model.predict(Xy_from_data(data_test)[0])
-data_test['CLASS'] = [1 if el > 0.49 else 0 for el in predictions]
+class TestData(Aux):
 
-fig, axs = plt.subplots(2, figsize=(10,8), tight_layout=True)
-data_test.reset_index().plot(kind='scatter', x='NPV', y='CLASS', ax=axs[0])
-data_test['CLASS'].value_counts().plot(kind='bar', ax=axs[1])
-axs[0].set_title('Hits {} over 20 best sample' .format(data_test.iloc[-20:,:]['CLASS'].sum()))
-axs[1].set_title(data_test['CLASS'].value_counts().to_string().replace('\n', ' | ').replace('    ', '->'))
-plt.savefig('out.png')
+    def __init__(self, X, y, iteration):
+        self.X = X.copy()
+        self.y = y.copy()
+        self.iteration = iteration
+
+        self._processing()
+
+    def _processing(self):
+
+        self.y['NPV'] = ((self.y['NPV'] / 1000).astype(int)) / 1000
+
+        self.y = self.y.sort_values(by='NPV', ascending=False)
+        self.X = self.X.loc[self.y.index, :]
+
+        self.Xs = self.X.copy()
+        if self.scaler:
+            self.Xs = self.scaler.transform(self.Xs)
+            self.Xs = pd.DataFrame(self.Xs, index=self.X.index, columns=self.X.columns)
+
+class Classifier:
+
+    def __init__(self, y, probs, threshold):
+        self.y = y.copy()
+
+        self.y['PROBS'] = probs
+        self.y['CLASS'] = [1 if el > threshold else 0 for el in probs]
+
+class Model:
+
+    def __init__(self, kind):
+        self.kind = kind
+
+        self._processing()
+
+    def _processing(self):
+        if self.kind == 'neural_network':
+            self.model = self._neural_network()
+
+    def _neural_network(self):
+        model = tf.keras.Sequential([
+            tf.keras.layers.Flatten(input_shape=(27,1)),
+            tf.keras.layers.Dense(128, activation=tf.nn.relu),
+            tf.keras.layers.Dense( 1, activation=tf.nn.sigmoid),
+        ])
+
+        model.compile(
+            optimizer=tf.keras.optimizers.Adam(),
+            loss='binary_crossentropy',
+            metrics=['accuracy']
+        )
+
+        return model
+
+    def train(self, X, y, epochs=None):
+        if self.kind == 'neural_network':
+            self.epochs = epochs
+            if self.epochs == None:
+                raise ValueError('Define number of epochs...')
+
+            count = self.epochs
+
+            while count:
+                index = np.arange(len(X))
+                np.random.shuffle(index)
+                X.to_numpy()[index,:]
+                self.model.fit(X.to_numpy()[index,:], y.to_numpy()[index], epochs=1)
+                count -= 1
+
+    def classify(self, X):
+        if self.kind == 'neural_network':
+            return  self.model.predict(X)
+
+def plot(TrainDataObj, TestDataObj, ClassifierObj, savefig_root):
+    trd = TrainDataObj
+    ted = TestDataObj
+    cl  = ClassifierObj
+
+    fig, axs = plt.subplots(1,2, figsize=(10,8), tight_layout=True)
+
+    title  = 'Tranning with iteration {} data and classification of iteration {} data'.format(trd.iteration, ted.iteration)
+    title += '\nTrain data size {}'.format(len(trd.X))
+    title += '\nTrain data oversampled size {}'.format(len(trd.Xos))
+    title += '\nHit {} over 20 best samples'.format(cl.y['CLASS'].iloc[:20].sum())
+    fig.suptitle(title, fontsize=20)
+
+    _x = cl.y['CLASS'].tolist()
+    _y = cl.y['NPV'].astype('int').tolist()
+    #import pdb; pdb.set_trace()
+    axs[0].scatter(_x, _y, s=250)
+    axs[0].scatter(_x[:20], _y[:20], s=250)
+
+    axs[0].set_ylabel('NPV [MM$]')
+    axs[0].set_xlabel('CLASS')
+
+    axs[0].set_xticks([0,1])
+    axs[0].set_xlim([-0.25, 1.25])
+
+    axs[0].yaxis.set_major_locator(ticker.LinearLocator(5))
+    axs[0].yaxis.set_major_formatter(ticker.FormatStrFormatter("%d"))
+
+    _x = [0,1]
+    _y = cl.y['CLASS'].value_counts()[_x].tolist()
+    axs[1].bar(_x, _y)
+
+    axs[1].set_ylabel('Qty')
+    axs[1].set_xlabel('CLASS')
+
+    axs[1].set_xticks([0,1])
+    axs[1].set_yticks([0, 25, 50 , 75, 100])
+
+    rects = axs[1].patches
+    labels = _y
+
+    for rect, label in zip(rects, labels):
+        height = rect.get_height()
+        axs[1].text(rect.get_x() + rect.get_width() / 2, height / 2, label,
+                ha='center', va='center', fontsize=18)
+
+    plt.savefig('{}/ml_it_{}_it_{}'.format(savefig_root, trd.iteration, ted.iteration))
+    plt.close()
+
+if __name__ == "__main__":
+    omd = OtmManagerData()
+    omd.add_omf('18WIDE', OtmManagerFile(project_root='/media/beldroega/DATA/DRIVE/TRANSFER/OTM_GOR_ICV1_WIDE18_1'))
+    X, y = omd.data()
+    I = pd.IndexSlice
+
+    Aux.oversampler = BorderlineSMOTE()
+    Aux.scaler = preprocessing.MinMaxScaler()
+
+    mask = None
+    for i in range(1, 20):
+        iteration = i
+
+        trd = TrainData(X.loc[I[:, iteration, :], :], y.loc[I[:, iteration, :], :], iteration, 10, mask)
+        ted = TestData(X.loc[I[:, iteration + 1, :], :], y.loc[I[:, iteration + 1, :], :], iteration + 1)
+
+        mo = Model(kind='neural_network')
+        mo.train(trd.Xos, trd.yo, epochs=15)
+        prob = mo.classify(ted.Xs)
+
+        cl = Classifier(ted.y, prob, 0.40)
+
+        plot(trd, ted, cl, 'fig')
+
+        mask = (cl.y['CLASS'] == 1)

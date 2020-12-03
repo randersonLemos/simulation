@@ -32,11 +32,11 @@ plt.style.use('seaborn-talk')
 
 mpl.rcParams['axes.titlesize']  = 18.0
 mpl.rcParams['axes.labelsize']  = 18.0
-mpl.rcParams['xtick.labelsize'] = 18.0
-mpl.rcParams['ytick.labelsize'] = 18.0
+mpl.rcParams['xtick.labelsize'] = 17.0
+mpl.rcParams['ytick.labelsize'] = 17.0
 mpl.rcParams['legend.fontsize'] = 18.0
 mpl.rcParams["legend.title_fontsize"] = 18.0
-mpl.rcParams['lines.linewidth'] =  2.0
+mpl.rcParams['lines.linewidth'] =  4.0
 
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from simulation.manager.otm_manager_file import OtmManagerFile

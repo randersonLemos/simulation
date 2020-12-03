@@ -3,14 +3,25 @@ import numpy as np
 import pandas as pd
 
 import seaborn as sb
-import matplotlib.pyplot as plt
-plt.style.use('seaborn-talk')
+import matplotlib as mpl
+import matplotlib.ticker as ticker
+import matplotlib.pyplot as plt; plt.style.use('seaborn-talk')
 
-import tensorflow as tf
+mpl.rcParams['axes.titlesize']  = 18.0
+mpl.rcParams['axes.labelsize']  = 18.0
+mpl.rcParams['xtick.labelsize'] = 17.0
+mpl.rcParams['ytick.labelsize'] = 17.0
+mpl.rcParams['legend.fontsize'] = 18.0
+mpl.rcParams["legend.title_fontsize"] = 18.0
+mpl.rcParams['lines.linewidth'] =  4.0
+
+from sklearn import preprocessing
+from imblearn.over_sampling import SMOTE, SVMSMOTE, BorderlineSMOTE, ADASYN
+
+import tensorflow as tf; print(tf.__version__)
 from tensorflow import keras
 from tensorflow.keras import layers
-
-print(tf.__version__)
+from keras.layers.advanced_activations import LeakyReLU
 
 import tensorflow_docs as tfdocs
 import tensorflow_docs.plots

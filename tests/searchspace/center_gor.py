@@ -16,11 +16,11 @@ class Interval_Handle:
         incr = (self.end - self.ini) / self.n_int
         curr = self.ini
         for i in range(self.n_int):
-            self.lst.append(curr + incr/2.0)
-            self.lst_ext.append(curr)
-            self.lst_ext.append(curr + incr/2.0)
+            self.lst.append(int(curr + incr/2.0))
+            self.lst_ext.append(int(curr))
+            self.lst_ext.append(int(curr + incr/2.0))
             curr += incr
-        self.lst_ext.append(curr)
+        self.lst_ext.append(int(curr))
 
     def new_intervals(self, value):
         idx = self.lst_ext.index(value)

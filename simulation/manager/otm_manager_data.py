@@ -18,6 +18,7 @@ class OtmManagerData:
         if project_name in self.omfs:
             raise ValueError('Project name must be unique...')
         self.omfs[project_name] = obj
+        return self
 
 
     def data(self):

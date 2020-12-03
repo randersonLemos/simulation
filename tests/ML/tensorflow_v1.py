@@ -133,7 +133,7 @@ def plot(TrainDataObj, TestDataObj, ClassifierObj, savefig_root):
 
     _x = cl.y['CLASS'].tolist()
     _y = cl.y['NPV'].astype('int').tolist()
-    #import pdb; pdb.set_trace()
+
     axs[0].scatter(_x, _y, s=250)
     axs[0].scatter(_x[:20], _y[:20], s=250)
 
@@ -177,18 +177,24 @@ if __name__ == "__main__":
     Aux.scaler = preprocessing.MinMaxScaler()
 
     mask = None
+    n_class_0 = 0
     for i in range(1, 20):
         iteration = i
 
         trd = TrainData(X.loc[I[:, iteration, :], :], y.loc[I[:, iteration, :], :], iteration, 10, mask)
         ted = TestData(X.loc[I[:, iteration + 1, :], :], y.loc[I[:, iteration + 1, :], :], iteration + 1)
 
-        mo = Model(kind='neural_network')
-        mo.train(trd.Xos, trd.yo, epochs=15)
-        prob = mo.classify(ted.Xs)
+        for j in range(25):
+            mo = Model(kind='neural_network')
+            mo.train(trd.Xos, trd.yo, epochs=15)
+            prob = mo.classify(ted.Xs)
 
-        cl = Classifier(ted.y, prob, 0.40)
+            cl = Classifier(ted.y, prob, 0.40)
+
+            if (cl.y['CLASS'] == 1).sum() > 65 and (cl.y['CLASS'] == 1) < 85):
+                break
 
         plot(trd, ted, cl, 'fig')
 
         mask = (cl.y['CLASS'] == 1)
+        n_class_0 += (cl.y['CLASS'] == 0).sum()

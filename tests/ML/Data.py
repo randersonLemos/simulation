@@ -72,6 +72,8 @@ class ClassifiedData:
 
         self.y = copy.deepcopy(self.tedObj.y)
 
+        self.threshold = threshold
+
         self.y['PROBS'] = probabilities
         self.y['CLASS'] = [1 if el > threshold else 0 for el in probabilities]
 

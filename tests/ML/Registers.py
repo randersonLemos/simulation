@@ -23,6 +23,7 @@ def save(TrainDataObj, TestDataObj, ClassifierObj, savefig_root):
     title += '\nTrain data size {}'.format(len(trd.X))
     title += '\nTrain data oversampled size {}'.format(len(trd.Xos))
     title += '\nHit {} over 20 best samples'.format(cl.y['CLASS'].iloc[:20].sum())
+    title += '\nThreshold {}'.format(cl.threshold)
     fig.suptitle(title, fontsize=20)
 
     _x = cl.y['CLASS'].tolist()
@@ -41,7 +42,13 @@ def save(TrainDataObj, TestDataObj, ClassifierObj, savefig_root):
     axs[0].yaxis.set_major_formatter(ticker.FormatStrFormatter("%d"))
 
     _x = [0,1]
-    _y = cl.y['CLASS'].value_counts()[_x].tolist()
+    value_counts = cl.y['CLASS'].value_counts()
+    if len(value_counts) == 2:
+        _y = cl.y['CLASS'].value_counts()[_x].tolist()
+    else: # Assumundo que tem apenas classe 1
+        _y = [0]
+        _y = _y + cl.y['CLASS'].value_counts().tolist()
+
     axs[1].bar(_x, _y)
 
     axs[1].set_ylabel('Qty')

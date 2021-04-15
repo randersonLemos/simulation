@@ -4,7 +4,7 @@ from collections.abc import Iterable
 import numpy as np
 import os
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from simulation.misc.icv import Icv
+from src.misc.icv import Icv
 
 SMART_WELLS = \
 [
@@ -103,9 +103,9 @@ def MultiPositIcvOnCrtllump(positions, tracked_measure):
                 position_name = 'ICV_{}_{}_S{}'.format(well, zone, idx+1)
                 icv.add_stage(position_name, position)
 
-                from simulation.astk.triggerobject_onctrllump import OnCtrllump
+                from src.astk.triggerobject_onctrllump import OnCtrllump
                 trigger_obj = OnCtrllump().set_layerclump_name(layer)
-                wildcard = '#CLOSE{}_{}_{}_S{}#'.format(tracked_measure.strip('*') ,well, zone, idx+1)
+                wildcard = '#CLOSE_{}_{}_{}_S{}#'.format(tracked_measure.strip('*') ,well, zone, idx+1)
                 trigger_obj.set_condition(tracked_measure, '>', wildcard)
                 wildcards.append(wildcard)
 
@@ -140,40 +140,40 @@ if __name__ == '__main__':
     #    dic[key] = lst
 
 
-    gorfs = {}
-    with open('/media/pamonha/DATA/DRIVE/simulation/tests/smartwell/output/ICV_GOR.txt', 'r') as fh:
-        fh.readline()
-        for line in fh:
-            zone, gor = line.strip().split('\t')
-            gorfs[zone] = int(gor)
+    #gorfs = {}
+    #with open('/media/pamonha/DATA/DRIVE/simulation/tests/smartwell/output/ICV_GOR.txt', 'r') as fh:
+    #    fh.readline()
+    #    for line in fh:
+    #        zone, gor = line.strip().split('\t')
+    #        gorfs[zone] = int(gor)
 
-    gors = {}
-    with open('/media/pamonha/DATA/DRIVE/simulation/tests/smartwell/output/ICV6ONCRTLLUMPGORWILDCARDS.txt', 'r') as fh:
-        for key, gorf in gorfs.items():
-            gori = 0.5*gorf
-            exp = Exp(gori, gorf)
-            _gors = exp.comp_inv(positions)
-            wildcards = []
-            for _ in enumerate(_gors):
-                wildcards.append('{}'.format(fh.readline().strip()))
+    #gors = {}
+    #with open('/media/pamonha/DATA/DRIVE/simulation/tests/smartwell/output/ICV6ONCRTLLUMPGORWILDCARDS.txt', 'r') as fh:
+    #    for key, gorf in gorfs.items():
+    #        gori = 0.5*gorf
+    #        exp = Exp(gori, gorf)
+    #        _gors = exp.comp_inv(positions)
+    #        wildcards = []
+    #        for _ in enumerate(_gors):
+    #            wildcards.append('{}'.format(fh.readline().strip()))
 
-            wildcards = reversed(wildcards)
-            gors[key] = list(reversed(list(zip(wildcards, positions, _gors))))
-
-
-    with open('/media/pamonha/DATA/DRIVE/simulation/tests/smartwell/output/ICV6ONCRTLLUMPGORTRIGGERS.txt', 'r') as fh:
-        document = fh.read()
-
-    for key, lst in gors.items():
-        for wildcard, openn, gor in lst:
-            document = document.replace(wildcard, str(gor))
-
-    with open('./output/EXP50%ClOSE.txt', 'w') as fh:
-        fh.write(document)
+    #        wildcards = reversed(wildcards)
+    #        gors[key] = list(reversed(list(zip(wildcards, positions, _gors))))
 
 
-    with open('./output/EXP50%ClOSEVALUES.txt', 'w') as fh:
-        for key, lst in gors.items():
-            fh.write(key); fh.write('\n')
-            for tup in lst:
-                fh.write(str(tup)), fh.write('\n')
+    #with open('/media/pamonha/DATA/DRIVE/simulation/tests/smartwell/output/ICV6ONCRTLLUMPGORTRIGGERS.txt', 'r') as fh:
+    #    document = fh.read()
+
+    #for key, lst in gors.items():
+    #    for wildcard, openn, gor in lst:
+    #        document = document.replace(wildcard, str(gor))
+
+    #with open('./output/EXP50%ClOSE.txt', 'w') as fh:
+    #    fh.write(document)
+
+
+    #with open('./output/EXP50%ClOSEVALUES.txt', 'w') as fh:
+    #    for key, lst in gors.items():
+    #        fh.write(key); fh.write('\n')
+    #        for tup in lst:
+    #            fh.write(str(tup)), fh.write('\n')

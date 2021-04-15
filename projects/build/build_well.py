@@ -1,17 +1,17 @@
 from os import sys, path; sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
-from simulation.dict.keywords import Keywords as Kw
-from simulation.astk.astkwell import AstkWell
-from simulation.astk.astkproducer import AstkProducer
-from simulation.astk.astkoperate import AstkOperate
-from simulation.astk.astkmonitor import AstkMonitor
-from simulation.astk.astkgeometry import AstkGeometry
-from simulation.astk.astkperf import AstkPerf
-from simulation.astk.astkopen import AstkOpen
-from simulation.astk.astkshutin import AstkShutin
-from simulation.astk.astkontime import AstkOntime
-from simulation.astk.astklayerclump import AstkLayerclump
-from simulation.astk.astklayerclump import AstkLayerclumps
+from src.dict.keywords import Keywords as Kw
+from src.astk.astkwell import AstkWell
+from src.astk.astkproducer import AstkProducer
+from src.astk.astkoperate import AstkOperate
+from src.astk.astkmonitor import AstkMonitor
+from src.astk.astkgeometry import AstkGeometry
+from src.astk.astkperf import AstkPerf
+from src.astk.astkopen import AstkOpen
+from src.astk.astkshutin import AstkShutin
+from src.astk.astkontime import AstkOntime
+from src.astk.astklayerclump import AstkLayerclump
+from src.astk.astklayerclump import AstkLayerclumps
 
 astkwell = AstkWell().set_name('PRK014').set_group('PRODUCTION')
 

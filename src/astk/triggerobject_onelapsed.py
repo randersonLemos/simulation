@@ -1,6 +1,6 @@
-from simulation.dict.keywords import Keywords as Kw
-from simulation.dict.words import Words as Wrd
-from simulation.astk.triggerobject import TriggerObject
+from src.dict.keywords import Keywords as Kw
+from src.dict.words import Words as Wrd
+from src.astk.triggerobject import TriggerObject
 
 
 class OnElapsed(TriggerObject):

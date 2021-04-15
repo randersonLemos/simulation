@@ -1,4 +1,4 @@
-from simulation.dict.keywords import Keywords as Kw
+from src.dict.keywords import Keywords as Kw
 
 class AstkGeometry:
     def __init__(self):

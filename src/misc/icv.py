@@ -1,7 +1,7 @@
 import os
 os.sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from simulation.astk.astktrigger import AstkTrigger
-from simulation.astk.astkclumpsetting import AstkClumpsetting
+from src.astk.astktrigger import AstkTrigger
+from src.astk.astkclumpsetting import AstkClumpsetting
 
 
 class Icv:
@@ -29,7 +29,7 @@ class Icv:
     def add_trigger_rule(self, stage_name, trigger_obj):
         if stage_name in self._stage:
             self._trigger_rule[stage_name] = trigger_obj
-            return self
+            return
         raise ValueError('Stage name not found. Added it first...')
 
 
@@ -52,8 +52,8 @@ if __name__ == '__main__':
     icv.add_stage('STAGE1', 1.0)
     icv.add_stage('STAGE2', 0.5)
     icv.add_stage('STAGE3', 0.0)
-
-    from simulation.astk.triggerobject_onctrllump import OnCtrllump
+    
+    from src.astk.triggerobject_onctrllump import OnCtrllump
     trigger_obj = OnCtrllump().set_layerclump_name('LAYER1')
     trigger_obj.set_condition('*GOR', '>', '#AAAAA#')
     icv.add_trigger_rule('STAGE1', trigger_obj)
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     icv2.add_stage('STAGE2', 0.5)
     icv2.add_stage('STAGE3', 0.0)
 
-    from simulation.astk.triggerobject_onelapsed import OnElapsed
+    from src.astk.triggerobject_onelapsed import OnElapsed
     trigger_obj = OnElapsed()
     trigger_obj.set_condition('*TIMSIM', '>', '#AAAAA#')
     icv2.add_trigger_rule('STAGE1', trigger_obj)

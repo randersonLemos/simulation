@@ -36,18 +36,18 @@ mpl.rcParams['xtick.labelsize'] = 17.0
 mpl.rcParams['ytick.labelsize'] = 17.0
 mpl.rcParams['legend.fontsize'] = 18.0
 mpl.rcParams["legend.title_fontsize"] = 18.0
-mpl.rcParams['lines.linewidth'] =  4.0
+mpl.rcParams['lines.linewidth'] = 2.0
 
 if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from simulation.manager.otm_manager_file import OtmManagerFile
-from simulation.manager.otm_manager_data import OtmManagerData
+from src.manager.otm_manager_file import OtmManagerFile
+from src.manager.otm_manager_data import OtmManagerData
 
 OtmManagerFile.set_default_simulation_folder_prefix('otm_IT')
 OtmManagerFile.set_default_simulation_file_prefix('run')
 OtmManagerFile.set_default_result_file('otm.otm.csv')
 OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
-from simulation.table.utils import get_tables
+from src.table.utils import get_tables
 
 def Get_tables(FileDotTables):
     Tables = []

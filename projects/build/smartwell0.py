@@ -74,6 +74,6 @@ def MultiPositIcvOnCrtllump(positions, tracked_measure):
  
 
 if __name__ == '__main__':
-    positions = [0.0, 0.25, 0.50, 0.75, 1.0]
+    positions = [0.0, 0.25]
 
     MultiPositIcvOnCrtllump(positions=positions, tracked_measure='*GOR')

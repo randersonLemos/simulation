@@ -17,22 +17,31 @@ OtmManagerFile.set_default_simulation_file_prefix('run')
 OtmManagerFile.set_default_result_file('otm.otm.csv')
 OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
-omf = OtmManagerFile(project_root='U:\FULL\OTM_GOR_ICV1_WIDE18_4')
-    
-reports = []
-    
-for irf_path in omf.simulation_file_paths('.irf'):
-    rwd_path = irf_path.with_suffix('.rwd')
-    rwo_path = irf_path.with_suffix('.rwo')
+files = []
+files.append("W:\OTM_GOR_ICV5_1")
 
-    tlp = TemplateManager(template_file_path='../template/main.rwd.tlp')
-    tlp.replace_mark(MARK_RWD_IRFFILE, str(irf_path))
-    tlp.replace_mark(MARK_RWD_RWOFILE, str(rwo_path))
-    tlp.write(rwd_path)
-   
-    reports.append(Report(path_to_rwd=rwd_path, path_to_rwo=rwo_path, verbose=True, run=False))
-     
-rm = RunManager(reports, 10)       
+rms = []
+
+for file in files:
+
+    omf = OtmManagerFile(project_root=file)
+        
+    reports = []
+        
+    for irf_path in omf.simulation_file_paths('.irf'):
+        rwd_path = irf_path.with_suffix('.rwd')
+        rwo_path = irf_path.with_suffix('.rwo')
     
-rm.start()
+        tlp = TemplateManager(template_file_path='../template/main.rwd.tlp')
+        tlp.replace_mark(MARK_RWD_IRFFILE, str(irf_path))
+        tlp.replace_mark(MARK_RWD_RWOFILE, str(rwo_path))
+        tlp.write(rwd_path)
+       
+        reports.append(Report(path_to_rwd=rwd_path, path_to_rwo=rwo_path, verbose=True, run=False))
+         
+    rms.append(RunManager(reports, 10))    
+    
+               
+#for rm in rms:
+#    rm.start()
           

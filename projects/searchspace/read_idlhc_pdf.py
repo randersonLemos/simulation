@@ -1,9 +1,10 @@
+import copy
 import numpy as np
 import pandas as pd
 import center_gor
 
  
-df = pd.read_csv("W:/OTM_GOR_ICV1_USS5_U1_4_1/otm_idlhc_pdf.csv", sep=';', skiprows=5)
+df = pd.read_csv("W:/OTM_GOR_ICV1_USS5_U1_5_16/otm_idlhc_pdf.csv", sep=';', skiprows=5)
 df = df.set_index('ITERATION')
 _df = df.copy()
 #piv = df.pivot_table(index=['ITERATION', 'ATTRIBUTE'], columns='VALUE', values='PROBABILITY')
@@ -17,7 +18,7 @@ for idx in df.index.unique():
     print('AUX')
     print(aux.reset_index().pivot(index='ATTRIBUTE', columns='VALUE', values='PROBABILITY'))
     
-    msk = aux > 0.8
+    msk = aux >= 0.8
         
     print('\nMSK')    
     print(msk.reset_index().pivot(index='ATTRIBUTE', columns='VALUE', values='PROBABILITY'))
@@ -43,8 +44,12 @@ for id in df.index.unique():
         print(aux)
         ipt = input('Enter with the sequence of values for generation' +
                     'of the new values interval optimization:\n')
-        print('---')
-        nih = ih.new_intervals(int(ipt))
+        print('---')        
+        nih = copy.deepcopy(ih)
+        lst = ipt.split(',')
+        for el in lst:
+            nih = nih.new_intervals(int(el))
+        
         for i in range(aux.shape[0]):
             aux.iloc[i,0] = nih.lst[i]; aux.iloc[i,1] = 0.20
     df.loc[id, :] = aux

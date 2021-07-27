@@ -12,20 +12,12 @@ inje_lst.append(('IRK029',('IRK029-G','IRK029-W', ), )); inje_lst.append(('IRK03
 inje_lst.append(('IRK049',('IRK049-G','IRK049-W', ), )); inje_lst.append(('IRK050',('IRK050-G','IRK050-W', ), ))
 inje_lst.append(('IRK056',('IRK056-G','IRK056-W', ), )); inje_lst.append(('IRK063',('IRK063-G','IRK063-W', ), ))
 
-import copy
-import pathlib
-import pandas as pd
-import matplotlib.pyplot as plt
-
 import os
-if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path: 
+import pathlib
+
+if os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) not in os.sys.path:
     os.sys.path.insert(0,os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-
-#root = pathlib.Path('/media/beldroega/DATA/DRIVE/OTM_20200101')
-root = pathlib.Path('U:/SERGIO')
-pathprojects = {}
-pathprojects['WIDE18'] = root / 'OTM_GOR_ICV5_1'
-
+    
 from src.manager.otm_manager_file import OtmManagerFile
 from src.manager.otm_manager_data import OtmManagerData
 
@@ -34,8 +26,18 @@ OtmManagerFile.set_default_simulation_file_prefix('run')
 OtmManagerFile.set_default_result_file('otm.otm.csv')
 OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
-omd = OtmManagerData()
-for key, value in pathprojects.items(): 
-    omd.add_omf(key, OtmManagerFile(project_root=value))
+from src.table.utils import get_tables
 
-X, y = omd.data()
+def Get_tables(FileDotTables):
+    Tables = []
+    with open(FileDotTables, 'r') as fh:
+        for line in fh:
+            tables = get_tables(line.strip())
+            for well_name, alias in inje_lst: tables.add(tables.join(well_name, *alias, dell=True)) # join xxxxxx-w and xxxxxx-g to xxxxxx
+            Tables.append(tables)
+    return Tables
+
+Tables = Get_tables('list.tables')
+
+for tables in Tables:
+    tables.date_range(ini='2020')

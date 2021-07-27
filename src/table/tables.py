@@ -63,7 +63,10 @@ class Tables():
         self._dic[Sector_Keys.sector()].df.to_csv(dir / '{}.csv'.format('FIELD'))
 
         for key in self._dic:
+
             if isinstance(self._dic[key], Well_Table):
+
+
                 df1 = self._dic[key].df
                 df2 = self.grp_col_spe_well(key) # specials
                 df = pd.concat([df1, df2], axis=1, sort=False)

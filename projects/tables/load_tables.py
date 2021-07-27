@@ -41,3 +41,5 @@ Tables = Get_tables('list.tables')
 
 for tables in Tables:
     tables.date_range(ini='2020')
+
+tables.to_csv('./out')

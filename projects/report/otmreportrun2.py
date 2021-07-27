@@ -18,7 +18,7 @@ OtmManagerFile.set_default_result_file('otm.otm.csv')
 OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
 files = []
-files.append("W:\OTM_GOR_ICV5_1")
+files.append("U:\SERGIO\OTM_GOR_ICV5_1")
 
 rms = []
 
@@ -42,6 +42,6 @@ for file in files:
     rms.append(RunManager(reports, 10))    
     
                
-#for rm in rms:
-#    rm.start()
+for rm in rms:
+    rm.start()
           

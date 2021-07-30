@@ -26,20 +26,34 @@ OtmManagerFile.set_default_simulation_file_prefix('run')
 OtmManagerFile.set_default_result_file('otm.otm.csv')
 OtmManagerFile.set_default_hldg_sample_file('hldg.txt')
 
+# files = []
+# files.append("U:\SERGIO\OTM_GOR_ICV5_1")
+
+# for file in files:
+#     omf = OtmManagerFile(project_root=file)
+
+# files = omf.simulation_file_paths('.rwo')
+# files = map(str, files)
+# txt = '\n'.join(files)
+
+# with open('./list.tables', 'w') as fh:
+#     fh.write(txt)
+ 
 from src.table.utils import get_tables
 
 def Get_tables(FileDotTables):
-    Tables = []
+    Tables = {}
     with open(FileDotTables, 'r') as fh:
         for line in fh:
             tables = get_tables(line.strip())
             for well_name, alias in inje_lst: tables.add(tables.join(well_name, *alias, dell=True)) # join xxxxxx-w and xxxxxx-g to xxxxxx
-            Tables.append(tables)
+            Tables[pathlib.Path(line).stem] = tables
+            break
     return Tables
 
 Tables = Get_tables('list.tables')
 
-for tables in Tables:
-    tables.date_range(ini='2020')
-
-tables.to_csv('./out')
+for key in Tables:
+     tables = Tables[key]
+     tables.date_range(ini='2020')
+     tables.to_csv('./out/{}'.format(key))
